@@ -1,5 +1,25 @@
-    @media (max-width: 600px) {
-        .hide {
-            display: none; 
-        }
-    }
+@media (max-width: 600px) {
+  .hide {
+    display: none;
+  }
+}
+
+.navbar {
+  box-shadow: none;
+}
+
+.logo {
+  width: 35px;
+  margin-left: 10px;
+}
+
+.brand-name {
+  font-size: 24px;
+  padding: 10px;
+}
+
+.nav-link {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}

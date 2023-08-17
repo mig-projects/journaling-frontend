@@ -1,16 +1,21 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext } from "react";
 
-
-export const AuthContext = createContext();
+export const AuthContext = createContext({
+  authSession: null,
+  setAuthSession: () => {},
+  supaClient: null,
+  setSupaClient: () => {},
+});
 
 export const AuthProvider = ({ children }) => {
-    const [session, setSession] = useState(null);
-    const [supabase, setSupabase] = useState(null);
+  const [authSession, setAuthSession] = useState(null);
+  const [supaClient, setSupaClient] = useState(null);
 
-
-    return (
-        <AuthContext.Provider value={{ session: [session, setSession], supabase: [supabase, setSupabase] }}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
+  return (
+    <AuthContext.Provider
+      value={{ authSession, setAuthSession, supaClient, setSupaClient }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
