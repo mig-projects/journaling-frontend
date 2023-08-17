@@ -1,24 +1,87 @@
+@media (max-width: 600px) {
+  .uploadIcon {
+    width: 150px;
+  }
+  .discoveryIcon {
+    width: 150px;
+  }
+  .homeIcon {
+    width: 80px;
+  }
+  .solidarityIcon {
+    width: 80px;
+    padding-top: 10px;
+  }
+  .wellBeingIcon {
+    width: 80px;
+    padding-top: 10px;
+  }
+}
 
+.mainContainer {
+  margin: 50px;
 
-@media (max-width: 600px){
-    .uploadIcon {
-        width: 150px; 
-    }
-    .discoveryIcon {
-        width: 150px; 
-    }
-    .homeIcon {
-        width: 80px;
-    }
-    .solidarityIcon {
-        width: 80px;
-        padding-top: 10px; 
-    }
-    .wellBeingIcon {
-        width: 80px;
-        padding-top: 10px; 
-    }
+  .mainBox {
+    padding: 20px;
+
     .introText {
-        font-size: 14px; 
+      font-size: 14px;
     }
+  }
+}
+
+.footerContainer {
+  margin-top: 30px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+
+  .githubSignup {
+    background: white;
+    color: #b272ce;
+    border-radius: 15px;
+  }
+
+  .newsletterButton {
+    background-color: #b272ce;
+    border-radius: 15px;
+  }
+}
+
+.footerGrid {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+}
+
+.uploadIcon,
+.discoveryIcon {
+  max-width: 250px;
+}
+
+.uploadGrid {
+  display: flex;
+  justify-content: right;
+  max-width: 250px;
+
+  .button {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.discoverGrid {
+  display: flex;
+  justify-content: left;
+
+  .button {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.uploadPopOver,
+.discoverPopoverText {
+  font-size: 60px !important;
+  color: #535252;
 }
