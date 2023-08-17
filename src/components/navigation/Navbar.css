@@ -13,13 +13,22 @@
   margin-left: 10px;
 }
 
+.avatar {
+  width: 35px;
+  opacity: 60%;
+  margin-right: 10px;
+}
+
 .brand-name {
   font-size: 24px;
   padding: 10px;
 }
 
-.nav-link {
+.navbar-collapse {
   display: flex;
   justify-content: flex-end;
-  width: 100%;
+}
+
+.login-button {
+  margin-left: auto;
 }

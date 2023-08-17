@@ -14,6 +14,7 @@ import useAuth from "../auth/useAuth";
 
 // import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import logo from "../../pics/logo.png";
+import avatar from "../../pics/avatar.png";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -40,12 +41,22 @@ export default function Navbar() {
             <MDBIcon icon="bars" fas />
           </MDBNavbarToggler>
 
-          <MDBCollapse navbar show={showNavExternal}>
+          <MDBCollapse
+            navbar
+            show={showNavExternal}
+            className="navbar-collapse"
+          >
             {authSession ? (
-              <MDBNavbarLink onClick={handleLogout}>Logout</MDBNavbarLink>
+              <>
+                <img src={avatar} className="avatar" alt="avatar" />
+
+                <MDBNavbarLink onClick={handleLogout}>Logout</MDBNavbarLink>
+              </>
             ) : (
               <MDBNavbarNav>
-                <MDBNavbarLink href="/login">Login</MDBNavbarLink>
+                <MDBNavbarLink href="/login" className="login-button">
+                  Login
+                </MDBNavbarLink>
               </MDBNavbarNav>
             )}
           </MDBCollapse>
