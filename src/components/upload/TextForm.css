@@ -1,4 +1,50 @@
-.highlighter-color {
-    background-color: #B272CE;
-    
+.highlighterColor {
+  background-color: #b272ce;
+}
+
+.HighlightChipContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.textFieldStyle.MuiChip-root {
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  color: #b272ce;
+  padding: 25px 10px;
+  margin: 10px;
+}
+
+.highlighterContainer {
+  margin-top: 10px;
+  background-color: #d9cdbc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.tagContainer {
+  margin-top: 10px;
+}
+
+.userChipStyle.MuiChip-root {
+  font-size: 16px;
+  color: #b272ce;
+  border: 2px solid #b272ce;
+  background-color: #e6dac8;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.avatarStyle.MuiAvatar-root {
+  background-color: #b272ce;
+  color: white;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.suggestedChipStyle.MuiChip-root {
+  font-size: 16px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
