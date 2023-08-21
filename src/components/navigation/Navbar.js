@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import {
   MDBContainer,
@@ -14,7 +14,6 @@ import useAuth from "../auth/useAuth";
 
 // import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import logo from "../../pics/logo.png";
-import avatar from "../../pics/avatar.png";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -47,11 +46,10 @@ export default function Navbar() {
             className="navbar-collapse"
           >
             {authSession ? (
-              <>
-                <img src={avatar} className="avatar" alt="avatar" />
-
-                <MDBNavbarLink onClick={handleLogout}>Logout</MDBNavbarLink>
-              </>
+              <MDBNavbarLink onClick={handleLogout} className="logout-button">
+                <MDBIcon fas icon="user-circle" className="avatar" size="lg" />{" "}
+                Logout
+              </MDBNavbarLink>
             ) : (
               <MDBNavbarNav>
                 <MDBNavbarLink href="/login" className="login-button">

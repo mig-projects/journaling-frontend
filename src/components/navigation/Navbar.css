@@ -14,7 +14,6 @@
 }
 
 .avatar {
-  width: 35px;
   opacity: 60%;
   margin-right: 10px;
 }
@@ -27,8 +26,11 @@
 .navbar-collapse {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
-.login-button {
+.login-button,
+.logout-button {
   margin-left: auto;
+  padding: 10px;
 }
