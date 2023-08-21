@@ -10,7 +10,7 @@ import {
   MDBIcon,
   MDBCollapse,
 } from "mdb-react-ui-kit";
-import useAuth from "../auth/useAuth";
+import { useAuth } from "../../contexts/auth";
 
 // import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import logo from "../../pics/logo.png";
@@ -18,7 +18,7 @@ import "./Navbar.css";
 
 export default function Navbar() {
   const [showNavExternal, setShowNavExternal] = useState(false);
-  const { authSession, handleLogout } = useAuth();
+  const { user, signOut } = useAuth();
 
   return (
     <div>
@@ -45,8 +45,8 @@ export default function Navbar() {
             show={showNavExternal}
             className="navbar-collapse"
           >
-            {authSession ? (
-              <MDBNavbarLink onClick={handleLogout} className="logout-button">
+            {user ? (
+              <MDBNavbarLink onClick={signOut} className="logout-button">
                 <MDBIcon fas icon="user-circle" className="avatar" size="lg" />{" "}
                 Logout
               </MDBNavbarLink>

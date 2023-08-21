@@ -13,14 +13,14 @@ import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
 
 import "./Home.css";
-import useAuth from "../components/auth/useAuth";
+import { useAuth } from "../contexts/auth";
 
 export default function Home() {
   const [discoveryMode, setDiscoveryMode] = React.useState(false);
   const [uploadMode, setUploadMode] = React.useState(false);
   const [anchorElUpload, setAnchorElUpload] = React.useState(null);
   const [anchorElDiscover, setAnchorElDiscover] = React.useState(null);
-  const { authSession } = useAuth();
+  const { user } = useAuth();
 
   const showUpload = () => {
     setUploadMode(true);
@@ -72,7 +72,7 @@ export default function Home() {
 
             <hr />
           </div>
-          {authSession && (
+          {user && (
             <div>
               <Grid container spacing={0}>
                 <Grid item xs={12} md={6} className="uploadGrid">
@@ -160,7 +160,7 @@ export default function Home() {
 
           <div className="footerContainer">
             <Stack spacing={2} direction="column" className="footerGrid">
-              {authSession && (
+              {user && (
                 <Button variant="contained" className="newsletterButton">
                   {" "}
                   Sign Up For Our Newsletter!{" "}

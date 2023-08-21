@@ -6,52 +6,32 @@ import Login from "../../pages/auth/Login";
 
 
 // NEW:
-import { ThemeProvider, useTheme, Grid, Stack, Button, Typography, CircularProgress } from '@mui/material';
+import {
+  ThemeProvider,
+  useTheme,
+  Grid,
+  Stack,
+  Button,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
+import { useAuth } from "../../contexts/auth";
+import { useNavigate } from "react-router";
+import { supaClient } from "../../services/supabase";
 
 
 export default function UploadForm() {
-    const { session, supabase } = useContext(AuthContext);
-    const [post, setPost] = useState(false);
-    const [tags, setTags] = useState([]);
-    const [text, setText] = useState(null);
-    const [src, setSrc] = useState(null);
-    const [progress, setProgress] = useState(false);
-    const [trigger, setTrigger] = useState(false);
-    const [loginView, setLoginView] = useState(false);
-
-
-
-    // const [src, setSrc] = React.useState(null);
-    // const [returnTags, setReturnTags] = React.useState([]);
-    // const [returnCaption, setReturnCaption] = React.useState(null);
-    // const [returnAITags, setReturnAITags] = React.useState([]);
-
-    var style1 = {
-        margin: "50px",
-    }
-
-    var style2 = {
-        marginTop: "30px",
-        margin: "0auto",
-        display: "flex",
-        justifyContent: "center",
-    }
-
-    var style3 = {
-        display: "flex",
-        justifyContent: "center",
-        margin: "50px",
-    }
-
-    var style4 = {
-        backgroundColor: "#B272CE",
-        borderRadius: '15px',
-    }
-
-    var style5 = {
-        display: "flex",
-        justifyContent: "center",
-    }
+  const { user } = useAuth();
+  const [published, setPublished] = useState(false);
+  const [tagStates, setTagStates] = React.useState(
+    SUGGESTED_TAGS.reduce((obj, tag) => ({ ...obj, [tag]: false }), {})
+  );
+  const [userTags, setUserTags] = React.useState([]);
+  const [memory, setMemory] = useState(null);
+  const [src, setSrc] = useState(null);
+  const [progress, setProgress] = useState(false);
+  const [trigger, setTrigger] = useState(false);
+  const navigate = useNavigate();
 
     const theme = useTheme({
         palette: {
@@ -61,31 +41,12 @@ export default function UploadForm() {
         }
     });
 
-    useEffect(() => {
-        if (trigger === true) {
-            setTrigger(false);
-        }
-
-        if (loginView) {
-            setLoginView(session[0] ? false : true)
-            console.log(session);
-        }
-        // if (!session) {
-        //     return (<Login />);
-        //     supabase.auth
-        //         .getSession()
-        //         .then(({ data, error }) => {
-        //             if (error) {
-        //                 // Handle the error, e.g., display an error message or take appropriate action
-        //                 console.error('Error fetching session:', error);
-        //             } else {
-        //                 setSession(data.session);
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             // Handle any other errors that may occur
-        //             console.error('Error fetching session:', error);
-        //         });
+  // send back to login page if session doesn't exist or disappears.
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user]);
 
 
     }, [trigger]);
@@ -114,17 +75,16 @@ export default function UploadForm() {
 
     }
 
-    const insertImage = () => {
-        insert(
-            "users_images", // tableName
-            {
-                owner: session[0].user.id, //insertParams
-                name: "some name",
-                description: "text"
-            });
-    }
-
-    const insertTags = () => {
+  const insertImage = () => {
+    insert(
+      "users_images", // tableName
+      {
+        owner: user.id, //insertParams
+        name: "some name",
+        description: "text",
+      }
+    );
+  };
 
         const arr = [];
         tags.forEach((tag) => {
@@ -136,34 +96,32 @@ export default function UploadForm() {
         )
     }
 
-    const uploadToStorage = (imageData, subFolder, photoName) => {
-        fetch(imageData)
-            .then(res => res.blob())
-            .then(blob => {
-                const file = new File([blob], "File name", { type: "image/png" })
-                const path = `${subFolder}/${session[0].user.id}-${Date.now()}-${photoName}.png`;
-                supabase[0].storage
-                    .from('images')
-                    .upload(path, file)
-                    .then((result) => {
-                        if (result.error) {
-                            console.log(result.error)
-                        }
-                    })
-            })
-    }
+  const uploadToStorage = (imageData, subFolder, photoName) => {
+    fetch(imageData)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const file = new File([blob], "File name", { type: "image/png" });
+        const path = `${subFolder}/${user.id}-${Date.now()}-${photoName}.png`;
+        supaClient.storage
+          .from("images")
+          .upload(path, file)
+          .then((result) => {
+            if (result.error) {
+              console.log(result.error);
+            }
+          });
+      });
+  };
 
-    const readiedFiles = (photoData, annotationData) => {
-        if (session[0]) {
-            // console.log(session);
-            uploadToStorage(photoData, "photos", "photo");
-            uploadToStorage(annotationData, "drawings", "drawing");
-            insertImage();
-            insertTags();
-        } else {
-            setLoginView(true);
-            console.log("session not established yet")
-        }
+  const readiedFiles = (photoData, annotationData) => {
+    if (user) {
+      // console.log(session);
+      uploadToStorage(photoData, "photos", "photo");
+      uploadToStorage(annotationData, "drawings", "drawing");
+      insertImage();
+      // insertTags();
+    } else {
+      console.log("session not established yet");
     }
 
 
