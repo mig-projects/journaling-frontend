@@ -28,6 +28,13 @@
       font-size: 14px;
     }
   }
+
+  @media (max-width: 900px) {
+    .uploadGrid,
+    .discoverGrid {
+      justify-content: center;
+    }
+  }
 }
 
 .footerContainer {
