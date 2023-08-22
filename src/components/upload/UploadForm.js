@@ -13,23 +13,18 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import { useAuth } from "../../contexts/auth";
-import { useNavigate } from "react-router";
-import { supaClient } from "../../services/supabase";
-const SUGGESTED_TAGS = ["home", "well-being", "solidarity"];
+import { useUploadForm } from "./hooks";
 
-export default function UploadForm() {
-  const { user } = useAuth();
-  const [published, setPublished] = useState(false);
-  const [tagStates, setTagStates] = React.useState(
-    SUGGESTED_TAGS.reduce((obj, tag) => ({ ...obj, [tag]: false }), {})
-  );
-  const [userTags, setUserTags] = React.useState([]);
-  const [memory, setMemory] = useState(null);
-  const [src, setSrc] = useState(null);
-  const [progress, setProgress] = useState(false);
-  const [trigger, setTrigger] = useState(false);
-  const navigate = useNavigate();
+const UploadForm = () => {
+  const {
+    trigger,
+    memoryState,
+    setTrigger,
+    uploadState,
+    setMemoryState,
+    submitData,
+    readiedFiles,
+  } = useUploadForm();
 
   const theme = useTheme({
     palette: {
@@ -39,99 +34,15 @@ export default function UploadForm() {
     },
   });
 
-  // send back to login page if session doesn't exist or disappears.
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user]);
-
-  // Pass to the post handler
-  const onMemoryChange = useCallback((event) => {
-    setMemory(event.target.value);
-  }, []);
-
-  const insert = async (tableName, insertParams) => {
-    // send to supaClient
-    const { error } = await supaClient[0].from(tableName).insert(insertParams);
-    if (error) {
-      console.log(error);
-    }
-  };
-
-  const upsert = async (tableName, insertParams) => {
-    const { data, error } = await supaClient[0]
-      .from(tableName)
-      .upsert(insertParams, { onConflict: "name", ignoreDuplicates: true })
-      .select();
-
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(data);
-    }
-  };
-
-  const insertImage = () => {
-    insert(
-      "users_images", // tableName
-      {
-        owner: user.id, //insertParams
-        name: "some name",
-        description: "text",
-      }
-    );
-  };
-
-  //   const arr = [];
-  //   tags.forEach((tag) => {
-  //     arr.push({ name: tag });
-  //   });
-  //   console.log(arr);
-  //   upsert("tags", arr);
-  // }
-
-  const uploadToStorage = (imageData, subFolder, photoName) => {
-    fetch(imageData)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const file = new File([blob], "File name", { type: "image/png" });
-        const path = `${subFolder}/${user.id}-${Date.now()}-${photoName}.png`;
-        supaClient.storage
-          .from("images")
-          .upload(path, file)
-          .then((result) => {
-            if (result.error) {
-              console.log(result.error);
-            }
-          });
-      });
-  };
-
-  const readiedFiles = (photoData, annotationData) => {
-    if (user) {
-      // console.log(session);
-      uploadToStorage(photoData, "photos", "photo");
-      uploadToStorage(annotationData, "drawings", "drawing");
-      insertImage();
-      // insertTags();
-    } else {
-      console.log("session not established yet");
-    }
-  };
-
-  const postData = () => {
-    console.log(tagStates, userTags, memory);
-    setPublished(!published);
-  };
-
-  if (published) {
+  if (uploadState.published) {
     return (
       <div>
         <Typography> Success!</Typography>
+
+        {/* TODO: Integrate image loading.
         <div className="returnImgContainer">
           <img src={src} alt="" className="returnImg" />
-        </div>
+        </div> */}
         <Stack spacing={2} direction="column" className="submitStack">
           <Button variant="contained" className="submitButton">
             Back to Home
@@ -140,6 +51,17 @@ export default function UploadForm() {
             Go to the Gallery
           </Button>
         </Stack>
+      </div>
+    );
+  } else if (
+    uploadState.dataFetchInProgress ||
+    uploadState.submissionInProgress
+  ) {
+    return (
+      <div className="mainContainer">
+        <ThemeProvider theme={theme}>
+          <CircularProgress />
+        </ThemeProvider>
       </div>
     );
   } else {
@@ -152,12 +74,8 @@ export default function UploadForm() {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextForm
-                tagStates={tagStates}
-                setTagStates={setTagStates}
-                userTags={userTags}
-                setUserTags={setUserTags}
-                memory={memory}
-                onMemoryChange={onMemoryChange}
+                memoryState={memoryState}
+                setMemoryState={setMemoryState}
               />
             </Grid>
           </Grid>
@@ -168,16 +86,14 @@ export default function UploadForm() {
             <Button
               variant="contained"
               className="submitButton"
-              onClick={postData}
+              onClick={submitData}
             >
               Submit
             </Button>
-            <ThemeProvider theme={theme}>
-              {progress && <CircularProgress />}
-            </ThemeProvider>
           </Stack>
         </div>
       </div>
     );
   }
-}
+};
+export default UploadForm;

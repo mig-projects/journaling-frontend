@@ -34,13 +34,13 @@
   background-color: #e6dac8;
   margin-top: 10px;
   margin-right: 10px;
-}
 
-.avatarStyle.MuiAvatar-root {
-  background-color: #b272ce;
-  color: white;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  .avatarStyle.MuiAvatar-root {
+    background-color: #b272ce;
+    color: white;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
 }
 
 .suggestedChipStyle.MuiChip-root {

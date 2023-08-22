@@ -3,9 +3,9 @@ import { supaClient } from "../services/supabase";
 
 export const AuthContext = createContext();
 
-export function useAuth() {
+export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
 
 export const AuthProvider = ({ children }) => {
   const [authSession, setAuthSession] = useState(null);
