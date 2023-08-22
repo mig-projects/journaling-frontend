@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import CanvasII from "./CanvasII";
-import TextForm from "./TextForm";
+import CanvasII from "./components/CanvasII";
+import TextForm from "./components/TextForm/TextForm";
 import "./UploadForm.css";
 
 // NEW:
