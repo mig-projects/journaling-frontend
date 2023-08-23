@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router-dom";
@@ -20,9 +20,7 @@ export default function Login() {
   if (loading) {
     return <div>Loading...</div>;
   } else if (!user) {
-    return (
-      <Auth supabaseClient={supaClient} providers={["google", "facebook"]} />
-    );
+    return <Auth supabaseClient={supaClient} providers={[]} />;
   } else {
     return <div>Logged in!</div>;
   }
