@@ -21,10 +21,10 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
 
   // Removing a user tag from the list, and corresponding highlight in the text.
   const removeUserTag = (deletedWord) => {
-    setMemoryState({
-      ...memoryState,
-      userTags: [...memoryState.userTags.filter((word) => word != deletedWord)],
-    });
+    setMemoryState((prevState) => ({
+      ...prevState,
+      userTags: [...prevState.userTags.filter((word) => word != deletedWord)],
+    }));
     setHighlights([
       ...highlights.filter((highlight) => highlight.word != deletedWord),
     ]);
@@ -32,19 +32,19 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
 
   // Changing `selected` state of an individual tag.
   const toggleTag = (tagId) => {
-    setMemoryState({
-      ...memoryState,
-      tagStates: memoryState.tagStates.map((tag) =>
+    setMemoryState((prevState) => ({
+      ...prevState,
+      tagStates: prevState.tagStates.map((tag) =>
         tag.id === tagId ? { ...tag, selected: !tag.selected } : tag
       ),
-    });
+    }));
   };
 
   const selectionHandler = (selected, startIndex, numChars) => {
-    setMemoryState({
-      ...memoryState,
-      userTags: [...memoryState.userTags, selected],
-    });
+    setMemoryState((prevState) => ({
+      ...prevState,
+      userTags: [...prevState.userTags, selected],
+    }));
     setHighlights([
       ...highlights,
       { word: selected, startIndex: startIndex, numChars: numChars },
@@ -56,7 +56,10 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
   }, []);
 
   const onMemoryChange = useCallback((event) => {
-    setMemoryState({ ...memoryState, textMemory: event.target.value });
+    setMemoryState((prevState) => ({
+      ...prevState,
+      textMemory: event.target.value,
+    }));
   }, []);
 
   return (

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import CanvasII from "./components/CanvasII";
+import React from "react";
+import CanvasII from "./components/Canvas/CanvasII";
 import TextForm from "./components/TextForm/TextForm";
 import "./UploadForm.css";
 
@@ -17,13 +17,15 @@ import { useUploadForm } from "./hooks";
 
 const UploadForm = () => {
   const {
-    trigger,
-    memoryState,
-    setTrigger,
+    // Manage state of the upload form
     uploadState,
+    // Manage state of the memory
+    memoryState,
     setMemoryState,
+    // Manage state of the canvas
+    setCanvasState,
+    // data submit handler
     submitData,
-    readiedFiles,
   } = useUploadForm();
 
   const theme = useTheme({
@@ -70,7 +72,7 @@ const UploadForm = () => {
         <div>
           <Grid container spacing={9}>
             <Grid item xs={12} md={6}>
-              <CanvasII trigger={trigger} imgFiles={readiedFiles} />
+              <CanvasII setCanvasState={setCanvasState} />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextForm
