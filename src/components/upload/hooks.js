@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router";
 import { supaClient } from "../../services/supabase";
@@ -96,8 +96,8 @@ export const useUploadForm = () => {
     }
   };
 
-  const uploadAndInsertImage = async (userId, memoryKey, imgData, imgDir) => {
-    fetch(imgData)
+  const uploadAndInsertImage = async (userId, memoryKey, imgCanvas, imgDir) => {
+    fetch(imgCanvas)
       .then((res) => res.blob())
       .then(async (blob) => {
         const file = new File([blob], "File name", { type: "image/png" });
@@ -130,26 +130,7 @@ export const useUploadForm = () => {
               insertImage(userId, memoryKey, path);
             }
           });
-      });
-  };
-
-  const addCanvasEntry = async (userId, canvasState, memoryKey) => {
-    try {
-      await Promise.all([
-        uploadAndInsertImage(userId, memoryKey, canvasState.photo, "photos"),
-        uploadAndInsertImage(
-          userId,
-          memoryKey,
-          canvasState.drawing,
-          "drawings"
-        ),
-      ]);
-    } catch (error) {
-      console.error(
-        "An error occurred during image upload and insertion:",
-        error
-      );
-    }
+      }, "image/png");
   };
 
   // addEntry writes the memory and its associated tags in Supabase.
@@ -168,6 +149,7 @@ export const useUploadForm = () => {
 
   const addEntry = async (userId, memoryState, canvasState) => {
     const { textMemory, tagStates, userTags } = memoryState;
+    const { photo, drawing } = canvasState;
 
     if (user) {
       // create memory
@@ -225,7 +207,19 @@ export const useUploadForm = () => {
         );
       }
 
-      await addCanvasEntry(userId, canvasState, memoryKey);
+      try {
+        await Promise.all([
+          uploadAndInsertImage(userId, memoryKey, photo, "photos"),
+          uploadAndInsertImage(userId, memoryKey, drawing, "drawings"),
+        ]);
+      } catch (error) {
+        throw new UploadError(
+          "An error occurred during image upload and insertion:",
+          "uploadAndInsertImage",
+          { photo, drawing, memoryKey },
+          error
+        );
+      }
     }
 
     return true;
