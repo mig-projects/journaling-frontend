@@ -17,7 +17,12 @@
 
     .submitButton {
       background-color: #b272ce;
+      color: white;
       border-radius: 15px;
+    }
+
+    .submitButton.Mui-disabled {
+      opacity: 0.4;
     }
   }
 }

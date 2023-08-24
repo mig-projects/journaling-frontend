@@ -151,7 +151,7 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
                 variant="contained"
                 className="textFieldStyle"
                 onClick={enableHighlighter}
-                disabled={memoryState.textMemory === null}
+                disabled={memoryState.textMemory === ""}
                 label="Highlight the text"
               />
             </div>

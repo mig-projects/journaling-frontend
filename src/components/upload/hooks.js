@@ -231,6 +231,20 @@ export const useUploadForm = () => {
     }
   }, [user.id, memoryState, canvasState]);
 
+  // Make sure data contains all the required fields before enabling submit.
+  const validateData = useCallback(() => {
+    if (memoryState.textMemory === "") {
+      return false;
+    }
+    if (memoryState.userTags.length === 0) {
+      return false;
+    }
+    if (!memoryState.tagStates.any((tag) => tag.selected)) {
+      return false;
+    }
+    return true;
+  }, [memoryState]);
+
   return {
     memoryState,
     uploadState,
@@ -238,5 +252,6 @@ export const useUploadForm = () => {
     setCanvasState,
     setUploadState,
     submitData,
+    validateData,
   };
 };

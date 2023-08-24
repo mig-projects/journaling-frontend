@@ -26,6 +26,7 @@ const UploadForm = () => {
     setCanvasState,
     // data submit handler
     submitData,
+    validateData,
   } = useUploadForm();
 
   const theme = useTheme({
@@ -89,6 +90,7 @@ const UploadForm = () => {
               variant="contained"
               className="submitButton"
               onClick={submitData}
+              disabled={!validateData}
             >
               Submit
             </Button>
