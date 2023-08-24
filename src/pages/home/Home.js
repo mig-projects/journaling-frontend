@@ -12,6 +12,7 @@ import Popover from "@mui/material/Popover";
 
 import "./Home.css";
 import { useAuth } from "../../contexts/auth";
+import Chart from "../../features/dashboard/components/Chart/Chart";
 
 export default function Home() {
   const [discoveryMode, setDiscoveryMode] = React.useState(false);
@@ -51,8 +52,7 @@ export default function Home() {
     return <UploadForm />;
   } else {
     if (discoveryMode) {
-      return null;
-      //<Gallery />
+      return <Chart />;
     } else {
       return (
         <div className="mainContainer">
