@@ -76,22 +76,21 @@ export const useUploadForm = () => {
     fetchSuggestedTags();
   }, []);
 
-  const insertImage = async (userId, memoryKey, imagePath) => {
-    const { error: imageError } = await supaClient.from("user_images").insert({
-      user_id: userId,
-      memory_id: memoryKey,
-      img_path: imagePath,
-    });
-    if (imageError) {
+  // Frame supabase call with error handling
+  const writeOrThrowError = async (table, operation, data) => {
+    let error;
+    if (operation === "insert") {
+      ({ error } = await supaClient.from(table).insert(data));
+    } else if (operation === "upload") {
+      const { path, file } = data;
+      ({ error } = await supaClient.from(table).upload(path, file));
+    }
+    if (error) {
       throw new UploadError(
-        "Error inserting image reference",
-        "insertImage",
-        {
-          userId,
-          memoryKey,
-          imagePath,
-        },
-        imageError
+        `Error during ${operation} operation on table ${table}`,
+        operation,
+        data,
+        error
       );
     }
   };
@@ -113,24 +112,21 @@ export const useUploadForm = () => {
           ".png"
         );
 
-        const result = await supaClient.storage
-          .from("images")
-          .upload(path, file)
-          .then((result) => {
-            if (result.error) {
-              throw new UploadError(
-                `Error uploading image: ${result.error}`,
-                "uploadImage",
-                {
-                  path,
-                  memoryKey,
-                }
-              );
-            } else {
-              insertImage(userId, memoryKey, path);
-            }
-          });
-      }, "image/png");
+        await writeOrThrowError("upload", "images", { path: path, file: file });
+        await writeOrThrowError("insert", "user_images", {
+          user_id: userId,
+          memory_id: memoryKey,
+          img_path: path,
+        });
+      }, "image/png")
+      .catch((error) => {
+        throw new UploadError(
+          `Error during conversion to blob`,
+          "CanvasUpload",
+          { imgCanvas, imgDir },
+          error
+        );
+      });
   };
 
   // addEntry writes the memory and its associated tags in Supabase.
@@ -174,18 +170,7 @@ export const useUploadForm = () => {
         memory_id: memoryKey,
         tag_name: tagName,
       }));
-      let { error: tagError } = await supaClient
-        .from("user_tags")
-        .insert(newUserTags);
-
-      if (tagError) {
-        throw new UploadError(
-          "Error inserting user tag",
-          "insertUserTag",
-          { newUserTags },
-          tagError
-        );
-      }
+      await writeOrThrowError("insert", "user_tags", newUserTags);
 
       // associate entry with suggested tags
       let selectedTags = tagStates
@@ -194,32 +179,19 @@ export const useUploadForm = () => {
           suggested_tag_id: tag.id,
           text_memory_id: memoryKey,
         }));
-      let { error } = await supaClient
-        .from("suggested_tag_memories")
-        .insert(selectedTags);
+      await writeOrThrowError("insert", "suggested_tag_memories", selectedTags);
 
-      if (error) {
-        throw new UploadError(
-          "Error associating entry with suggested tag",
-          "associateEntryWithSuggestedTag",
-          { selectedTags },
-          error
-        );
-      }
-
-      try {
-        await Promise.all([
-          uploadAndInsertImage(userId, memoryKey, photo, "photos"),
-          uploadAndInsertImage(userId, memoryKey, drawing, "drawings"),
-        ]);
-      } catch (error) {
+      await Promise.all([
+        uploadAndInsertImage(userId, memoryKey, photo, "photos"),
+        uploadAndInsertImage(userId, memoryKey, drawing, "drawings"),
+      ]).catch((error) => {
         throw new UploadError(
           "An error occurred during image upload and insertion:",
           "uploadAndInsertImage",
           { photo, drawing, memoryKey },
           error
         );
-      }
+      });
     }
 
     return true;
