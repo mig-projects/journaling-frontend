@@ -1,10 +1,8 @@
 import React from "react";
 
-import UploadForm from "../features/upload/UploadForm";
-// import Gallery from "../components/discovery/Gallery";
-
-import upload from "../pics/upload.png";
-import discovery from "../pics/discovery.png";
+import UploadForm from "../../features/upload/UploadForm";
+import upload from "../../pics/upload.png";
+import discovery from "../../pics/discovery.png";
 
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -13,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
 
 import "./Home.css";
-import { useAuth } from "../contexts/auth";
+import { useAuth } from "../../contexts/auth";
 
 export default function Home() {
   const [discoveryMode, setDiscoveryMode] = React.useState(false);
