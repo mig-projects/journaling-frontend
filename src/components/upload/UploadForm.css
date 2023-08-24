@@ -27,6 +27,11 @@
   }
 }
 
+.successMessage {
+  padding: 5% 33%;
+  text-align: center;
+}
+
 .returnImgContainer {
   display: flex;
   justify-content: center;

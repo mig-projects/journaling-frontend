@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
@@ -6,6 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { InteractiveHighlighter } from "react-interactive-highlighter";
 import "./TextForm.css";
+import useTextForm from "./hooks";
 
 const theme = createTheme({
   palette: {
@@ -16,58 +17,28 @@ const theme = createTheme({
 });
 
 export const TextForm = ({ memoryState, setMemoryState }) => {
-  const [highlighter, setHighlighter] = React.useState(false);
-  const [highlights, setHighlights] = React.useState([]);
-
-  // Removing a user tag from the list, and corresponding highlight in the text.
-  const removeUserTag = (deletedWord) => {
-    setMemoryState((prevState) => ({
-      ...prevState,
-      userTags: [...prevState.userTags.filter((word) => word != deletedWord)],
-    }));
-    setHighlights([
-      ...highlights.filter((highlight) => highlight.word != deletedWord),
-    ]);
-  };
-
-  // Changing `selected` state of an individual tag.
-  const toggleTag = (tagId) => {
-    setMemoryState((prevState) => ({
-      ...prevState,
-      tagStates: prevState.tagStates.map((tag) =>
-        tag.id === tagId ? { ...tag, selected: !tag.selected } : tag
-      ),
-    }));
-  };
-
-  const selectionHandler = (selected, startIndex, numChars) => {
-    setMemoryState((prevState) => ({
-      ...prevState,
-      userTags: [...prevState.userTags, selected],
-    }));
-    setHighlights([
-      ...highlights,
-      { word: selected, startIndex: startIndex, numChars: numChars },
-    ]);
-  };
-
-  const enableHighlighter = useCallback(() => {
-    setHighlighter(true);
-  }, []);
-
-  const onMemoryChange = useCallback((event) => {
-    setMemoryState((prevState) => ({
-      ...prevState,
-      textMemory: event.target.value,
-    }));
-  }, []);
+  const {
+    highlighter,
+    highlights,
+    selectionHandler,
+    removeTag,
+    toggleTag,
+    onMemoryChange,
+    enableHighlighter,
+    tagInput,
+    onTagInputChange,
+    onKeyDown,
+  } = useTextForm({ memoryState, setMemoryState });
 
   return (
     <div>
       <div>
         {highlighter ? (
           <div>
-            <Typography>Highlight the words with your cursor.</Typography>
+            <Typography>
+              Highlight the words with your cursor.
+              <span className="textMandatory">*</span>
+            </Typography>
             <div className="highlighterContainer">
               <InteractiveHighlighter
                 text={memoryState.textMemory}
@@ -87,7 +58,21 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
                   className="tagsChip userChipStyle"
                   key={`user-tag-${index}`}
                   label={word}
-                  onDelete={() => removeUserTag(word)}
+                  onDelete={() => removeTag(word, "user")}
+                  variant="filled"
+                />
+              ))}
+              {memoryState.communityTags.map((word, index) => (
+                <Chip
+                  avatar={
+                    <Avatar className="avatarStyle">
+                      <b>#</b>
+                    </Avatar>
+                  }
+                  className="tagsChip communityChipStyle"
+                  key={`community-tag-${index}`}
+                  label={word}
+                  onDelete={() => removeTag(word, "community")}
                   variant="filled"
                 />
               ))}
@@ -101,9 +86,9 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
                         </Avatar>
                       }
                       key={`selected-tag-${index}`}
-                      className="tagsChip userChipStyle"
+                      className="tagsChip selectedChipStyle"
                       label={tag.name}
-                      onDelete={() => toggleTag(tag.id)}
+                      onDelete={() => removeTag(tag.id, "selected")}
                       variant="filled"
                     />
                   )
@@ -112,7 +97,24 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
             <br />
             <br />
             <Typography className="tagContainer">
+              Which communities is this experience most relevant to?
+              <span className="textMandatory">*</span>
+            </Typography>
+            <TextField
+              id="tag-input"
+              label="Enter community tags"
+              variant="filled"
+              margin="normal"
+              fullWidth="true"
+              value={tagInput} // this state will be added in the next step
+              onChange={onTagInputChange} // this handler will be added in the next step
+              onKeyDown={onKeyDown} // for adding tags on pressing 'Enter'
+            />
+            <br />
+            <br />
+            <Typography className="tagContainer">
               Are any of these themes related to your memory? Click and add.
+              <span className="textMandatory">*</span>
             </Typography>
             <div className="tagContainer">
               {memoryState.tagStates.map(
@@ -132,7 +134,7 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
         ) : (
           <div>
             <Typography>
-              Write about your memory. Then, highlight the important words.
+              Write about your memory.<span className="textMandatory">*</span>
             </Typography>
             <ThemeProvider theme={theme}>
               <TextField

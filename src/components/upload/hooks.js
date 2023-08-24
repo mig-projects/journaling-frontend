@@ -10,6 +10,7 @@ export const useUploadForm = () => {
   const [memoryState, setMemoryState] = useState({
     tagStates: [],
     userTags: [],
+    communityTags: [],
     textMemory: "",
   });
 
@@ -144,7 +145,7 @@ export const useUploadForm = () => {
   }
 
   const addEntry = async (userId, memoryState, canvasState) => {
-    const { textMemory, tagStates, userTags } = memoryState;
+    const { textMemory, tagStates, userTags, communityTags } = memoryState;
     const { photo, drawing } = canvasState;
 
     if (user) {
@@ -166,10 +167,21 @@ export const useUploadForm = () => {
       const memoryKey = memory[0].id;
 
       // insert user tags
-      const newUserTags = userTags.map((tagName) => ({
-        memory_id: memoryKey,
-        tag_name: tagName,
-      }));
+      const newUserTags = userTags
+        .map((tagName) => ({
+          memory_id: memoryKey,
+          user_id: userId,
+          tag_name: tagName,
+          category: "highlight",
+        }))
+        .concat(
+          communityTags.map((tagName) => ({
+            memory_id: memoryKey,
+            user_id: userId,
+            tag_name: tagName,
+            category: "community",
+          }))
+        );
       await writeOrThrowError("insert", "user_tags", newUserTags);
 
       // associate entry with suggested tags
@@ -239,7 +251,7 @@ export const useUploadForm = () => {
     if (memoryState.userTags.length === 0) {
       return false;
     }
-    if (!memoryState.tagStates.any((tag) => tag.selected)) {
+    if (!memoryState.tagStates.some((tag) => tag.selected)) {
       return false;
     }
     return true;

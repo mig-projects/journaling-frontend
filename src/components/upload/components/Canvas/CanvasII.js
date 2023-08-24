@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import RubberIcon from "../../../../pics/RubberIcon.jpg";
 import Palette from "./Palette";
-import FileInput from "./FileInput";
+import FileInput from "../FileInput/FileInput";
 
 const transparencyStops = [
   { value: 10, hexValue: "1A" },

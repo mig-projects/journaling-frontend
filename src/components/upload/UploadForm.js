@@ -39,21 +39,23 @@ const UploadForm = () => {
 
   if (uploadState.published) {
     return (
-      <div>
+      <div className="successMessage">
         <Typography> Success!</Typography>
-
+        <Button href="/" variant="contained" className="homeButton">
+          Back to Home
+        </Button>
         {/* TODO: Integrate image loading.
         <div className="returnImgContainer">
           <img src={src} alt="" className="returnImg" />
         </div> */}
-        <Stack spacing={2} direction="column" className="submitStack">
-          <Button variant="contained" className="submitButton">
+        {/* <Stack spacing={2} direction="column" className="submitStack">
+          <Button variant="contained" className="homeButton">
             Back to Home
           </Button>
-          <Button variant="contained" className="submitButton">
+          <Button variant="contained">
             Go to the Gallery
           </Button>
-        </Stack>
+        </Stack> */}
       </div>
     );
   } else if (
@@ -68,6 +70,7 @@ const UploadForm = () => {
       </div>
     );
   } else {
+    console.log("Validate: ", validateData());
     return (
       <div className="mainContainer">
         <div>
@@ -90,7 +93,7 @@ const UploadForm = () => {
               variant="contained"
               className="submitButton"
               onClick={submitData}
-              disabled={!validateData}
+              disabled={!validateData()}
             >
               Submit
             </Button>

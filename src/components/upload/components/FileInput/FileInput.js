@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import upload from "../../../../pics/upload.png";
 import Typography from "@mui/material/Typography";
+import "./FileInput.css";
 
 const style1 = {
   width: "200px",
@@ -13,7 +14,7 @@ const style1 = {
   backgroundSize: "cover",
 };
 
-export default function FileInput({ src, setSrc }) {
+const FileInput = ({ src, setSrc }) => {
   const fileInput = useRef(null);
 
   const handleImageSelection = (event) => {
@@ -31,7 +32,10 @@ export default function FileInput({ src, setSrc }) {
 
   return (
     <div>
-      <Typography>Upload a photo of a memory.</Typography>
+      <Typography>
+        Upload a photo of a memory.{" "}
+        <span className="textOptional">(optional)</span>
+      </Typography>
       <div className="imageInput" onClick={openFileInput} style={style1}>
         <img
           style={{ height: "100%" }}
@@ -52,4 +56,5 @@ export default function FileInput({ src, setSrc }) {
       </div>
     </div>
   );
-}
+};
+export default FileInput;
