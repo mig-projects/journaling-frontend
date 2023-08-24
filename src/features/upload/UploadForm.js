@@ -13,7 +13,7 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import { useUploadForm } from "./hooks";
+import { useUploadForm } from "./useUploadForm";
 
 const UploadForm = () => {
   const {

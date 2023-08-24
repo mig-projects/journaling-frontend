@@ -1,6 +1,6 @@
 import React from "react";
 
-import UploadForm from "../components/upload/UploadForm";
+import UploadForm from "../features/upload/UploadForm";
 // import Gallery from "../components/discovery/Gallery";
 
 import upload from "../pics/upload.png";

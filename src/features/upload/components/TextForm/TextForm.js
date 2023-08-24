@@ -6,7 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { InteractiveHighlighter } from "react-interactive-highlighter";
 import "./TextForm.css";
-import useTextForm from "./hooks";
+import useTextForm from "./useTextForm";
 
 const theme = createTheme({
   palette: {
