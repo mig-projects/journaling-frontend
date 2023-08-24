@@ -4,7 +4,10 @@ import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router-dom";
 import { supaClient } from "../../services/supabase";
 
-export default function Login() {
+import { CircularProgress } from "@mui/material";
+import "./Login.css";
+
+const Login = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -17,11 +20,18 @@ export default function Login() {
     }
   }, [user]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  } else if (!user) {
-    return <Auth supabaseClient={supaClient} providers={[]} />;
-  } else {
-    return <div>Logged in!</div>;
-  }
-}
+  return (
+    <div className="loginContainer">
+      {loading && <CircularProgress />}
+      {!user && (
+        <Auth
+          supabaseClient={supaClient}
+          providers={[]}
+          className="loginForm"
+        />
+      )}
+      {user && <span>You're logged in!</span>}
+    </div>
+  );
+};
+export default Login;

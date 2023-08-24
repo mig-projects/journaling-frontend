@@ -160,16 +160,15 @@ export default function Home() {
 
           <div className="footerContainer">
             <Stack spacing={2} direction="column" className="footerGrid">
+              <Button variant="contained" className="newsletterButton">
+                Sign Up For Our Newsletter!
+              </Button>
+
               {user && (
-                <Button variant="contained" className="newsletterButton">
-                  {" "}
-                  Sign Up For Our Newsletter!{" "}
+                <Button variant="contained" className="githubSignup">
+                  Join Our Open Source Community!
                 </Button>
               )}
-              <Button variant="contained" className="githubSignup">
-                {" "}
-                Join Our Open Source Community!{" "}
-              </Button>
             </Stack>
           </div>
         </div>
