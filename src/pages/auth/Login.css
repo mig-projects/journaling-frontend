@@ -1,5 +1,4 @@
-.auth-ui {
-    display: flex;
-    justify-content: center;
-    height: 100%
+.loginContainer {
+  padding: 5% 33%;
+  text-align: center;
 }

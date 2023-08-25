@@ -2,6 +2,10 @@
   background-color: #7438E2;
 }
 
+.textMandatory {
+  color: #b272ce;
+}
+
 .HighlightChipContainer {
   display: flex;
   justify-content: center;
@@ -27,7 +31,7 @@
   margin-top: 10px;
 }
 
-.userChipStyle.MuiChip-root {
+.tagsChip.MuiChip-root {
   font-size: 16px;
   color: #7438E2;
   border: 2px solid #7438E2;

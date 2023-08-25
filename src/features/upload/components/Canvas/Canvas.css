@@ -1,0 +1,77 @@
+.canvas {
+  border: 2px solid #d1c6b6;
+  border-radius: 5px;
+  z-index: 1;
+  position: absolute;
+}
+
+.canvasDiv {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.canvasDivTwo {
+  z-index: 2;
+}
+
+.brushSizeButtons {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0px 5px 0px;
+}
+
+.brushSize {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 17px;
+  margin: 10px;
+  width: 140px;
+}
+
+.brushSizeText {
+  color: #b272ce;
+  text-align: center;
+}
+
+.paletteDiv {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.opacityDiv {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 15px 20px 0px 20px;
+  border-radius: 17px;
+  margin: 10px;
+  width: 140px;
+  height: 90px;
+  text-align: center;
+}
+
+.opacity {
+  color: #b272ce;
+}
+
+.eraseAndUndo {
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  color: #b272ce;
+  padding: 25px 10px 25px 10px;
+  margin: 10px;
+}
+
+.slider {
+  padding: 5px 0px 5px 0px;
+}
+
+.columnTwo {
+  display: flex;
+  justify-content: center;
+}
+
+.columnThree {
+  display: flex;
+  justify-content: center;
+}

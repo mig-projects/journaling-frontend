@@ -17,9 +17,19 @@
 
     .submitButton {
       background-color: #b272ce;
+      color: white;
       border-radius: 15px;
     }
+
+    .submitButton.Mui-disabled {
+      opacity: 0.4;
+    }
   }
+}
+
+.successMessage {
+  padding: 5% 33%;
+  text-align: center;
 }
 
 .returnImgContainer {

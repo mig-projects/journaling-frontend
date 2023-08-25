@@ -1,11 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router-dom";
 import { supaClient } from "../../services/supabase";
+
+import { CircularProgress } from "@mui/material";
 import "./Login.css";
 
-export default function Login() {
+const Login = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -18,15 +20,18 @@ export default function Login() {
     }
   }, [user]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  } else if (!user) {
-    return (
-      <div className="auth-ui">
-        <Auth supabaseClient={supaClient} providers={["google", "facebook"]} />
-      </div>
-    );
-  } else {
-    return <div>Logged in!</div>;
-  }
-}
+  return (
+    <div className="loginContainer">
+      {loading && <CircularProgress />}
+      {!user && (
+        <Auth
+          supabaseClient={supaClient}
+          providers={[]}
+          className="loginForm"
+        />
+      )}
+      {user && <span>You're logged in!</span>}
+    </div>
+  );
+};
+export default Login;
