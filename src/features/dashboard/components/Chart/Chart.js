@@ -15,7 +15,7 @@ const Chart = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate("/");
+      navigate("login/");
     }
   }, [user]);
 
