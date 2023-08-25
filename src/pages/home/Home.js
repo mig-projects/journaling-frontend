@@ -2,9 +2,9 @@ import React from "react";
 
 import UploadForm from "../../features/upload/UploadForm";
 
-import upload from "../pics/upload-white.png";
-import discovery from "../pics/discovery-white.png";
-import findhrPic from "../pics/FINDHR.png";
+import upload from "../../pics/upload-white.png";
+import discovery from "../../pics/discovery-white.png";
+import findhrPic from "../../pics/FINDHR.png";
 
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -66,6 +66,7 @@ export default function Home() {
             <img src={findhrPic} alt="findhr-logo" className="coverImg" />
           </div>
           <div className="mainBox">
+
             <Typography variant="h7" className="introText">
               Welcome to <span className="bold">MIGR-AI-TION's Research App</span>.
               We're investigating connections between organizational and hiring AI
@@ -174,7 +175,7 @@ export default function Home() {
 
 
               {user && (
-                <Chip variant="contained" className="githubSignupButton" label="Join Our Open-source Community !" icon={<MailOutlineIcon className="gitHubSignUpIcon" />} />
+                <Chip variant="contained" className="githubSignupButton" label="Join Our Open-source Community !" icon={<LanguageIcon className="gitHubSignUpIcon" />} />
               )}
             </Stack>
           </div>
