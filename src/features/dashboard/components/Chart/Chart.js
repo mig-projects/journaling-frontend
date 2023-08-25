@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ReactEcharts from "echarts-for-react";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useAuth } from "../../../../contexts/auth";
 import { useApi } from "../../../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
+import { mockGraph } from "../../mockGraph";
+import "./Chart.css";
+
+const MOCK = true;
 
 const Chart = () => {
   const [graph, setGraph] = useState({ nodes: [], links: [] });
@@ -34,7 +38,7 @@ const Chart = () => {
 
     return Object.keys(nodeCounts).map((id) => ({
       id,
-      size: nodeCounts[id],
+      value: nodeCounts[id],
       name: tags.find((tag) => tag.id === id).name || "Unknown",
     }));
   };
@@ -68,6 +72,31 @@ const Chart = () => {
     }));
   };
 
+  // Log-transform and project to desired min-max interval
+  const transformNodes = (nodes, min = 5, max = 50) => {
+    const logNodes = nodes.map((node) => ({
+      ...node,
+      logSize: Math.log10(node.value + 1),
+    }));
+
+    const maxLogSize = Math.max(...logNodes.map((node) => node.logSize));
+    const minLogSize = Math.min(...logNodes.map((node) => node.logSize));
+
+    const normalizedNodes = logNodes.map((node) => ({
+      id: node.id,
+      name: node.name,
+      value: node.value,
+      size:
+        ((node.logSize - minLogSize) / (maxLogSize - minLogSize)) *
+          (max - min) +
+        min,
+      tags: node.tags,
+    }));
+    console.log(normalizedNodes);
+
+    return normalizedNodes;
+  };
+
   useEffect(() => {
     const initializeGraph = async () => {
       setLoading(true);
@@ -81,15 +110,36 @@ const Chart = () => {
       setLoading(false);
       console.log(graph);
     };
-    initializeGraph();
+    if (MOCK) {
+      setGraph(mockGraph);
+    } else {
+      initializeGraph();
+    }
+    setGraph((prevState) => ({
+      ...prevState,
+      nodes: transformNodes(prevState.nodes),
+    }));
   }, []);
 
   if (loading) {
     <CircularProgress />;
   } else {
     let option = {
+      backgroundColor: "rgba(171, 136, 191, 0.4)",
       tooltip: {
-        alwaysShowContent: true,
+        triggerOn: "click",
+        formatter: (params) => {
+          if (params.dataType === "node") {
+            const node = graph.nodes.find((n) => n.id === params.data.id);
+            const tags = node.tags
+              ? node.tags.join("</li><li>")
+              : "No tags available";
+            return `Category: ${node.name}<br>User tags: <ul><li>${tags}</li></ul>`;
+          }
+        },
+      },
+      legend: {
+        data: graph.nodes.value,
       },
       series: [
         {
@@ -97,29 +147,36 @@ const Chart = () => {
           layout: "force",
           data: graph.nodes.map((n) => ({
             ...n,
-            symbolSize: n.size * 10,
-            name: n.name,
+            symbolSize: n.size,
             itemStyle: { color: getRandomColor() },
           })),
           links: graph.links.map((l) => ({
             ...l,
-            lineStyle: { color: "#24e1ea" },
+            value: l.value * 10,
+            lineStyle: { color: "#24e1ea", curveness: 0.1 },
+            label: { show: false },
           })),
           roam: true,
           label: {
             position: "right",
           },
           force: {
-            repulsion: 100,
+            repulsion: 500,
+            edgeLength: [5, 50],
+            gravity: 0.1,
           },
         },
       ],
     };
     return (
-      <ReactEcharts
-        style={{ width: "100%", height: "100vh" }}
-        option={option}
-      />
+      <div className="chartContainer">
+        <Typography>Intro Paragraph</Typography>
+        <ReactEcharts
+          style={{ width: "100%", height: "100vh" }}
+          option={option}
+          className="chartDiv"
+        />
+      </div>
     );
   }
 };
