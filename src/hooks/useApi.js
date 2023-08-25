@@ -12,13 +12,13 @@ export class UploadError extends Error {
 
 export const useApi = ({ user }) => {
   // Frame supabase call with error handling
-  const writeOrThrowError = async (table, operation, data) => {
+  const writeOrThrowError = async (operation, table, data) => {
     let error;
     if (operation === "insert") {
       ({ error } = await supaClient.from(table).insert(data));
     } else if (operation === "upload") {
       const { path, file } = data;
-      ({ error } = await supaClient.from(table).upload(path, file));
+      ({ error } = await supaClient.storage.from(table).upload(path, file));
     }
     if (error) {
       throw new UploadError(
@@ -44,38 +44,42 @@ export const useApi = ({ user }) => {
     return data;
   };
 
-  const uploadAndInsertImage = async (userId, memoryKey, imgCanvas, imgDir) => {
-    fetch(imgCanvas)
-      .then((res) => res.blob())
-      .then(async (blob) => {
-        const file = new File([blob], "File name", { type: "image/png" });
+  const uploadAndInsertImage = async (userId, memoryKey, imgData, imgDir) => {
+    try {
+      console.log(imgData);
+      const result = await fetch(imgData);
+      const blob = await result.blob();
+      const file = new File([blob], "File name", { type: "image/png" });
 
-        const date = new Date();
-        const path = imgDir.concat(
-          "/",
-          ["photos", "drawings"].includes(imgDir) ? imgDir.slice(0, -1) : "img", // either "photo", "drawing" or default "img"
-          "-",
-          date.toISOString().slice(0, 10), // YYYY-MM-DD
-          "-",
-          memoryKey,
-          ".png"
-        );
+      const date = new Date();
+      const path = imgDir.concat(
+        "/",
+        ["photos", "drawings"].includes(imgDir) ? imgDir.slice(0, -1) : "img", // either "photo", "drawing" or default "img"
+        "-",
+        date.toISOString().slice(0, 10), // YYYY-MM-DD
+        "-",
+        memoryKey,
+        ".png"
+      );
 
-        await writeOrThrowError("upload", "images", { path: path, file: file });
-        await writeOrThrowError("insert", "user_images", {
-          user_id: userId,
-          memory_id: memoryKey,
-          img_path: path,
-        });
-      }, "image/png")
-      .catch((error) => {
+      await writeOrThrowError("upload", "images", { path: path, file: file });
+      await writeOrThrowError("insert", "user_images", {
+        user_id: userId,
+        memory_id: memoryKey,
+        img_path: path,
+      });
+    } catch (error) {
+      if (error instanceof UploadError) {
+        throw error;
+      } else {
         throw new UploadError(
           `Error during conversion to blob`,
           "CanvasUpload",
-          { imgCanvas, imgDir },
+          { imgData, imgDir },
           error
         );
-      });
+      }
+    }
   };
 
   // addEntry writes the memory and its associated tags in Supabase.
