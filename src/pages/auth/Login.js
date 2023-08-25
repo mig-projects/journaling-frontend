@@ -3,6 +3,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router-dom";
 import { supaClient } from "../../services/supabase";
+import "./Login.css";
 
 export default function Login() {
   const { user, loading } = useAuth();
@@ -21,7 +22,9 @@ export default function Login() {
     return <div>Loading...</div>;
   } else if (!user) {
     return (
-      <Auth supabaseClient={supaClient} providers={["google", "facebook"]} />
+      <div className="auth-ui">
+        <Auth supabaseClient={supaClient} providers={["google", "facebook"]} />
+      </div>
     );
   } else {
     return <div>Logged in!</div>;

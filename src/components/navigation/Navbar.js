@@ -14,7 +14,7 @@ import {
 import { useAuth } from "../../contexts/auth";
 
 // import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import logo from "../../pics/logo.png";
+import logo from "../../pics/logo_purple.png";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -29,7 +29,7 @@ export default function Navbar() {
             <img src={logo} className="logo" alt="logo" />
             <span className="brand-name hide">
               {" "}
-              <b>MIGR - AI - TION</b>{" "}
+              MIGR-AI-TION{" "}
             </span>
           </MDBNavbarBrand>
 

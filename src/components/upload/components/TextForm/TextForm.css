@@ -1,5 +1,5 @@
 .highlighterColor {
-  background-color: #b272ce;
+  background-color: #7438E2;
 }
 
 .HighlightChipContainer {
@@ -11,7 +11,7 @@
 .textFieldStyle.MuiChip-root {
   background-color: rgba(255, 255, 255, 0.5);
   font-size: 16px;
-  color: #b272ce;
+  color: #7438E2;
   padding: 25px 10px;
   margin: 10px;
 }
@@ -29,14 +29,14 @@
 
 .userChipStyle.MuiChip-root {
   font-size: 16px;
-  color: #b272ce;
-  border: 2px solid #b272ce;
+  color: #7438E2;
+  border: 2px solid #7438E2;
   background-color: #e6dac8;
   margin-top: 10px;
   margin-right: 10px;
 
   .avatarStyle.MuiAvatar-root {
-    background-color: #b272ce;
+    background-color: #7438E2;
     color: white;
     padding-top: 3px;
     padding-bottom: 3px;

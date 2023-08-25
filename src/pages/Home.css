@@ -2,39 +2,103 @@
   .uploadIcon {
     width: 150px;
   }
+
   .discoveryIcon {
     width: 150px;
   }
+
   .homeIcon {
     width: 80px;
   }
+
   .solidarityIcon {
     width: 80px;
     padding-top: 10px;
   }
+
   .wellBeingIcon {
     width: 80px;
     padding-top: 10px;
+  }
+
+  .uploadPopOver,
+  .discoverPopoverText {
+    font-size: 50px !important;
   }
 }
 
 .mainContainer {
   margin: 50px;
 
-  .mainBox {
-    padding: 20px;
 
-    .introText {
-      font-size: 14px;
+  .coverPicDiv {
+    display: flex;
+    justify-content: center;
+
+    .coverImg {
+      display: flex;
+      min-width: 50px;
+      max-width: 600px;
     }
   }
 
+  .mainBox {
+
+    display: flex;
+    justify-content: center;
+    padding: 60px 30px 60px 30px;
+
+
+    .introText {
+      font-size: 14px;
+      max-width: 600px;
+    }
+
+    .highlight {
+      background-color: #b2ede7;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+  }
+
   @media (max-width: 900px) {
+
     .uploadGrid,
     .discoverGrid {
       justify-content: center;
     }
+
+    .uploadGrid {
+      border-bottom: solid 3px #f7f7f7;
+    }
   }
+}
+
+@media (min-width: 901px) {
+  .uploadGrid {
+    border-right: solid 3px #f0eded;
+  }
+
+  .uploadPopOver,
+  .discoverPopoverText {
+    font-size: 60px;
+  }
+}
+
+.gridDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.gridContainer {
+  max-width: 600px;
+  background-color: #7438E2;
+  border: solid 3px #f0eded;
+  border-radius: 16px;
+  box-shadow: 3px 3px 5px #d3cece;
 }
 
 .footerContainer {
@@ -43,23 +107,32 @@
   display: flex;
   justify-content: center;
 
-  .githubSignup {
-    background: white;
-    color: #b272ce;
+  .githubSignupButton {
+    background: #f0eded;
+    color: #7438E2;
     border-radius: 15px;
+    box-shadow: 3px 3px 5px #d3cece;
+  }
+
+  .githubSignupButton:hover {
+    background: #f0eded;
+    color: #8CD1CA;
   }
 
   .newsletterButton {
-    background-color: #b272ce;
+    color: white;
+    background-color: #7438E2;
     border-radius: 15px;
+    box-shadow: 3px 3px 5px #d3cece;
   }
+
+  .newsletterButton:hover {
+    background-color: #8CD1CA;
+  }
+
 }
 
-.footerGrid {
-  display: flex;
-  justify-content: center;
-  margin: 50px;
-}
+
 
 .uploadIcon,
 .discoveryIcon {
@@ -68,7 +141,7 @@
 
 .uploadGrid {
   display: flex;
-  justify-content: right;
+  justify-content: center;
   max-width: 250px;
 
   .button {
@@ -79,7 +152,7 @@
 
 .discoverGrid {
   display: flex;
-  justify-content: left;
+  justify-content: center;
 
   .button {
     background-color: transparent;
@@ -87,8 +160,42 @@
   }
 }
 
-.uploadPopOver,
+.uploadPopOver {
+  color: #8CD1CA;
+  filter: drop-shadow(3px 3px 3px #5a18d5);
+}
+
 .discoverPopoverText {
-  font-size: 60px !important;
-  color: #535252;
+  color: #545353;
+  text-decoration: line-through;
+  filter: drop-shadow(3px 3px 3px #5a18d5);
+}
+
+@media (min-width: 601px) {
+
+  .uploadPopOver,
+  .discoverPopoverText {
+    font-size: 60px !important;
+    filter: drop-shadow(3px 3px 3px #5a18d5);
+  }
+}
+
+.footerGrid {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+}
+
+.newsletterIcon.MuiChip-root {
+  color: white;
+}
+
+.gitHubSignUpIcon.MuiChip-root {
+  color: #7438E2;
+}
+
+.legalGrid {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
 }
