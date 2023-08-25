@@ -1,19 +1,24 @@
 import React from "react";
 
-import UploadForm from "../components/upload/UploadForm";
-// import Gallery from "../components/discovery/Gallery";
+import UploadForm from "../../features/upload/UploadForm";
 
-import upload from "../pics/upload.png";
-import discovery from "../pics/discovery.png";
+import upload from "../pics/upload-white.png";
+import discovery from "../pics/discovery-white.png";
+import findhrPic from "../pics/FINDHR.png";
 
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
+
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
 
+import Chip from '@mui/material/Chip';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import LanguageIcon from '@mui/icons-material/Language';
+
 import "./Home.css";
-import { useAuth } from "../contexts/auth";
+import { useAuth } from "../../contexts/auth";
+import Chart from "../../features/dashboard/components/Chart/Chart";
 
 export default function Home() {
   const [discoveryMode, setDiscoveryMode] = React.useState(false);
@@ -53,28 +58,33 @@ export default function Home() {
     return <UploadForm />;
   } else {
     if (discoveryMode) {
-      return null;
-      //<Gallery />
+      return <Chart />;
     } else {
       return (
         <div className="mainContainer">
+          <div className="coverPicDiv">
+            <img src={findhrPic} alt="findhr-logo" className="coverImg" />
+          </div>
           <div className="mainBox">
             <Typography variant="h7" className="introText">
-              This is demo of a Computer Vision machine teaching UI, that
-              members from diverse communities can use to co-create synthetic
-              data in order to represent themselves in datasets. The UI was
-              designed with art therapists to promote reflective thinking and
-              knowledge-building in users. In conjunction with aligning
-              regulatory and institutional stakeholders on adaptive frameworks
-              for different sensitive/protected categories, this tool can be
-              used to democratize datasets to build inclusive and ethical AI.
+              Welcome to <span className="bold">MIGR-AI-TION's Research App</span>.
+              We're investigating connections between organizational and hiring AI
+              discrimination for the <span className="bold">FINDHR project</span>.
+              Start by <span className="highlight">journaling</span> your personal
+              experiences. Your insights shape a live dashboard <span className="highlight">
+                visualization</span> shared with other participants. Contribute to constructing
+              a fairness ontology, qualitative dataset, and identifying intersectional
+              challenges. Our <span className="highlight">LLM-powered tool</span> illustrates
+              collective experiences, guiding intersectional fairness recommendations.
+              This research empowers developers, researchers, and EU policy makers to create
+              ethical, inclusive <span className="bold">hiring AI</span>.
             </Typography>
 
             <hr />
           </div>
           {user && (
-            <div>
-              <Grid container spacing={0}>
+            <div className="gridDiv">
+              <Grid container spacing={0} className="gridContainer">
                 <Grid item xs={12} md={6} className="uploadGrid">
                   <button className="button" onClick={showUpload}>
                     <img
@@ -159,19 +169,27 @@ export default function Home() {
           <br />
 
           <div className="footerContainer">
-            <Stack spacing={2} direction="column" className="footerGrid">
+            <Stack spacing={8} direction="row" className="footerGrid">
+              <Chip variant="contained" className="newsletterButton" label="Sign Up to Our Newsletter!" icon={<MailOutlineIcon className="newsletterIcon" />} />
+
+
               {user && (
-                <Button variant="contained" className="newsletterButton">
-                  {" "}
-                  Sign Up For Our Newsletter!{" "}
-                </Button>
+                <Chip variant="contained" className="githubSignupButton" label="Join Our Open-source Community !" icon={<MailOutlineIcon className="gitHubSignUpIcon" />} />
               )}
-              <Button variant="contained" className="githubSignup">
-                {" "}
-                Join Our Open Source Community!{" "}
-              </Button>
             </Stack>
           </div>
+
+          <div className="legal">
+            <Stack spacing={8} direction="row" className="legalGrid">
+              <Typography />
+              Data Privacy
+              <Typography />
+              <Typography />
+              Impressum
+              <Typography />
+            </Stack>
+          </div>
+
         </div>
       );
     }
