@@ -7,17 +7,16 @@ import { AuthProvider } from "./contexts/auth";
 
 const App = () => {
   return (
-    <div>
-      <AuthProvider>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+
+    </AuthProvider>
   );
 };
 

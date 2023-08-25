@@ -30,7 +30,6 @@
 .mainContainer {
   margin: 50px;
 
-
   .coverPicDiv {
     display: flex;
     justify-content: center;
@@ -101,8 +100,9 @@
   box-shadow: 3px 3px 5px #d3cece;
 }
 
-.footerContainer {
+.buttonContainer {
   margin-top: 30px;
+  margin-bottom: 30px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -166,8 +166,7 @@
 }
 
 .discoverPopoverText {
-  color: #545353;
-  text-decoration: line-through;
+  color: #8CD1CA;
   filter: drop-shadow(3px 3px 3px #5a18d5);
 }
 
@@ -184,18 +183,69 @@
   display: flex;
   justify-content: center;
   margin: 50px;
+
+  .newsletterIcon.MuiChip-root {
+    color: white;
+  }
+
+  .gitHubSignUpIcon.MuiChip-root {
+    color: #7438E2;
+  }
 }
 
-.newsletterIcon.MuiChip-root {
-  color: white;
+.horizontal {
+  display: block;
+  margin: 0 auto;
+  max-width: 180px;
 }
 
-.gitHubSignUpIcon.MuiChip-root {
-  color: #7438E2;
+.fundedLogosDiv {
+  display: block;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.logosGridContainer {
+  padding-left: 20px;
+  display: flex;
+  justify-content: center;
+  max-width: 900px;
+
+  .logosGridItem {
+    display: flex;
+    justify-content: center;
+
+    .fundedLogo-OKF,
+    .fundedLogo-BMBF {
+      width: 100px;
+      margin: 20px;
+    }
+
+    .fundedLogo-EU {
+      height: 30px;
+      margin: 20px;
+    }
+
+    .fundedLogo-PTF,
+    .fundedLogo-HTW {
+      height: 50px;
+      margin: 20px;
+    }
+  }
+}
+
+
+
+
+.legalDiv {
+  display: flex;
+  justify-content: center;
 }
 
 .legalGrid {
-  display: flex;
-  justify-content: center;
-  margin: 50px;
+  max-width: 600px;
+  color: gray;
+
+  /* margin: 50px; */
+
 }

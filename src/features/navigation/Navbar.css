@@ -5,7 +5,9 @@
 }
 
 .navbar {
-  box-shadow: none;
+
+  padding: 15px;
+
 }
 
 .logo {

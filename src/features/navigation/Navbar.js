@@ -22,45 +22,45 @@ export default function Navbar() {
   const { user, signOut } = useAuth();
 
   return (
-    <div>
-      <MDBNavbar expand="lg" light className="navbar">
-        <MDBContainer fluid>
-          <MDBNavbarBrand href="/">
-            <img src={logo} className="logo" alt="logo" />
-            <span className="brand-name hide">
-              {" "}
-              MIGR-AI-TION{" "}
-            </span>
-          </MDBNavbarBrand>
+    <MDBNavbar expand="lg" bgColor="white"
+      sticky
+      className="navbar">
+      <MDBContainer fluid>
+        <MDBNavbarBrand href="/">
+          <img src={logo} className="logo" alt="logo" />
+          <span className="brand-name hide">
+            {" "}
+            MIGR-AI-TION{" "}
+          </span>
+        </MDBNavbarBrand>
 
-          <MDBNavbarToggler
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            onClick={() => setShowNavExternal(!showNavExternal)}
-          >
-            <MDBIcon icon="bars" fas />
-          </MDBNavbarToggler>
+        <MDBNavbarToggler
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          onClick={() => setShowNavExternal(!showNavExternal)}
+        >
+          <MDBIcon icon="bars" fas />
+        </MDBNavbarToggler>
 
-          <MDBCollapse
-            navbar
-            show={showNavExternal}
-            className="navbar-collapse"
-          >
-            {user ? (
-              <MDBNavbarLink onClick={signOut} className="logout-button">
-                <MDBIcon fas icon="user-circle" className="avatar" size="lg" />{" "}
-                Logout
+        <MDBCollapse
+          navbar
+          show={showNavExternal}
+          className="navbar-collapse"
+        >
+          {user ? (
+            <MDBNavbarLink onClick={signOut} className="logout-button">
+              <MDBIcon fas icon="user-circle" className="avatar" size="lg" />{" "}
+              Logout
+            </MDBNavbarLink>
+          ) : (
+            <MDBNavbarNav>
+              <MDBNavbarLink href="/login" className="login-button">
+                Login
               </MDBNavbarLink>
-            ) : (
-              <MDBNavbarNav>
-                <MDBNavbarLink href="/login" className="login-button">
-                  Login
-                </MDBNavbarLink>
-              </MDBNavbarNav>
-            )}
-          </MDBCollapse>
-        </MDBContainer>
-      </MDBNavbar>
-    </div>
+            </MDBNavbarNav>
+          )}
+        </MDBCollapse>
+      </MDBContainer>
+    </MDBNavbar>
   );
 }

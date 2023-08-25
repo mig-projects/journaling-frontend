@@ -1,9 +1,9 @@
 .highlighterColor {
-  background-color: #7438E2;
+  background-color: #b2ede7;
 }
 
 .textMandatory {
-  color: #b272ce;
+  color: #7438E2;
 }
 
 .HighlightChipContainer {
@@ -13,7 +13,7 @@
 }
 
 .textFieldStyle.MuiChip-root {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #f0eded;
   font-size: 16px;
   color: #7438E2;
   padding: 25px 10px;
@@ -22,20 +22,22 @@
 
 .highlighterContainer {
   margin-top: 10px;
-  background-color: #d9cdbc;
+  background-color: #f0eded;
   border-radius: 5px;
   padding: 10px;
 }
 
 .tagContainer {
-  margin-top: 10px;
+  padding-bottom: 20px;
+  margin: 20px;
+
 }
 
 .tagsChip.MuiChip-root {
   font-size: 16px;
   color: #7438E2;
-  border: 2px solid #7438E2;
-  background-color: #e6dac8;
+  border: 2px solid #a280df;
+  background-color: #f0eded;
   margin-top: 10px;
   margin-right: 10px;
 

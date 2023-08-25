@@ -11,7 +11,7 @@ import useTextForm from "./useTextForm";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#B272CE",
+      main: "#7438E2",
     },
   },
 });
@@ -32,6 +32,54 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
 
   return (
     <div>
+
+      <div className="tagContainer">
+        {memoryState.userTags.map((word, index) => (
+          <Chip
+            avatar={
+              <Avatar className="avatarStyle">
+                <b>#</b>
+              </Avatar>
+            }
+            className="tagsChip userChipStyle"
+            key={`user-tag-${index}`}
+            label={word}
+            onDelete={() => removeTag(word, "user")}
+            variant="filled"
+          />
+        ))}
+        {memoryState.communityTags.map((word, index) => (
+          <Chip
+            avatar={
+              <Avatar className="avatarStyle">
+                <b>#</b>
+              </Avatar>
+            }
+            className="tagsChip communityChipStyle"
+            key={`community-tag-${index}`}
+            label={word}
+            onDelete={() => removeTag(word, "community")}
+            variant="filled"
+          />
+        ))}
+        {memoryState.tagStates.map(
+          (tag, index) =>
+            tag.selected && (
+              <Chip
+                avatar={
+                  <Avatar className="avatarStyle">
+                    <b>#</b>
+                  </Avatar>
+                }
+                key={`selected-tag-${index}`}
+                className="tagsChip selectedChipStyle"
+                label={tag.name}
+                onDelete={() => removeTag(tag.id, "selected")}
+                variant="filled"
+              />
+            )
+        )}
+      </div>
       <div>
         {highlighter ? (
           <div>
@@ -47,69 +95,25 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
                 customClass="highlighterColor"
               />
             </div>
-            <div className="tagContainer">
-              {memoryState.userTags.map((word, index) => (
-                <Chip
-                  avatar={
-                    <Avatar className="avatarStyle">
-                      <b>#</b>
-                    </Avatar>
-                  }
-                  className="tagsChip userChipStyle"
-                  key={`user-tag-${index}`}
-                  label={word}
-                  onDelete={() => removeTag(word, "user")}
-                  variant="filled"
-                />
-              ))}
-              {memoryState.communityTags.map((word, index) => (
-                <Chip
-                  avatar={
-                    <Avatar className="avatarStyle">
-                      <b>#</b>
-                    </Avatar>
-                  }
-                  className="tagsChip communityChipStyle"
-                  key={`community-tag-${index}`}
-                  label={word}
-                  onDelete={() => removeTag(word, "community")}
-                  variant="filled"
-                />
-              ))}
-              {memoryState.tagStates.map(
-                (tag, index) =>
-                  tag.selected && (
-                    <Chip
-                      avatar={
-                        <Avatar className="avatarStyle">
-                          <b>#</b>
-                        </Avatar>
-                      }
-                      key={`selected-tag-${index}`}
-                      className="tagsChip selectedChipStyle"
-                      label={tag.name}
-                      onDelete={() => removeTag(tag.id, "selected")}
-                      variant="filled"
-                    />
-                  )
-              )}
-            </div>
+
             <br />
             <br />
             <Typography className="tagContainer">
               Which communities is this experience most relevant to?
               <span className="textMandatory">*</span>
             </Typography>
-            <TextField
-              id="tag-input"
-              label="Enter community tags"
-              variant="filled"
-              margin="normal"
-              fullWidth="true"
-              value={tagInput} // this state will be added in the next step
-              onChange={onTagInputChange} // this handler will be added in the next step
-              onKeyDown={onKeyDown} // for adding tags on pressing 'Enter'
-            />
+            <ThemeProvider theme={theme}>
+              <TextField
+                id="tag-input"
+                label="Enter community tags"
+                variant="filled"
+                margin="normal"
+                fullWidth="true"
+                value={tagInput} // this state will be added in the next step
+                onChange={onTagInputChange} // this handler will be added in the next step
+                onKeyDown={onKeyDown} // for adding tags on pressing 'Enter'
+              />
+            </ThemeProvider>
             <br />
             <br />
             <Typography className="tagContainer">
