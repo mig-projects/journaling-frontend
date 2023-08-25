@@ -8,29 +8,26 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [authSession, setAuthSession] = useState(null);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
-    // Fetch from local storage, if already logged in.
-    let gotSession = localStorage.getItem("authSession");
-    if (gotSession) {
-      gotSession = JSON.parse(gotSession);
-      setAuthSession(gotSession);
-      setUser(gotSession?.user);
-    }
     // Sign in or sign out according to Supabase event.
+    setLoading(true);
+    const getUser = async () => {
+      const { data } = await supaClient.auth.getUser();
+      const { user: currentUser } = data;
+      setUser(currentUser ?? null);
+      setLoading(false);
+    };
+    getUser();
+
     const { subscription } = supaClient.auth.onAuthStateChange(
       async (event, session) => {
         if (!session && event === "SIGNED_OUT") {
-          localStorage.removeItem("authSession");
-          setAuthSession(null);
           setUser(null);
         } else if (session) {
-          setAuthSession(session);
-          setUser(session?.user);
-          localStorage.setItem("authSession", JSON.stringify(session));
+          setUser(session.user);
         }
       }
     );
@@ -39,17 +36,15 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      setLoading(false);
-    }
-  }, [user]);
-
   const value = {
     // signUp: (data) => supaClient.auth.signUp(data),
     signOut: () => supaClient.auth.signOut(),
     user: user,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };

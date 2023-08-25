@@ -97,7 +97,7 @@ export const useUploadForm = () => {
       }));
       return;
     }
-  }, [user.id, memoryState, canvasState]);
+  }, [user, memoryState, canvasState]);
 
   // Make sure data contains all the required fields before enabling submit.
   const validateData = useCallback(() => {
