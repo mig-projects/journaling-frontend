@@ -1,8 +1,9 @@
 .canvas {
-  border: 2px solid #d1c6b6;
-  border-radius: 5px;
+  border: 3px solid #f7f7f7;
+  border-radius: 15px;
   z-index: 1;
   position: absolute;
+
 }
 
 .canvasDiv {
@@ -22,7 +23,7 @@
 }
 
 .brushSize {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #f7f7f7;
   padding: 15px;
   border-radius: 17px;
   margin: 10px;
@@ -30,7 +31,7 @@
 }
 
 .brushSizeText {
-  color: #b272ce;
+  color: #7438E2;
   text-align: center;
 }
 
@@ -41,7 +42,7 @@
 }
 
 .opacityDiv {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #f7f7f7;
   padding: 15px 20px 0px 20px;
   border-radius: 17px;
   margin: 10px;
@@ -51,13 +52,13 @@
 }
 
 .opacity {
-  color: #b272ce;
+  color: #7438E2;
 }
 
-.eraseAndUndo {
-  background-color: rgba(255, 255, 255, 0.5);
+.erase-clear-chip.MuiChip-root {
+  background-color: #f7f7f7;
   font-size: 16px;
-  color: #b272ce;
+  color: #7438E2;
   padding: 25px 10px 25px 10px;
   margin: 10px;
 }
@@ -74,4 +75,9 @@
 .columnThree {
   display: flex;
   justify-content: center;
+}
+
+.important-words {
+  color: #7438E2;
+  font-weight: bold;
 }

@@ -11,7 +11,7 @@ import useTextForm from "./useTextForm";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#7438E2",
+      main: "#a280df",
     },
   },
 });
@@ -84,8 +84,10 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
         {highlighter ? (
           <div>
             <Typography>
-              Highlight the words with your cursor.
-              <span className="textMandatory">*</span>
+              <li>
+                <span className="important-words">Highlight</span> the words with your cursor.
+                <span className="textMandatory">*</span>
+              </li>
             </Typography>
             <div className="highlighterContainer">
               <InteractiveHighlighter
@@ -99,12 +101,15 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
             <br />
             <br />
             <Typography className="tagContainer">
-              Which communities is this experience most relevant to?
-              <span className="textMandatory">*</span>
+              <li>
+                Which <span className="important-words">communities</span> is this experience most relevant to?
+
+                <span className="textMandatory">*</span>
+              </li>
             </Typography>
             <ThemeProvider theme={theme}>
               <TextField
-                id="tag-input"
+                id="community-tag-input"
                 label="Enter community tags"
                 variant="filled"
                 margin="normal"
@@ -117,8 +122,11 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
             <br />
             <br />
             <Typography className="tagContainer">
-              Are any of these themes related to your memory? Click and add.
-              <span className="textMandatory">*</span>
+              <li>
+                Are any of these <span className="important-words">themes</span> related to your memory? Click and add.
+
+                <span className="textMandatory">*</span>
+              </li>
             </Typography>
             <div className="tagContainer">
               {memoryState.tagStates.map(
@@ -137,13 +145,31 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
           </div>
         ) : (
           <div>
+
             <Typography>
-              Write about your memory.<span className="textMandatory">*</span>
+              <li>
+                Have you faced any <span className="important-words">discrimination</span> working in <span className="important-words">tech</span>?
+
+              </li>
+              <li>
+                Are you wondering what counts as discrimination?
+
+              </li>
+              <li>
+                Do you have some thoughts on <span className="important-words">fairness</span> in hiring and AI?
+              </li>
+              <li>
+                Have you reflected the group discussions and others' inputs?
+              </li>
+              <li>
+                Record your thoughts below.<span className="textMandatory">*</span>
+              </li>
             </Typography>
+            <br />
             <ThemeProvider theme={theme}>
               <TextField
                 id="filled-multiline-static"
-                label="My Memory"
+                label="My Thoughts"
                 multiline={true}
                 rows={18}
                 variant="filled"
@@ -155,10 +181,10 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
             <div className="HighlightChipContainer">
               <Chip
                 variant="contained"
-                className="textFieldStyle"
+                className="highlightButton"
                 onClick={enableHighlighter}
                 disabled={memoryState.textMemory === ""}
-                label="Highlight the text"
+                label="CLICK TO HIGHLIGHT"
               />
             </div>
           </div>

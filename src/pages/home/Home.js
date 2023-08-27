@@ -8,12 +8,11 @@ import findhrPic from "../../pics/FINDHR.png";
 import EU from "../../pics/EU-logo.jpg";
 import BMBF from "../../pics/BMBF-logo.png";
 import PTF from "../../pics/PTF-logo.png";
-import OKF from "../../pics/OKF-logo.png";
 import HTW from "../../pics/HTW-logo.jpg";
 
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import Divider from '@mui/material/Divider';
+
 
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
@@ -75,9 +74,9 @@ export default function Home() {
             <div className="mainBox">
 
               <Typography variant="h7" className="introText">
-                Welcome to <span className="bold">MIGR-AI-TION's Research App</span>.
+                Welcome to <span className="important-words">MIGR-AI-TION's Research App</span>.
                 We're investigating connections between organizational and hiring AI
-                discrimination for the <span className="bold">FINDHR project</span>.
+                discrimination for the <span className="important-words">FINDHR project</span>.
                 Start by <span className="highlight">journaling</span> your personal
                 experiences. Your insights shape a live dashboard <span className="highlight">
                   visualization</span> shared with other participants. Contribute to constructing
@@ -85,7 +84,7 @@ export default function Home() {
                 challenges. Our <span className="highlight">LLM-powered tool</span> illustrates
                 collective experiences, guiding intersectional fairness recommendations.
                 This research empowers developers, researchers, and EU policy makers to create
-                ethical, inclusive <span className="bold">hiring AI</span>.
+                ethical, inclusive <span className="important-words">hiring AI</span>.
               </Typography>
 
               <hr />

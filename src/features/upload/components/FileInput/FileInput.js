@@ -1,17 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
-import upload from "../../../../pics/upload.png";
+import upload from "../../../../pics/upload-white.png";
 import Typography from "@mui/material/Typography";
+import Popover from "@mui/material/Popover";
 import "./FileInput.css";
 
 const style1 = {
   width: "200px",
   height: "200px",
   color: "black",
-  borderRadius: "3px",
+  borderRadius: "15px",
   margin: "0 auto",
   marginTop: "90px",
+  backgroundColor: "#7438E2",
   backgroundImage: `url(${upload})`,
   backgroundSize: "cover",
+  boxShadow: ""
 };
 
 const FileInput = ({ src, setSrc }) => {
@@ -33,7 +36,9 @@ const FileInput = ({ src, setSrc }) => {
   return (
     <div>
       <Typography>
-        Upload a photo of a memory.{" "}
+        <li>
+          Would it help to make some art about your thoughts? <span className="important-words">Click</span> to upload a picture.{" "}
+        </li>
         <span className="textOptional">(optional)</span>
       </Typography>
       <div className="imageInput" onClick={openFileInput} style={style1}>
@@ -54,6 +59,7 @@ const FileInput = ({ src, setSrc }) => {
           />
         </label>
       </div>
+
     </div>
   );
 };

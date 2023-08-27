@@ -66,7 +66,7 @@ export default function CanvasII({ setCanvasState }) {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#B272CE",
+        main: "#7438E2",
       },
     },
   });
@@ -222,8 +222,10 @@ export default function CanvasII({ setCanvasState }) {
     return (
       <div>
         <Typography>
-          Upload a picture and make a <b>collage</b> using your photograph and
-          our painting tool!
+          <li>
+            Make a <span className="important-words">collage</span> using your photograph and
+            our painting tool.
+          </li>
           <br />
           <br />
         </Typography>
@@ -301,7 +303,7 @@ export default function CanvasII({ setCanvasState }) {
               <div className="erase">
                 <ThemeProvider theme={theme}>
                   <Chip
-                    className="eraseAndUndo"
+                    className="erase-clear-chip"
                     avatar={<Avatar alt="erase" src={RubberIcon} />}
                     label="Erase"
                     onClick={erase}
@@ -314,9 +316,9 @@ export default function CanvasII({ setCanvasState }) {
             <div className="clearCanvas">
               <Chip
                 variant="contained"
-                className="eraseAndUndo"
+                className="erase-clear-chip"
                 onClick={clear}
-                label="Clear Canvas"
+                label="Clear"
                 icon={<DeleteIcon />}
               />
             </div>

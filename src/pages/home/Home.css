@@ -7,20 +7,6 @@
     width: 150px;
   }
 
-  .homeIcon {
-    width: 80px;
-  }
-
-  .solidarityIcon {
-    width: 80px;
-    padding-top: 10px;
-  }
-
-  .wellBeingIcon {
-    width: 80px;
-    padding-top: 10px;
-  }
-
   .uploadPopOver,
   .discoverPopoverText {
     font-size: 50px !important;
@@ -78,7 +64,7 @@
 
 @media (min-width: 901px) {
   .uploadGrid {
-    border-right: solid 3px #f0eded;
+    border-right: solid 3px #f7f7f7;
   }
 
   .uploadPopOver,
@@ -95,7 +81,7 @@
 .gridContainer {
   max-width: 600px;
   background-color: #7438E2;
-  border: solid 3px #f0eded;
+  border: solid 3px #f7f7f7;
   border-radius: 16px;
   box-shadow: 3px 3px 5px #d3cece;
 }
@@ -108,15 +94,15 @@
   justify-content: center;
 
   .githubSignupButton {
-    background: #f0eded;
+    background: #f7f7f7;
     color: #7438E2;
     border-radius: 15px;
     box-shadow: 3px 3px 5px #d3cece;
   }
 
   .githubSignupButton:hover {
-    background: #f0eded;
-    color: #8CD1CA;
+    background: #f7f7f7;
+    color: #B2EDE7;
   }
 
   .newsletterButton {
@@ -127,7 +113,7 @@
   }
 
   .newsletterButton:hover {
-    background-color: #8CD1CA;
+    background-color: #B2EDE7;
   }
 
 }
@@ -161,12 +147,12 @@
 }
 
 .uploadPopOver {
-  color: #8CD1CA;
+  color: #B2EDE7;
   filter: drop-shadow(3px 3px 3px #5a18d5);
 }
 
 .discoverPopoverText {
-  color: #8CD1CA;
+  color: #B2EDE7;
   filter: drop-shadow(3px 3px 3px #5a18d5);
 }
 
@@ -248,4 +234,10 @@
 
   /* margin: 50px; */
 
+}
+
+
+.important-words {
+  color: #7438E2;
+  font-weight: bold;
 }

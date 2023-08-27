@@ -32,7 +32,26 @@
   text-align: center;
 }
 
+.journalHeader.MuiTypography-h2 {
+  font-family: roboto;
+  color: #b2ede7;
+  font-weight: bold;
+  filter: drop-shadow(3px 3px 3px #d6d4d4);
+  /* text-decoration: underline; */
+  text-align: center;
+}
+
 .returnImgContainer {
   display: flex;
   justify-content: center;
+}
+
+.homeButton.MuiButton-root {
+  background-color: #7438E2;
+  border-radius: 15px;
+}
+
+.homeButton.MuiButton-root:hover {
+  background-color: #b2ede7;
+  color: white;
 }

@@ -19,7 +19,7 @@ let colors = [
 var style1 = {
   // display: 'flex',
   // justifyContent: 'center',
-  backgroundColor: "rgba( 255, 255, 255, 0.5)",
+  backgroundColor: "#f7f7f7",
   padding: "20px",
   // marginLeft: '30px',
   // marginRight: '50px',

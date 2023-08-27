@@ -4,6 +4,7 @@
 
 .textMandatory {
   color: #7438E2;
+  font-weight: bold;
 }
 
 .HighlightChipContainer {
@@ -12,20 +13,30 @@
   margin-top: 10px;
 }
 
-.textFieldStyle.MuiChip-root {
-  background-color: #f0eded;
+.highlightButton.MuiChip-root {
+  background-color: #f7f7f7;
   font-size: 16px;
   color: #7438E2;
   padding: 25px 10px;
   margin: 10px;
 }
 
+.highlightButton.MuiChip-root:hover {
+  background-color: #b2ede7;
+  font-size: 16px;
+  color: white;
+  padding: 25px 10px;
+  margin: 10px;
+}
+
 .highlighterContainer {
   margin-top: 10px;
-  background-color: #f0eded;
+  background-color: #f7f7f7;
   border-radius: 5px;
   padding: 10px;
 }
+
+
 
 .tagContainer {
   padding-bottom: 20px;
@@ -36,8 +47,8 @@
 .tagsChip.MuiChip-root {
   font-size: 16px;
   color: #7438E2;
-  border: 2px solid #a280df;
-  background-color: #f0eded;
+  border: 2px solid #7438E2;
+  background-color: #f7f7f7;
   margin-top: 10px;
   margin-right: 10px;
 
@@ -46,6 +57,7 @@
     color: white;
     padding-top: 3px;
     padding-bottom: 3px;
+
   }
 }
 
@@ -53,4 +65,19 @@
   font-size: 16px;
   margin-top: 10px;
   margin-right: 10px;
+  color: white;
+  border: solid 3px #a280df;
+  background-color: #7438E2;
+  border-radius: 15px;
+
+}
+
+.suggestedChipStyle.MuiChip-root:hover {
+  background-color: #b2ede7;
+  border: solid 3px #8CD1CA;
+}
+
+.important-words {
+  color: #7438E2;
+  font-weight: bold;
 }

@@ -2,3 +2,14 @@
   font-style: italic;
   color: gray;
 }
+
+.imageInput {
+  border: solid 3px #f7f7f7;
+  border-radius: 15px;
+  box-shadow: 3px 3px 5px #d3cece;
+}
+
+.important-words {
+  color: #7438E2;
+  font-weight: bold;
+}

@@ -41,6 +41,7 @@ const UploadForm = () => {
     return (
       <div className="successMessage">
         <Typography> Success!</Typography>
+        <br />
         <Button href="/" variant="contained" className="homeButton">
           Back to Home
         </Button>
@@ -74,16 +75,22 @@ const UploadForm = () => {
     return (
       <div className="mainContainer">
         <div>
+          <Typography className="journalHeader" variant="h2">  JOURNAL </Typography>
+        </div>
+        <div>
           <Grid container spacing={9}>
-            <Grid item xs={12} md={6}>
-              <CanvasII setCanvasState={setCanvasState} />
-            </Grid>
             <Grid item xs={12} md={6}>
               <TextForm
                 memoryState={memoryState}
                 setMemoryState={setMemoryState}
               />
             </Grid>
+            <Grid item xs={12} md={6}>
+              <br />
+              <br />
+              <CanvasII setCanvasState={setCanvasState} />
+            </Grid>
+
           </Grid>
         </div>
 
