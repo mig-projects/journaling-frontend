@@ -3,7 +3,7 @@
 }
 
 .textMandatory {
-  color: #7438E2;
+  color: #7438e2;
   font-weight: bold;
 }
 
@@ -16,7 +16,7 @@
 .highlightButton.MuiChip-root {
   background-color: #f7f7f7;
   font-size: 16px;
-  color: #7438E2;
+  color: #7438e2;
   padding: 25px 10px;
   margin: 10px;
 }
@@ -36,28 +36,38 @@
   padding: 10px;
 }
 
-
-
 .tagContainer {
   padding-bottom: 20px;
   margin: 20px;
-
 }
 
 .tagsChip.MuiChip-root {
   font-size: 16px;
-  color: #7438E2;
-  border: 2px solid #7438E2;
+  color: #7438e2;
+  border: 2px solid #7438e2;
   background-color: #f7f7f7;
   margin-top: 10px;
   margin-right: 10px;
 
-  .avatarStyle.MuiAvatar-root {
-    background-color: #7438E2;
+  .avatarStyle {
+    background-color: #7438e2;
     color: white;
     padding-top: 3px;
     padding-bottom: 3px;
+  }
+}
 
+.tagsChip.MuiChip-root.userChipStyle {
+  border-color: #a280df;
+  .avatarStyle {
+    background-color: #a280df;
+  }
+}
+
+.tagsChip.MuiChip-root.communityChipStyle {
+  border-color: #5a18d5;
+  .avatarStyle {
+    background-color: #5a18d5;
   }
 }
 
@@ -67,17 +77,16 @@
   margin-right: 10px;
   color: white;
   border: solid 3px #a280df;
-  background-color: #7438E2;
+  background-color: #7438e2;
   border-radius: 15px;
-
 }
 
 .suggestedChipStyle.MuiChip-root:hover {
   background-color: #b2ede7;
-  border: solid 3px #8CD1CA;
+  border: solid 3px #8cd1ca;
 }
 
 .important-words {
-  color: #7438E2;
+  color: #7438e2;
   font-weight: bold;
 }

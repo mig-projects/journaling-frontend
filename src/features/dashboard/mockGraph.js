@@ -18,12 +18,12 @@ const mockNodes = [
     name: "Watermelon",
     tags: ["large", "sweet", "refreshing"],
   },
-  { id: "11", value: 28, name: "Lemon", tags: ["sour", "yellow color"] },
-  { id: "12", value: 7, name: "Blueberry", tags: ["small", "blue color"] },
-  { id: "13", value: 16, name: "Raspberry", tags: ["small", "red color"] },
-  { id: "14", value: 30, name: "Kiwi", tags: ["green"] },
-  { id: "15", value: 14, name: "Peach", tags: ["fuzzy", "orange color"] },
-  { id: "16", value: 9, name: "Plum", tags: ["fuzzy", "sweet"] },
+  { id: "9", value: 28, name: "Lemon", tags: ["sour", "yellow color"] },
+  { id: "10", value: 7, name: "Blueberry", tags: ["small", "blue color"] },
+  { id: "11", value: 16, name: "Raspberry", tags: ["small", "red color"] },
+  { id: "12", value: 30, name: "Kiwi", tags: ["green"] },
+  { id: "13", value: 14, name: "Peach", tags: ["fuzzy", "orange color"] },
+  { id: "14", value: 9, name: "Plum", tags: ["fuzzy", "sweet"] },
 ];
 
 // Mock dataset for links
@@ -54,7 +54,38 @@ const mockLinks = [
   { source: "16", target: "1", value: 12 },
 ];
 
-export const mockGraph = {
-  nodes: mockNodes,
-  links: mockLinks,
-};
+function restructureDataset(nodes, links) {
+  const newNodes = [...nodes];
+  const newLinks = [...links];
+
+  let counter = newNodes.length + 1;
+  for (const node of nodes) {
+    if (node.tags) {
+      for (const tag of node.tags) {
+        const tagNode = {
+          id: String(counter),
+          value: 1,
+          name: tag,
+          tagType: "highlight",
+        };
+        newNodes.push(tagNode);
+
+        const tagLink = {
+          source: tagNode.id,
+          target: node.id,
+          value: 1,
+        };
+
+        newLinks.push(tagLink);
+        counter += 1;
+      }
+    }
+  }
+
+  return { nodes: newNodes, links: newLinks };
+}
+
+export const mockGraphs = [
+  { nodes: mockNodes, links: mockLinks, type: "mockGraph" },
+  { ...restructureDataset(mockNodes, mockLinks), type: "starShaped" },
+];

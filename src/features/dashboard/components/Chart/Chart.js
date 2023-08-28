@@ -1,179 +1,151 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ReactEcharts from "echarts-for-react";
 import { CircularProgress, Typography } from "@mui/material";
 import { useAuth } from "../../../../contexts/auth";
-import { useApi } from "../../../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
-import { mockGraph } from "../../mockGraph";
 import "./Chart.css";
+import usePreprocessing from "../../hooks/usePreprocessing";
 
 const MOCK = true;
+const LIMIT = false;
 
 const Chart = () => {
-  const [graph, setGraph] = useState({ nodes: [], links: [] });
-  const [loading, setLoading] = useState(false);
-
   const { user } = useAuth();
-  const { fetchData } = useApi({ user });
+  const { loading, graphs } = usePreprocessing({ MOCK, user });
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
-      navigate("login/");
+      navigate("/login");
     }
   }, [user]);
 
-  const getRandomColor = () => {
-    var value = (Math.random() * 0xff) | 0;
-    var grayscale = (value << 16) | (value << 8) | value;
-    var color = "#" + grayscale.toString(16);
-    return color;
-  };
-
-  const initializeNodes = (data, tags) => {
-    const nodeCounts = data.reduce((acc, item) => {
-      acc[item.suggested_tag_id] = (acc[item.suggested_tag_id] || 0) + 1;
-      return acc;
-    }, {});
-
-    return Object.keys(nodeCounts).map((id) => ({
-      id,
-      value: nodeCounts[id],
-      name: tags.find((tag) => tag.id === id).name || "Unknown",
-    }));
-  };
-
-  // Initialize links function to count co-occurences
-  const initializeLinks = (data) => {
-    const textMemoryMap = data.reduce((acc, item) => {
-      acc[item.text_memory_id] = (acc[item.text_memory_id] || []).concat(
-        item.suggested_tag_id
-      );
-      return acc;
-    }, {});
-
-    const linkCounts = Object.values(textMemoryMap).reduce((acc, tags) => {
-      for (let i = 0; i < tags.length; i++) {
-        for (let j = i + 1; j < tags.length; j++) {
-          const linkKey =
-            tags[i] < tags[j]
-              ? `${tags[i]}|${tags[j]}`
-              : `${tags[j]}|${tags[i]}`;
-          acc[linkKey] = (acc[linkKey] || 0) + 1;
+  const createListingTooltip = (nodes, graphType = "listTags") => {
+    if (graphType === "listTags") {
+      const listFormatter = (params) => {
+        if (params.dataType === "node") {
+          const node = nodes.find((n) => n.id === params.data.id);
+          const tags = node.tags
+            ? node.tags.join("</li><li>")
+            : "No tags available";
+          return `Category: ${node.name}<br>User tags: <ul><li>${tags}</li></ul>`;
         }
-      }
-      return acc;
-    }, {});
+      };
 
-    return Object.keys(linkCounts).map((link) => ({
-      source: link.split("|")[0],
-      target: link.split("|")[1],
-      value: linkCounts[link],
-    }));
-  };
-
-  // Log-transform and project to desired min-max interval
-  const transformNodes = (nodes, min = 5, max = 50) => {
-    const logNodes = nodes.map((node) => ({
-      ...node,
-      logSize: Math.log10(node.value + 1),
-    }));
-
-    const maxLogSize = Math.max(...logNodes.map((node) => node.logSize));
-    const minLogSize = Math.min(...logNodes.map((node) => node.logSize));
-
-    const normalizedNodes = logNodes.map((node) => ({
-      id: node.id,
-      name: node.name,
-      value: node.value,
-      size:
-        ((node.logSize - minLogSize) / (maxLogSize - minLogSize)) *
-          (max - min) +
-        min,
-      tags: node.tags,
-    }));
-    console.log(normalizedNodes);
-
-    return normalizedNodes;
-  };
-
-  useEffect(() => {
-    const initializeGraph = async () => {
-      setLoading(true);
-      const data = await fetchData("suggested_tag_memories");
-      const tags = await fetchData("suggested_tags");
-      console.log(tags);
-      setGraph({
-        links: initializeLinks(data),
-        nodes: initializeNodes(data, tags),
-      });
-      setLoading(false);
-      console.log(graph);
-    };
-    if (MOCK) {
-      setGraph(mockGraph);
+      return {
+        triggerOn: "click",
+        formatter: listFormatter,
+      };
     } else {
-      initializeGraph();
+      return {};
     }
-    setGraph((prevState) => ({
-      ...prevState,
-      nodes: transformNodes(prevState.nodes),
+  };
+
+  const createDataSpec = (nodes, graphType = "listTags", limit = false) => {
+    const isUserTag = (n) => {
+      return graphType === "starShaped" && n.tagType === "highlight";
+    };
+
+    let newNodes = nodes.map((n) => ({
+      ...n,
+      symbolSize: isUserTag(n) ? 15 : n.size,
+      itemStyle: isUserTag(n)
+        ? { color: "#a280df", borderWidth: 1, borderColor: "#f0eded" }
+        : { color: "#7438e2", borderWidth: 2, borderColor: "#f0eded" },
+      label: { show: !isUserTag(n) },
     }));
-  }, []);
+    if (limit) {
+      newNodes = newNodes.filter((n) => parseInt(n.id) < 10);
+    }
+
+    console.log("New nodes:", newNodes);
+    return newNodes;
+  };
+
+  const createLinkSpec = (links, graphType = "listTags", limit = false) => {
+    console.log(limit);
+    let newLinks = links.map((l) => ({
+      ...l,
+      value: l.value * 10,
+      lineStyle: { color: "#8CD1CA", curveness: 0.1 },
+      label: { show: false },
+    }));
+    if (limit) {
+      newLinks = newLinks.filter(
+        (link) => parseInt(link.source) < 10 && parseInt(link.target) < 10
+      );
+    }
+
+    if (graphType === "userLinksOnly") {
+      newLinks = newLinks.filter((link) => link.value === 10);
+    }
+
+    console.log("New links: ", newLinks);
+
+    return newLinks;
+  };
+
+  const createOptionSpec = (graphs, graphType, MOCK, LIMIT) => {
+    let option = {};
+    let graph = {};
+    if (graphType === "listTags") {
+      graph = graphs.find((graph) =>
+        graph.type === MOCK ? "mockGraph" : "userData"
+      );
+    } else if (graphType === "starShaped" || graphType === "userLinksOnly") {
+      graph = graphs.find((graph) => graph.type === "starShaped");
+      console.log(graph);
+    }
+    if (graph) {
+      option = {
+        backgroundColor: "#f7f7f7",
+        tooltip: createListingTooltip(graph.nodes, graphType),
+        series: [
+          {
+            type: "graph",
+            layout: "force",
+            nodes: createDataSpec(graph.nodes, graphType, LIMIT),
+            links: createLinkSpec(graph.links, graphType, LIMIT),
+            roam: true,
+            label: {
+              show: true,
+              position: "right",
+            },
+            force: {
+              repulsion: 500,
+              edgeLength: [5, 50],
+              gravity: 0.1,
+            },
+          },
+        ],
+      };
+    }
+    console.log("New option: ", option);
+    return option;
+  };
 
   if (loading) {
-    <CircularProgress />;
+    return <CircularProgress />;
   } else {
-    let option = {
-      backgroundColor: "rgba(171, 136, 191, 0.4)",
-      tooltip: {
-        triggerOn: "click",
-        formatter: (params) => {
-          if (params.dataType === "node") {
-            const node = graph.nodes.find((n) => n.id === params.data.id);
-            const tags = node.tags
-              ? node.tags.join("</li><li>")
-              : "No tags available";
-            return `Category: ${node.name}<br>User tags: <ul><li>${tags}</li></ul>`;
-          }
-        },
-      },
-      legend: {
-        data: graph.nodes.value,
-      },
-      series: [
-        {
-          type: "graph",
-          layout: "force",
-          data: graph.nodes.map((n) => ({
-            ...n,
-            symbolSize: n.size,
-            itemStyle: { color: getRandomColor() },
-          })),
-          links: graph.links.map((l) => ({
-            ...l,
-            value: l.value * 10,
-            lineStyle: { color: "#24e1ea", curveness: 0.1 },
-            label: { show: false },
-          })),
-          roam: true,
-          label: {
-            position: "right",
-          },
-          force: {
-            repulsion: 500,
-            edgeLength: [5, 50],
-            gravity: 0.1,
-          },
-        },
-      ],
-    };
     return (
       <div className="chartContainer">
-        <Typography>Intro Paragraph</Typography>
+        <Typography>Listing tags on click</Typography>
         <ReactEcharts
           style={{ width: "100%", height: "100vh" }}
-          option={option}
+          option={createOptionSpec(graphs, "listTags", MOCK, LIMIT)}
+          className="chartDiv"
+        />
+        <Typography>Showing user tags</Typography>
+        <ReactEcharts
+          style={{ width: "100%", height: "100vh" }}
+          option={createOptionSpec(graphs, "starShaped", MOCK, LIMIT)}
+          className="chartDiv"
+        />
+        <Typography>Removing sugggested tag links</Typography>
+        <ReactEcharts
+          style={{ width: "100%", height: "100vh" }}
+          option={createOptionSpec(graphs, "userLinksOnly", MOCK, LIMIT)}
           className="chartDiv"
         />
       </div>
