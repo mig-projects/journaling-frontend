@@ -10,16 +10,16 @@ const MOCK = true;
 const LIMIT = false;
 
 const Chart = () => {
-  const { user } = useAuth();
+  const { user, isRegisteredUser } = useAuth();
   const { loading, graphs } = usePreprocessing({ MOCK, user });
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
+    if (!isRegisteredUser) {
       navigate("/login");
     }
-  }, [user]);
+  }, [isRegisteredUser]);
 
   const createListingTooltip = (nodes, graphType = "listTags") => {
     if (graphType === "listTags") {
@@ -130,22 +130,10 @@ const Chart = () => {
   } else {
     return (
       <div className="chartContainer">
-        <Typography>Listing tags on click</Typography>
-        <ReactEcharts
-          style={{ width: "100%", height: "100vh" }}
-          option={createOptionSpec(graphs, "listTags", MOCK, LIMIT)}
-          className="chartDiv"
-        />
         <Typography>Showing user tags</Typography>
         <ReactEcharts
           style={{ width: "100%", height: "100vh" }}
           option={createOptionSpec(graphs, "starShaped", MOCK, LIMIT)}
-          className="chartDiv"
-        />
-        <Typography>Removing sugggested tag links</Typography>
-        <ReactEcharts
-          style={{ width: "100%", height: "100vh" }}
-          option={createOptionSpec(graphs, "userLinksOnly", MOCK, LIMIT)}
           className="chartDiv"
         />
       </div>
