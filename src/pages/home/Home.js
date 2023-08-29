@@ -23,13 +23,14 @@ import LanguageIcon from "@mui/icons-material/Language";
 import "./Home.css";
 import { useAuth } from "../../contexts/auth";
 import Chart from "../../features/dashboard/components/Chart/Chart";
+import { CircularProgress } from "@mui/material";
 
 export default function Home() {
   const [discoveryMode, setDiscoveryMode] = React.useState(false);
   const [uploadMode, setUploadMode] = React.useState(false);
   const [anchorElUpload, setAnchorElUpload] = React.useState(null);
   const [anchorElDiscover, setAnchorElDiscover] = React.useState(null);
-  const { isRegisteredUser } = useAuth();
+  const { isRegisteredUser, loading } = useAuth();
 
   const showUpload = () => {
     setUploadMode(true);
@@ -58,7 +59,9 @@ export default function Home() {
   const openUploadPopover = Boolean(anchorElUpload);
   const openDiscoverPopover = Boolean(anchorElDiscover);
 
-  if (uploadMode) {
+  if (loading) {
+    return <CircularProgress />;
+  } else if (uploadMode) {
     return <UploadForm />;
   } else {
     if (discoveryMode) {

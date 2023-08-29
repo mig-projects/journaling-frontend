@@ -23,16 +23,20 @@ const Login = () => {
 
   return (
     <div className="loginContainer">
-      {loading && <CircularProgress />}
-      {!user && (
+      {loading ? (
+        <CircularProgress />
+      ) : !user ? (
         <Auth
           supabaseClient={supaClient}
           providers={[]}
           className="loginForm"
+          redirectTo={
+            "https://https://quiet-kelpie-4caf69.netlify.app/reset-password"
+          }
         />
-      )}
-      {isRegisteredUser && <span>You're logged in!</span>}
-      {!isRegisteredUser && user && (
+      ) : isRegisteredUser ? (
+        <span>You're logged in!</span>
+      ) : (
         <span>
           You're account is pending approval. Reach out to the website's
           administrator for more details.

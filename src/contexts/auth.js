@@ -9,7 +9,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isRegisteredUser, setIsRegisteredUser] = useState(false);
 
   const fetchRegistrationStatus = async (userId) => {
@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Sign in or sign out according to Supabase event.
-    setLoading(true);
     const getUser = async () => {
       const { data } = await supaClient.auth.getUser();
       const { user: currentUser } = data;
