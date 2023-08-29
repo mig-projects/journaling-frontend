@@ -13,13 +13,12 @@ import HTW from "../../pics/HTW-logo.jpg";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 
-
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
 
-import Chip from '@mui/material/Chip';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import LanguageIcon from '@mui/icons-material/Language';
+import Chip from "@mui/material/Chip";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import LanguageIcon from "@mui/icons-material/Language";
 
 import "./Home.css";
 import { useAuth } from "../../contexts/auth";
@@ -30,7 +29,7 @@ export default function Home() {
   const [uploadMode, setUploadMode] = React.useState(false);
   const [anchorElUpload, setAnchorElUpload] = React.useState(null);
   const [anchorElDiscover, setAnchorElDiscover] = React.useState(null);
-  const { user } = useAuth();
+  const { isRegisteredUser } = useAuth();
 
   const showUpload = () => {
     setUploadMode(true);
@@ -72,24 +71,30 @@ export default function Home() {
               <img src={findhrPic} alt="findhr-logo" className="coverImg" />
             </div>
             <div className="mainBox">
-
               <Typography variant="h7" className="introText">
-                Welcome to <span className="important-words">MIGR-AI-TION's Research App</span>.
-                We're investigating connections between organizational and hiring AI
-                discrimination for the <span className="important-words">FINDHR project</span>.
-                Start by <span className="highlight">journaling</span> your personal
-                experiences. Your insights shape a live dashboard <span className="highlight">
-                  visualization</span> shared with other participants. Contribute to constructing
-                a fairness ontology, qualitative dataset, and identifying intersectional
-                challenges. Our <span className="highlight">LLM-powered tool</span> illustrates
-                collective experiences, guiding intersectional fairness recommendations.
-                This research empowers developers, researchers, and EU policy makers to create
-                ethical, inclusive <span className="important-words">hiring AI</span>.
+                Welcome to{" "}
+                <span className="important-words">
+                  MIGR-AI-TION's Research App
+                </span>
+                . We're investigating connections between organizational and
+                hiring AI discrimination for the{" "}
+                <span className="important-words">FINDHR project</span>. Start
+                by <span className="highlight">journaling</span> your personal
+                experiences. Your insights shape a live dashboard{" "}
+                <span className="highlight">visualization</span> shared with
+                other participants. Contribute to constructing a fairness
+                ontology, qualitative dataset, and identifying intersectional
+                challenges. Our{" "}
+                <span className="highlight">LLM-powered tool</span> illustrates
+                collective experiences, guiding intersectional fairness
+                recommendations. This research empowers developers, researchers,
+                and EU policy makers to create ethical, inclusive{" "}
+                <span className="important-words">hiring AI</span>.
               </Typography>
 
               <hr />
             </div>
-            {user && (
+            {isRegisteredUser && (
               <div className="gridDiv">
                 <Grid container spacing={0} className="gridContainer">
                   <Grid item xs={12} md={6} className="uploadGrid">
@@ -177,27 +182,34 @@ export default function Home() {
 
             <div className="buttonContainer">
               <Stack spacing={8} direction="row" className="footerGrid">
-                <Chip variant="contained" className="newsletterButton" label="Sign Up to Our Newsletter!" icon={<MailOutlineIcon className="newsletterIcon" />} />
+                <Chip
+                  variant="contained"
+                  className="newsletterButton"
+                  label="Sign Up to Our Newsletter!"
+                  icon={<MailOutlineIcon className="newsletterIcon" />}
+                />
 
-                {user && (
-                  <Chip variant="contained" className="githubSignupButton" label="Join Our Open-source Community !" icon={<LanguageIcon className="gitHubSignUpIcon" />} />
+                {isRegisteredUser && (
+                  <Chip
+                    variant="contained"
+                    className="githubSignupButton"
+                    label="Join Our Open-source Community !"
+                    icon={<LanguageIcon className="gitHubSignUpIcon" />}
+                  />
                 )}
               </Stack>
             </div>
-
-
           </div>
           <hr classname="horizontal" />
           <div className="mainContainer">
             <div className="fundedLogosDiv">
-
               <br />
               {/* <Stack spacing={8} direction="row" className="fundedGrid"> */}
               <Grid container spacing={1} className="logosGridContainer">
                 <Grid item xs={12} md={3} className="logosGridItem">
                   <img src={EU} alt="EU-logo" className="fundedLogo-EU" />
                 </Grid>
-                <Grid itemxs={12} md={3} className="logosGridItem" >
+                <Grid itemxs={12} md={3} className="logosGridItem">
                   <img src={BMBF} alt="BMBF-logo" className="fundedLogo-BMBF" />
                 </Grid>
                 <Grid item xs={12} md={3} className="logosGridItem">
@@ -212,7 +224,7 @@ export default function Home() {
 
             <br />
 
-            <div className="legalDiv" >
+            <div className="legalDiv">
               <Stack spacing={2} direction="row" className="legalGrid">
                 <Typography />
                 Data Privacy
@@ -222,7 +234,6 @@ export default function Home() {
                 <Typography />
               </Stack>
             </div>
-
           </div>
         </>
       );

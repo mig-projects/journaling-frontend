@@ -22,16 +22,11 @@ export default function Navbar() {
   const { user, signOut } = useAuth();
 
   return (
-    <MDBNavbar expand="lg" bgColor="white"
-      sticky
-      className="navbar">
+    <MDBNavbar expand="lg" bgColor="white" sticky className="navbar">
       <MDBContainer fluid>
         <MDBNavbarBrand href="/">
           <img src={logo} className="logo" alt="logo" />
-          <span className="brand-name hide">
-            {" "}
-            MIGR-AI-TION{" "}
-          </span>
+          <span className="brand-name hide"> MIGR-AI-TION </span>
         </MDBNavbarBrand>
 
         <MDBNavbarToggler
@@ -42,22 +37,23 @@ export default function Navbar() {
           <MDBIcon icon="bars" fas />
         </MDBNavbarToggler>
 
-        <MDBCollapse
-          navbar
-          show={showNavExternal}
-          className="navbar-collapse"
-        >
+        <MDBCollapse navbar show={showNavExternal} className="navbar-collapse">
           {user ? (
             <MDBNavbarLink onClick={signOut} className="logout-button">
               <MDBIcon fas icon="user-circle" className="avatar" size="lg" />{" "}
               Logout
             </MDBNavbarLink>
           ) : (
-            <MDBNavbarNav>
-              <MDBNavbarLink href="/login" className="login-button">
-                Login
-              </MDBNavbarLink>
-            </MDBNavbarNav>
+            <div className="navbar-buttons-wrapper">
+              <MDBNavbarNav className="ml-auto">
+                <MDBNavbarLink href="/signup" className="signup-button">
+                  Sign Up
+                </MDBNavbarLink>
+                <MDBNavbarLink href="/login" className="login-button">
+                  Login
+                </MDBNavbarLink>
+              </MDBNavbarNav>
+            </div>
           )}
         </MDBCollapse>
       </MDBContainer>

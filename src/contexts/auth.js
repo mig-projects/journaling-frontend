@@ -10,6 +10,21 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [isRegisteredUser, setIsRegisteredUser] = useState(false);
+
+  const fetchRegistrationStatus = async (userId) => {
+    const { data, error } = await supaClient
+      .from("user_metadata")
+      .select("validated")
+      .eq("id", userId)
+      .single();
+
+    if (data) {
+      setIsRegisteredUser(data.validated);
+    } else {
+      console.error("Error fetching user metadata:", error);
+    }
+  };
 
   useEffect(() => {
     // Sign in or sign out according to Supabase event.
@@ -20,14 +35,17 @@ export const AuthProvider = ({ children }) => {
       setUser(currentUser ?? null);
       setLoading(false);
     };
+
     getUser();
 
     const { subscription } = supaClient.auth.onAuthStateChange(
       async (event, session) => {
         if (!session && event === "SIGNED_OUT") {
           setUser(null);
+          setIsRegisteredUser(null);
         } else if (session) {
           setUser(session.user);
+          await fetchRegistrationStatus(session.user.id);
         }
       }
     );
@@ -37,9 +55,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const value = {
-    // signUp: (data) => supaClient.auth.signUp(data),
     signOut: () => supaClient.auth.signOut(),
-    user: user,
+    isRegisteredUser,
+    user,
   };
 
   return (

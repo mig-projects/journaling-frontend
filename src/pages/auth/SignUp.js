@@ -5,40 +5,35 @@ import { useNavigate } from "react-router-dom";
 import { supaClient } from "../../services/supabase";
 
 import { CircularProgress } from "@mui/material";
-import "./Login.css";
+import "./SignUp.css";
 
-const Login = () => {
-  const { user, loading, isRegisteredUser } = useAuth();
+const Signup = () => {
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
 
-  // Navigate back to home page.
+  // Navigate back to home page after successful sign-up.
   useEffect(() => {
-    if (isRegisteredUser) {
-      console.log(user);
+    if (user) {
       setTimeout(() => {
-        navigate("/");
+        navigate("/"); // redirect to home page
       }, 1500);
     }
-  }, [isRegisteredUser]);
+  }, [user]);
 
   return (
-    <div className="loginContainer">
+    <div className="signupContainer">
       {loading && <CircularProgress />}
       {!user && (
         <Auth
           supabaseClient={supaClient}
+          view="sign_up"
           providers={[]}
-          className="loginForm"
+          className="signupForm"
         />
       )}
-      {isRegisteredUser && <span>You're logged in!</span>}
-      {!isRegisteredUser && user && (
-        <span>
-          You're account is pending approval. Reach out to the website's
-          administrator for more details.
-        </span>
-      )}
+      {user && <span>Congratulations! You're a signed up user.</span>}
     </div>
   );
 };
-export default Login;
+
+export default Signup;

@@ -5,9 +5,7 @@
 }
 
 .navbar {
-
   padding: 15px;
-
 }
 
 .logo {
@@ -23,7 +21,7 @@
 .brand-name {
   font-size: 24px;
   padding: 10px;
-  color: #7438E2;
+  color: #7438e2;
 }
 
 .navbar-collapse {
@@ -33,7 +31,14 @@
 }
 
 .login-button,
-.logout-button {
+.logout-button,
+.signup-button {
   margin-left: auto;
   padding: 10px;
+}
+
+.navbar-buttons-wrapper {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }

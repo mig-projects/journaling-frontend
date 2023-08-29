@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { UploadError, useApi } from "../../hooks/useApi";
 
 export const useUploadForm = () => {
-  const { user } = useAuth();
+  const { user, isRegisteredUser } = useAuth();
   const navigate = useNavigate();
   const { fetchData, addEntry } = useApi({ user });
 
@@ -28,10 +28,10 @@ export const useUploadForm = () => {
 
   // send back to login page if session doesn't exist or disappears.
   useEffect(() => {
-    if (!user) {
+    if (!isRegisteredUser) {
       navigate("/login");
     }
-  }, [user]);
+  }, [isRegisteredUser]);
 
   // Fetch suggested tags and initialize tagStates on component mount
   useEffect(() => {

@@ -91,7 +91,7 @@ export const useApi = ({ user }) => {
     const { textMemory, tagStates, userTags, communityTags } = memoryState;
     const { photo, drawing } = canvasState;
 
-    if (user) {
+    if (userId) {
       // create memory
       let { data: memory, error: memoryError } = await supaClient
         .from("text_memories")
