@@ -130,10 +130,22 @@ const Chart = () => {
   } else {
     return (
       <div className="chartContainer">
+        <Typography>Listing tags on click</Typography>
+        <ReactEcharts
+          style={{ width: "100%", height: "100vh" }}
+          option={createOptionSpec(graphs, "listTags", MOCK, LIMIT)}
+          className="chartDiv"
+        />
         <Typography>Showing user tags</Typography>
         <ReactEcharts
           style={{ width: "100%", height: "100vh" }}
           option={createOptionSpec(graphs, "starShaped", MOCK, LIMIT)}
+          className="chartDiv"
+        />
+        <Typography>Removing sugggested tag links</Typography>
+        <ReactEcharts
+          style={{ width: "100%", height: "100vh" }}
+          option={createOptionSpec(graphs, "userLinksOnly", MOCK, LIMIT)}
           className="chartDiv"
         />
       </div>
