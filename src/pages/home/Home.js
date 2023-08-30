@@ -31,7 +31,12 @@ export default function Home() {
   const [uploadMode, setUploadMode] = React.useState(false);
   const [anchorElUpload, setAnchorElUpload] = React.useState(null);
   const [anchorElDiscover, setAnchorElDiscover] = React.useState(null);
-  const { isRegisteredUser, loading, passwordRecoveryMode } = useAuth();
+  const {
+    isRegisteredUser,
+    loading,
+    passwordRecoveryMode,
+    setPasswordRecoveryMode,
+  } = useAuth();
 
   const showUpload = () => {
     setUploadMode(true);

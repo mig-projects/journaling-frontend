@@ -2,48 +2,57 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField, Typography, CircularProgress } from "@mui/material";
 import { useAuth } from "../../contexts/auth";
 import { supaClient } from "../../services/supabase";
-
-// import "./RecoverPassword.css";
+import { useNavigate } from "react-router-dom";
 
 const RecoverPassword = () => {
-  const { user, loading, setPasswordRecoveryMode } = useAuth();
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const { user, loading, passwordRecoveryMode, setPasswordRecoveryMode } =
+    useAuth();
+  const navigate = useNavigate();
+
+  const [passwords, setPasswords] = useState({
+    newPassword: "",
+    confirmPassword: "",
+  });
   const [message, setMessage] = useState("");
   const [disableButton, setDisableButton] = useState(true);
 
-  console.log(user);
+  useEffect(() => {
+    if (!user) {
+      setPasswordRecoveryMode(false);
+      navigate("/");
+    }
+  }, [user]);
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
 
     const { error } = await supaClient.auth.updateUser({
-      password: newPassword,
+      password: passwords.newPassword,
     });
-    if (error) {
-      console.log(error.message);
-    } else {
-      console.log("Password updated successfully.");
+
+    if (!error) {
       setPasswordRecoveryMode(false);
+      setTimeout(() => navigate("/"), 1500);
     }
   };
 
   useEffect(() => {
-    // Enable the submit button only if both passwords match and are not empty
+    const { newPassword, confirmPassword } = passwords;
     setDisableButton(
       newPassword !== confirmPassword || newPassword.length === 0
     );
-  }, [newPassword, confirmPassword]);
+  }, [passwords]);
+
+  const handleChange = (prop) => (event) => {
+    setPasswords({ ...passwords, [prop]: event.target.value });
+  };
 
   return (
     <div className="loginContainer">
       {loading ? (
         <CircularProgress />
-      ) : !user ? (
-        <span>
-          You're not logged in. Contact your administrator to renew your
-          password.
-        </span>
+      ) : !passwordRecoveryMode ? (
+        <Typography>Your password has been updated.</Typography>
       ) : (
         <div>
           <Typography variant="h5">Update Password</Typography>
@@ -55,8 +64,8 @@ const RecoverPassword = () => {
               fullWidth
               label="New password"
               type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              value={passwords.newPassword}
+              onChange={handleChange("newPassword")}
             />
             <TextField
               variant="outlined"
@@ -65,8 +74,8 @@ const RecoverPassword = () => {
               fullWidth
               label="Confirm password"
               type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={passwords.confirmPassword}
+              onChange={handleChange("confirmPassword")}
             />
             <Button
               type="submit"
@@ -83,4 +92,5 @@ const RecoverPassword = () => {
     </div>
   );
 };
+
 export default RecoverPassword;
