@@ -30,15 +30,24 @@ export const useApi = ({ user }) => {
     }
   };
 
-  const fetchData = async (table, query = "*") => {
-    let { data, error } = await supaClient.from(table).select(query);
+  // Fetch data with select statement or with RPC.
+  const fetchData = async (operation, source, query = "*") => {
+    let result;
+    if (operation === "select") {
+      result = await supaClient.from(source).select(query);
+    } else if (operation === "rpc") {
+      result = await supaClient.rpc(source);
+    } else if (!["select", "rpc"].includes(operation)) {
+      throw new Error(`"The operation "${operation}" is not recognized.`);
+    }
+
+    let { data, error } = result;
 
     if (error) {
       throw new UploadError(
-        `Error during fetching operation on table ${table}`,
+        `Error during ${operation} operation on source ${source}`,
         "FetchData",
-        query,
-        error
+        error.message
       );
     }
     return data;

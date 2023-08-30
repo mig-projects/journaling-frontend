@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "./Chart.css";
 import usePreprocessing from "../../hooks/usePreprocessing";
 
-const MOCK = true;
+const MOCK = false;
 const LIMIT = false;
 
 const Chart = () => {
@@ -59,15 +59,14 @@ const Chart = () => {
       newNodes = newNodes.filter((n) => parseInt(n.id) < 10);
     }
 
-    console.log("New nodes:", newNodes);
+    // console.log("New nodes:", newNodes);
     return newNodes;
   };
 
   const createLinkSpec = (links, graphType = "listTags", limit = false) => {
-    console.log(limit);
     let newLinks = links.map((l) => ({
       ...l,
-      value: l.value * 10,
+      value: l.value,
       lineStyle: { color: "#8CD1CA", curveness: 0.1 },
       label: { show: false },
     }));
@@ -81,7 +80,7 @@ const Chart = () => {
       newLinks = newLinks.filter((link) => link.value === 10);
     }
 
-    console.log("New links: ", newLinks);
+    // console.log("New links: ", newLinks);
 
     return newLinks;
   };
@@ -94,8 +93,10 @@ const Chart = () => {
         graph.type === MOCK ? "mockGraph" : "userData"
       );
     } else if (graphType === "starShaped" || graphType === "userLinksOnly") {
-      graph = graphs.find((graph) => graph.type === "starShaped");
-      console.log(graph);
+      graph = graphs.find((graph) =>
+        graph.type === MOCK ? "starShaped" : "userData"
+      );
+      // console.log(graph);
     }
     if (graph) {
       option = {
@@ -121,7 +122,7 @@ const Chart = () => {
         ],
       };
     }
-    console.log("New option: ", option);
+    // console.log("New option: ", option);
     return option;
   };
 
@@ -130,22 +131,10 @@ const Chart = () => {
   } else {
     return (
       <div className="chartContainer">
-        <Typography>Listing tags on click</Typography>
-        <ReactEcharts
-          style={{ width: "100%", height: "100vh" }}
-          option={createOptionSpec(graphs, "listTags", MOCK, LIMIT)}
-          className="chartDiv"
-        />
         <Typography>Showing user tags</Typography>
         <ReactEcharts
           style={{ width: "100%", height: "100vh" }}
           option={createOptionSpec(graphs, "starShaped", MOCK, LIMIT)}
-          className="chartDiv"
-        />
-        <Typography>Removing sugggested tag links</Typography>
-        <ReactEcharts
-          style={{ width: "100%", height: "100vh" }}
-          option={createOptionSpec(graphs, "userLinksOnly", MOCK, LIMIT)}
           className="chartDiv"
         />
       </div>
