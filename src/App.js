@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./contexts/auth";
 import Navbar from "./features/navigation/Navbar";
 import Home from "./pages/home/Home";
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/SignUp";
-import { AuthProvider } from "./contexts/auth";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/SignUp";
 
 const App = () => {
   return (

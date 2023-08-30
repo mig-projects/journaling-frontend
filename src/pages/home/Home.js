@@ -24,13 +24,14 @@ import "./Home.css";
 import { useAuth } from "../../contexts/auth";
 import Chart from "../../features/dashboard/components/Chart/Chart";
 import { CircularProgress } from "@mui/material";
+import RecoverPassword from "../RecoverPassword/RecoverPassword";
 
 export default function Home() {
   const [discoveryMode, setDiscoveryMode] = React.useState(false);
   const [uploadMode, setUploadMode] = React.useState(false);
   const [anchorElUpload, setAnchorElUpload] = React.useState(null);
   const [anchorElDiscover, setAnchorElDiscover] = React.useState(null);
-  const { isRegisteredUser, loading } = useAuth();
+  const { isRegisteredUser, loading, passwordRecoveryMode } = useAuth();
 
   const showUpload = () => {
     setUploadMode(true);
@@ -61,6 +62,8 @@ export default function Home() {
 
   if (loading) {
     return <CircularProgress />;
+  } else if (passwordRecoveryMode) {
+    return <RecoverPassword />;
   } else if (uploadMode) {
     return <UploadForm />;
   } else {

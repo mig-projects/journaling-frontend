@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isRegisteredUser, setIsRegisteredUser] = useState(false);
+  const [passwordRecoveryMode, setPasswordRecoveryMode] = useState(false);
 
   const fetchRegistrationStatus = async (userId) => {
     const { data, error } = await supaClient
@@ -43,6 +44,9 @@ export const AuthProvider = ({ children }) => {
           setUser(null);
           setIsRegisteredUser(null);
         } else if (session) {
+          if (event === "PASSWORD_RECOVERY") {
+            setPasswordRecoveryMode(true);
+          }
           setUser(session.user);
           await fetchRegistrationStatus(session.user.id);
         }
@@ -57,6 +61,8 @@ export const AuthProvider = ({ children }) => {
     signOut: () => supaClient.auth.signOut(),
     isRegisteredUser,
     user,
+    passwordRecoveryMode,
+    setPasswordRecoveryMode,
   };
 
   return (
