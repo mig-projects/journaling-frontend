@@ -14,7 +14,6 @@ const Login = () => {
   // Navigate back to home page.
   useEffect(() => {
     if (isRegisteredUser) {
-      console.log(user);
       setTimeout(() => {
         navigate("/");
       }, 1500);

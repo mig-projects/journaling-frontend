@@ -24,8 +24,6 @@ const RecoverPassword = () => {
   }, [user]);
 
   const handleUpdatePassword = async (e) => {
-    e.preventDefault();
-
     const { error } = await supaClient.auth.updateUser({
       password: passwords.newPassword,
     });
@@ -33,6 +31,8 @@ const RecoverPassword = () => {
     if (!error) {
       setPasswordRecoveryMode(false);
       setTimeout(() => navigate("/"), 1500);
+    } else {
+      console.log(error);
     }
   };
 
