@@ -226,6 +226,10 @@
 .legalDiv {
   display: flex;
   justify-content: center;
+
+  .MuiLink-root:hover {
+    color: #a280df;
+  }
 }
 
 .legalGrid {

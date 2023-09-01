@@ -1,0 +1,6 @@
+.impressumContainer {
+  padding: 50px 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

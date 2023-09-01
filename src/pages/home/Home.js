@@ -23,7 +23,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import "./Home.css";
 import { useAuth } from "../../contexts/auth";
 import Chart from "../../features/dashboard/components/Chart/Chart";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Link } from "@mui/material";
 import RecoverPassword from "../RecoverPassword/RecoverPassword";
 
 export default function Home() {
@@ -238,10 +238,14 @@ export default function Home() {
             <div className="legalDiv">
               <Stack spacing={2} direction="row" className="legalGrid">
                 <Typography />
-                Data Privacy
+                <Link color="inherit" href="/privacy">
+                  Data Privacy
+                </Link>
                 <Typography />
                 <Typography />
-                Impressum
+                <Link color="inherit" href="/impressum">
+                  Impressum
+                </Link>
                 <Typography />
               </Stack>
             </div>
