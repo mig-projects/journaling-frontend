@@ -18,12 +18,12 @@ const usePreprocessing = ({ MOCK, user }) => {
     const minLogSize = Math.min(...logNodes.map((node) => node.count));
 
     const normalizedNodes = logNodes.map((node) => ({
-      id: node.tag_category + "||" + node.name,
+      id: node.node_type + "||" + node.name,
       name: node.name,
       size:
         ((node.count - minLogSize) / (maxLogSize - minLogSize)) * (max - min) +
         min,
-      tagType: node.tag_category,
+      tagType: node.node_type,
     }));
 
     return normalizedNodes;
@@ -34,12 +34,13 @@ const usePreprocessing = ({ MOCK, user }) => {
     const initializeGraph = async () => {
       const nodes = await fetchData("rpc", "get_nodes");
       const links = await fetchData("rpc", "get_links");
+      console.log(nodes);
 
       setGraphs([
         {
           links: links.map((link) => ({
-            source: link.source_category + "||" + link.source_name,
-            target: link.target_category + "||" + link.target_name,
+            source: link.source_type + "||" + link.source_name,
+            target: link.target_type + "||" + link.target_name,
             value: link.count,
           })),
           nodes: transformNodes(nodes),

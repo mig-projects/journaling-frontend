@@ -55,7 +55,7 @@ export const useApi = ({ user }) => {
 
   const uploadAndInsertImage = async (userId, memoryKey, imgData, imgDir) => {
     try {
-      console.log(imgData);
+      // console.log(imgData);
       const result = await fetch(imgData);
       const blob = await result.blob();
       const file = new File([blob], "File name", { type: "image/png" });
@@ -104,7 +104,7 @@ export const useApi = ({ user }) => {
       // create memory
       let { data: memory, error: memoryError } = await supaClient
         .from("text_memories")
-        .insert([{ user_id: userId, memory: textMemory }])
+        .insert([{ user_id: userId, text: textMemory }])
         .select();
 
       if (memoryError) {
@@ -124,14 +124,14 @@ export const useApi = ({ user }) => {
           memory_id: memoryKey,
           user_id: userId,
           tag_name: tagName,
-          category: "highlight",
+          tag_type: "highlight",
         }))
         .concat(
           communityTags.map((tagName) => ({
             memory_id: memoryKey,
             user_id: userId,
             tag_name: tagName,
-            category: "community",
+            tag_type: "community",
           }))
         );
       await writeOrThrowError("insert", "user_tags", newUserTags);
@@ -140,10 +140,10 @@ export const useApi = ({ user }) => {
       let selectedTags = tagStates
         .filter((tag) => tag.selected)
         .map((tag) => ({
-          suggested_tag_id: tag.id,
-          text_memory_id: memoryKey,
+          category_id: tag.id,
+          memory_id: memoryKey,
         }));
-      await writeOrThrowError("insert", "suggested_tag_memories", selectedTags);
+      await writeOrThrowError("insert", "category_memories", selectedTags);
 
       await Promise.all([
         uploadAndInsertImage(userId, memoryKey, photo, "photos"),

@@ -71,7 +71,7 @@
   }
 }
 
-.suggestedChipStyle.MuiChip-root {
+.categoryChipStyle.MuiChip-root {
   font-size: 16px;
   margin-top: 10px;
   margin-right: 10px;
@@ -81,7 +81,7 @@
   border-radius: 15px;
 }
 
-.suggestedChipStyle.MuiChip-root:hover {
+.categoryChipStyle.MuiChip-root:hover {
   background-color: #b2ede7;
   border: solid 3px #8cd1ca;
 }

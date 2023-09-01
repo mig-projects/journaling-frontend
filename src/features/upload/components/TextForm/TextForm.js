@@ -32,7 +32,6 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
 
   return (
     <div>
-
       <div className="tagContainer">
         {memoryState.userTags.map((word, index) => (
           <Chip
@@ -85,7 +84,8 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
           <div>
             <Typography>
               <li>
-                <span className="important-words">Highlight</span> the words with your cursor.
+                <span className="important-words">Highlight</span> the words
+                with your cursor.
                 <span className="textMandatory">*</span>
               </li>
             </Typography>
@@ -102,8 +102,8 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
             <br />
             <Typography className="tagContainer">
               <li>
-                Which <span className="important-words">communities</span> is this experience most relevant to?
-
+                Which <span className="important-words">communities</span> is
+                this experience most relevant to?
                 <span className="textMandatory">*</span>
               </li>
             </Typography>
@@ -123,8 +123,8 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
             <br />
             <Typography className="tagContainer">
               <li>
-                Are any of these <span className="important-words">themes</span> related to your memory? Click and add.
-
+                Are any of these <span className="important-words">themes</span>{" "}
+                related to your memory? Click and add.
                 <span className="textMandatory">*</span>
               </li>
             </Typography>
@@ -133,9 +133,9 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
                 (tag, index) =>
                   !tag.selected && (
                     <Chip
-                      className="suggestedChipStyle"
+                      className="categoryChipStyle"
                       label={tag.name}
-                      key={`suggested-tag-${index}`}
+                      key={`category-${index}`}
                       variant="filled"
                       onClick={() => toggleTag(tag.id)}
                     />
@@ -145,24 +145,24 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
           </div>
         ) : (
           <div>
-
             <Typography>
               <li>
-                Have you faced any <span className="important-words">discrimination</span> working in <span className="important-words">tech</span>?
-
+                Have you faced any{" "}
+                <span className="important-words">discrimination</span> working
+                in <span className="important-words">tech</span>?
               </li>
+              <li>Are you wondering what counts as discrimination?</li>
               <li>
-                Are you wondering what counts as discrimination?
-
-              </li>
-              <li>
-                Do you have some thoughts on <span className="important-words">fairness</span> in hiring and AI?
+                Do you have some thoughts on{" "}
+                <span className="important-words">fairness</span> in hiring and
+                AI?
               </li>
               <li>
                 Have you reflected the group discussions and others' inputs?
               </li>
               <li>
-                Record your thoughts below.<span className="textMandatory">*</span>
+                Record your thoughts below.
+                <span className="textMandatory">*</span>
               </li>
             </Typography>
             <br />

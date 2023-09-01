@@ -71,11 +71,13 @@ const UploadForm = () => {
       </div>
     );
   } else {
-    console.log("Validate: ", validateData());
     return (
       <div className="mainContainer">
         <div>
-          <Typography className="journalHeader" variant="h2">  JOURNAL </Typography>
+          <Typography className="journalHeader" variant="h2">
+            {" "}
+            JOURNAL{" "}
+          </Typography>
         </div>
         <div>
           <Grid container spacing={9}>
@@ -90,7 +92,6 @@ const UploadForm = () => {
               <br />
               <CanvasII setCanvasState={setCanvasState} />
             </Grid>
-
           </Grid>
         </div>
 

@@ -33,7 +33,7 @@ export const useUploadForm = () => {
     }
   }, [isRegisteredUser]);
 
-  // Fetch suggested tags and initialize tagStates on component mount
+  // Fetch categories and initialize tagStates on component mount
   useEffect(() => {
     const initializeTagStates = async () => {
       setUploadState((prevState) => ({
@@ -41,7 +41,7 @@ export const useUploadForm = () => {
         dataFetchInProgress: true,
       }));
 
-      const data = await fetchData("select", "suggested_tags");
+      const data = await fetchData("select", "categories");
 
       // Pass to memory state as initial list of states
       if (data) {
