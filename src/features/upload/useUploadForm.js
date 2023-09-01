@@ -41,7 +41,7 @@ export const useUploadForm = () => {
         dataFetchInProgress: true,
       }));
 
-      const data = await fetchData("suggested_tags");
+      const data = await fetchData("select", "suggested_tags");
 
       // Pass to memory state as initial list of states
       if (data) {
