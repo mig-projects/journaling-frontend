@@ -14,15 +14,15 @@ const usePreprocessing = ({ MOCK, user }) => {
       size: Math.log10(node.count + 1),
     }));
 
-    const maxLogSize = Math.max(...logNodes.map((node) => node.count));
-    const minLogSize = Math.min(...logNodes.map((node) => node.count));
+    const maxLogSize = Math.max(...logNodes.map((node) => node.size));
+    const minLogSize = Math.min(...logNodes.map((node) => node.size));
 
     const normalizedNodes = logNodes.map((node) => ({
       id: node.node_type + "||" + node.name,
       name: node.name,
       size:
-        ((node.count - minLogSize) / (maxLogSize - minLogSize)) * (max - min) +
-        min,
+        ((node.size - minLogSize) / (maxLogSize - minLogSize)) * (max - min) +
+          min || min,
       tagType: node.node_type,
     }));
 
