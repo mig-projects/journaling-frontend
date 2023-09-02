@@ -8,7 +8,7 @@ const usePreprocessing = ({ MOCK, user }) => {
   const [loading, setLoading] = useState(false);
 
   // Log-transform and project to desired min-max interval
-  const transformNodes = (nodes, min = 5, max = 50) => {
+  const transformNodes = (nodes, min = 15, max = 50) => {
     const logNodes = nodes.map((node) => ({
       ...node,
       size: Math.log10(node.count + 1),
