@@ -34,7 +34,6 @@ const usePreprocessing = ({ MOCK, user }) => {
     const initializeGraph = async () => {
       const nodes = await fetchData("rpc", "get_nodes");
       const links = await fetchData("rpc", "get_links");
-      console.log(nodes);
 
       setGraphs([
         {

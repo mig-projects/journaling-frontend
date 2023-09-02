@@ -136,7 +136,7 @@ export const useApi = ({ user }) => {
         );
       await writeOrThrowError("insert", "user_tags", newUserTags);
 
-      // associate entry with suggested tags
+      // associate entry with categories
       let selectedTags = tagStates
         .filter((tag) => tag.selected)
         .map((tag) => ({
