@@ -52,7 +52,19 @@ const Chart = () => {
       symbolSize: isUserTag(n) ? 15 : n.size,
       itemStyle: isUserTag(n)
         ? { color: "#a280df", borderWidth: 1, borderColor: "#f0eded" }
-        : { color: "#7438e2", borderWidth: 2, borderColor: "#f0eded" },
+        : {
+            color: "#7438e2",
+            borderWidth: 2,
+            borderColor: "#f0eded",
+            emphasis: {
+              focus: "adjacency",
+              lineStyle: {
+                width: 10,
+              },
+              scale: true,
+              label: { show: true },
+            },
+          },
       label: { show: !isUserTag(n) },
     }));
     if (limit) {
@@ -100,8 +112,11 @@ const Chart = () => {
     }
     if (graph) {
       option = {
+        // title: {
+        //   text: "",
+        // },
         backgroundColor: "#f7f7f7",
-        tooltip: createListingTooltip(graph.nodes, graphType),
+        tooltip: {},
         series: [
           {
             type: "graph",
@@ -114,10 +129,13 @@ const Chart = () => {
               position: "right",
             },
             force: {
-              repulsion: 500,
-              edgeLength: [5, 50],
+              initLayout: null,
+              repulsion: 300,
+              edgeLength: [50, 100],
+              friction: 0.5,
               gravity: 0.1,
             },
+            selectedMode: "single",
           },
         ],
       };
