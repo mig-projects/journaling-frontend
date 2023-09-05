@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { useApi } from "../../../hooks/useApi";
-import { mockGraphs } from "../mockGraph";
+import { mockGraph } from "../mockGraph";
 
+// Hook for dashboard preprocessing logic
+// - Pulling data from Supabase
+// - Transforming data
+// Returns:
+// - loading (boolean)
+// - graph (nodes: Array<any>, links: Array<any>, type: string)
 const usePreprocessing = ({ MOCK, user }) => {
   const { fetchData } = useApi({ user });
-  const [graphs, setGraphs] = useState([]);
+  const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
 
   // Log-transform and project to desired min-max interval
@@ -35,27 +41,26 @@ const usePreprocessing = ({ MOCK, user }) => {
       const nodes = await fetchData("rpc", "get_nodes");
       const links = await fetchData("rpc", "get_links");
 
-      setGraphs([
-        {
-          links: links.map((link) => ({
-            source: link.source_type + "||" + link.source_name,
-            target: link.target_type + "||" + link.target_name,
-            value: link.count,
-          })),
-          nodes: transformNodes(nodes),
-          type: "userData",
-        },
-      ]);
+      setGraph({
+        links: links.map((link) => ({
+          source: link.source_type + "||" + link.source_name,
+          target: link.target_type + "||" + link.target_name,
+          value: link.count,
+        })),
+        nodes: transformNodes(nodes),
+        type: "userData",
+      });
     };
+
     if (MOCK) {
-      setGraphs(mockGraphs);
+      setGraph(mockGraph);
     } else {
       initializeGraph();
     }
     setLoading(false);
   }, []);
 
-  return { loading, graphs };
+  return { loading, graph };
 };
 
 export default usePreprocessing;

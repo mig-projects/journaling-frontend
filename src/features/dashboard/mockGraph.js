@@ -1,91 +1,536 @@
 // Mock dataset for nodes
 const mockNodes = [
-  { id: "1", value: 20, name: "Apple", tags: ["red", "green", "yellow"] },
-  { id: "2", value: 10, name: "Banana", tags: ["ripe"] },
-  { id: "3", value: 30, name: "Orange", tags: ["citrus", "orange color"] },
-  { id: "4", value: 5, name: "Grapes", tags: ["small", "seedless"] },
+  {
+    id: "1",
+    value: 20,
+    name: "Apple",
+    tags: ["red", "green", "yellow"],
+  },
+  {
+    id: "2",
+    value: 10,
+    name: "Banana",
+    tags: ["ripe"],
+  },
+  {
+    id: "3",
+    value: 30,
+    name: "Orange",
+    tags: ["citrus", "orange color"],
+  },
+  {
+    id: "4",
+    value: 5,
+    name: "Grapes",
+    tags: ["small", "seedless"],
+  },
   {
     id: "5",
     value: 15,
     name: "Strawberry",
     tags: ["sweet", "red color", "berry"],
   },
-  { id: "6", value: 25, name: "Pineapple", tags: ["yellow", "spiky"] },
-  { id: "7", value: 18, name: "Mango", tags: ["sweet", "round"] },
+  {
+    id: "6",
+    value: 25,
+    name: "Pineapple",
+    tags: ["yellow", "spiky"],
+  },
+  {
+    id: "7",
+    value: 18,
+    name: "Mango",
+    tags: ["sweet", "round"],
+  },
   {
     id: "8",
     value: 12,
     name: "Watermelon",
     tags: ["large", "sweet", "refreshing"],
   },
-  { id: "9", value: 28, name: "Lemon", tags: ["sour", "yellow color"] },
-  { id: "10", value: 7, name: "Blueberry", tags: ["small", "blue color"] },
-  { id: "11", value: 16, name: "Raspberry", tags: ["small", "red color"] },
-  { id: "12", value: 30, name: "Kiwi", tags: ["green"] },
-  { id: "13", value: 14, name: "Peach", tags: ["fuzzy", "orange color"] },
-  { id: "14", value: 9, name: "Plum", tags: ["fuzzy", "sweet"] },
+  {
+    id: "9",
+    value: 28,
+    name: "Lemon",
+    tags: ["sour", "yellow color"],
+  },
+  {
+    id: "10",
+    value: 7,
+    name: "Blueberry",
+    tags: ["small", "blue color"],
+  },
+  {
+    id: "11",
+    value: 16,
+    name: "Raspberry",
+    tags: ["small", "red color"],
+  },
+  {
+    id: "12",
+    value: 30,
+    name: "Kiwi",
+    tags: ["green"],
+  },
+  {
+    id: "13",
+    value: 14,
+    name: "Peach",
+    tags: ["fuzzy", "orange color"],
+  },
+  {
+    id: "14",
+    value: 9,
+    name: "Plum",
+    tags: ["fuzzy", "sweet"],
+  },
+  {
+    id: "15",
+    value: 1,
+    name: "red",
+    tagType: "highlight",
+  },
+  {
+    id: "16",
+    value: 1,
+    name: "green",
+    tagType: "highlight",
+  },
+  {
+    id: "17",
+    value: 1,
+    name: "yellow",
+    tagType: "highlight",
+  },
+  {
+    id: "18",
+    value: 1,
+    name: "ripe",
+    tagType: "highlight",
+  },
+  {
+    id: "19",
+    value: 1,
+    name: "citrus",
+    tagType: "highlight",
+  },
+  {
+    id: "20",
+    value: 1,
+    name: "orange color",
+    tagType: "highlight",
+  },
+  {
+    id: "21",
+    value: 1,
+    name: "small",
+    tagType: "highlight",
+  },
+  {
+    id: "22",
+    value: 1,
+    name: "seedless",
+    tagType: "highlight",
+  },
+  {
+    id: "23",
+    value: 1,
+    name: "sweet",
+    tagType: "highlight",
+  },
+  {
+    id: "24",
+    value: 1,
+    name: "red color",
+    tagType: "highlight",
+  },
+  {
+    id: "25",
+    value: 1,
+    name: "berry",
+    tagType: "highlight",
+  },
+  {
+    id: "26",
+    value: 1,
+    name: "yellow",
+    tagType: "highlight",
+  },
+  {
+    id: "27",
+    value: 1,
+    name: "spiky",
+    tagType: "highlight",
+  },
+  {
+    id: "28",
+    value: 1,
+    name: "sweet",
+    tagType: "highlight",
+  },
+  {
+    id: "29",
+    value: 1,
+    name: "round",
+    tagType: "highlight",
+  },
+  {
+    id: "30",
+    value: 1,
+    name: "large",
+    tagType: "highlight",
+  },
+  {
+    id: "31",
+    value: 1,
+    name: "sweet",
+    tagType: "highlight",
+  },
+  {
+    id: "32",
+    value: 1,
+    name: "refreshing",
+    tagType: "highlight",
+  },
+  {
+    id: "33",
+    value: 1,
+    name: "sour",
+    tagType: "highlight",
+  },
+  {
+    id: "34",
+    value: 1,
+    name: "yellow color",
+    tagType: "highlight",
+  },
+  {
+    id: "35",
+    value: 1,
+    name: "small",
+    tagType: "highlight",
+  },
+  {
+    id: "36",
+    value: 1,
+    name: "blue color",
+    tagType: "highlight",
+  },
+  {
+    id: "37",
+    value: 1,
+    name: "small",
+    tagType: "highlight",
+  },
+  {
+    id: "38",
+    value: 1,
+    name: "red color",
+    tagType: "highlight",
+  },
+  {
+    id: "39",
+    value: 1,
+    name: "green",
+    tagType: "highlight",
+  },
+  {
+    id: "40",
+    value: 1,
+    name: "fuzzy",
+    tagType: "highlight",
+  },
+  {
+    id: "41",
+    value: 1,
+    name: "orange color",
+    tagType: "highlight",
+  },
+  {
+    id: "42",
+    value: 1,
+    name: "fuzzy",
+    tagType: "highlight",
+  },
+  {
+    id: "43",
+    value: 1,
+    name: "sweet",
+    tagType: "highlight",
+  },
 ];
 
 // Mock dataset for links
 const mockLinks = [
-  { source: "1", target: "2", value: 15 },
-  { source: "1", target: "14", value: 8 },
-  { source: "1", target: "4", value: 5 },
-  { source: "2", target: "3", value: 12 },
-  { source: "2", target: "13", value: 6 },
-  { source: "3", target: "4", value: 10 },
-  { source: "4", target: "5", value: 3 },
-  { source: "5", target: "11", value: 9 },
-  { source: "5", target: "7", value: 7 },
-  { source: "6", target: "7", value: 11 },
-  { source: "6", target: "8", value: 4 },
-  { source: "7", target: "8", value: 13 },
-  { source: "8", target: "16", value: 18 },
-  { source: "9", target: "10", value: 18 },
-  { source: "9", target: "12", value: 11 },
-  { source: "10", target: "13", value: 7 },
-  { source: "11", target: "14", value: 9 },
-  { source: "11", target: "5", value: 12 },
-  { source: "12", target: "16", value: 15 },
-  { source: "14", target: "7", value: 5 },
-  { source: "13", target: "4", value: 18 },
-  { source: "15", target: "14", value: 0 },
-  { source: "15", target: "11", value: 17 },
-  { source: "16", target: "1", value: 12 },
+  {
+    source: "1",
+    target: "2",
+    value: 15,
+  },
+  {
+    source: "1",
+    target: "14",
+    value: 8,
+  },
+  {
+    source: "1",
+    target: "4",
+    value: 5,
+  },
+  {
+    source: "2",
+    target: "3",
+    value: 12,
+  },
+  {
+    source: "2",
+    target: "13",
+    value: 6,
+  },
+  {
+    source: "3",
+    target: "4",
+    value: 10,
+  },
+  {
+    source: "4",
+    target: "5",
+    value: 3,
+  },
+  {
+    source: "5",
+    target: "11",
+    value: 9,
+  },
+  {
+    source: "5",
+    target: "7",
+    value: 7,
+  },
+  {
+    source: "6",
+    target: "7",
+    value: 11,
+  },
+  {
+    source: "6",
+    target: "8",
+    value: 4,
+  },
+  {
+    source: "7",
+    target: "8",
+    value: 13,
+  },
+  {
+    source: "8",
+    target: "16",
+    value: 18,
+  },
+  {
+    source: "9",
+    target: "10",
+    value: 18,
+  },
+  {
+    source: "9",
+    target: "12",
+    value: 11,
+  },
+  {
+    source: "10",
+    target: "13",
+    value: 7,
+  },
+  {
+    source: "11",
+    target: "14",
+    value: 9,
+  },
+  {
+    source: "11",
+    target: "5",
+    value: 12,
+  },
+  {
+    source: "12",
+    target: "16",
+    value: 15,
+  },
+  {
+    source: "14",
+    target: "7",
+    value: 5,
+  },
+  {
+    source: "13",
+    target: "4",
+    value: 18,
+  },
+  {
+    source: "15",
+    target: "14",
+    value: 0,
+  },
+  {
+    source: "15",
+    target: "11",
+    value: 17,
+  },
+  {
+    source: "16",
+    target: "1",
+    value: 12,
+  },
+  {
+    source: "15",
+    target: "1",
+    value: 1,
+  },
+  {
+    source: "16",
+    target: "1",
+    value: 1,
+  },
+  {
+    source: "17",
+    target: "1",
+    value: 1,
+  },
+  {
+    source: "18",
+    target: "2",
+    value: 1,
+  },
+  {
+    source: "19",
+    target: "3",
+    value: 1,
+  },
+  {
+    source: "20",
+    target: "3",
+    value: 1,
+  },
+  {
+    source: "21",
+    target: "4",
+    value: 1,
+  },
+  {
+    source: "22",
+    target: "4",
+    value: 1,
+  },
+  {
+    source: "23",
+    target: "5",
+    value: 1,
+  },
+  {
+    source: "24",
+    target: "5",
+    value: 1,
+  },
+  {
+    source: "25",
+    target: "5",
+    value: 1,
+  },
+  {
+    source: "26",
+    target: "6",
+    value: 1,
+  },
+  {
+    source: "27",
+    target: "6",
+    value: 1,
+  },
+  {
+    source: "28",
+    target: "7",
+    value: 1,
+  },
+  {
+    source: "29",
+    target: "7",
+    value: 1,
+  },
+  {
+    source: "30",
+    target: "8",
+    value: 1,
+  },
+  {
+    source: "31",
+    target: "8",
+    value: 1,
+  },
+  {
+    source: "32",
+    target: "8",
+    value: 1,
+  },
+  {
+    source: "33",
+    target: "9",
+    value: 1,
+  },
+  {
+    source: "34",
+    target: "9",
+    value: 1,
+  },
+  {
+    source: "35",
+    target: "10",
+    value: 1,
+  },
+  {
+    source: "36",
+    target: "10",
+    value: 1,
+  },
+  {
+    source: "37",
+    target: "11",
+    value: 1,
+  },
+  {
+    source: "38",
+    target: "11",
+    value: 1,
+  },
+  {
+    source: "39",
+    target: "12",
+    value: 1,
+  },
+  {
+    source: "40",
+    target: "13",
+    value: 1,
+  },
+  {
+    source: "41",
+    target: "13",
+    value: 1,
+  },
+  {
+    source: "42",
+    target: "14",
+    value: 1,
+  },
+  {
+    source: "43",
+    target: "14",
+    value: 1,
+  },
 ];
 
-function restructureDataset(nodes, links) {
-  const newNodes = [...nodes];
-  const newLinks = [...links];
-
-  let counter = newNodes.length + 1;
-  for (const node of nodes) {
-    if (node.tags) {
-      for (const tag of node.tags) {
-        const tagNode = {
-          id: String(counter),
-          value: 1,
-          name: tag,
-          tagType: "highlight",
-        };
-        newNodes.push(tagNode);
-
-        const tagLink = {
-          source: tagNode.id,
-          target: node.id,
-          value: 1,
-        };
-
-        newLinks.push(tagLink);
-        counter += 1;
-      }
-    }
-  }
-
-  return { nodes: newNodes, links: newLinks };
-}
-
-export const mockGraphs = [
-  { nodes: mockNodes, links: mockLinks, type: "mockGraph" },
-  { ...restructureDataset(mockNodes, mockLinks), type: "starShaped" },
-];
+export const mockGraph = {
+  nodes: mockNodes,
+  links: mockLinks,
+  type: "mockGraph",
+};
