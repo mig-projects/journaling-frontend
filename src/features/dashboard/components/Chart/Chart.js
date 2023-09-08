@@ -11,12 +11,18 @@ const MOCK = false;
 const LIMIT = false;
 
 const Chart = () => {
+  // Get user and registration status from authentication context
   const { user, isRegisteredUser } = useAuth();
+
+  // Use custom hook to preprocess data
   const { loading, graph } = usePreprocessing({ MOCK, user });
+
+  // Use custom hook to configure chart
   const { option } = useChart({ loading, graph, LIMIT });
 
   const navigate = useNavigate();
 
+  // Effect hook to redirect unregistered users to login page
   useEffect(() => {
     if (!isRegisteredUser) {
       navigate("/login");
@@ -41,6 +47,8 @@ const Chart = () => {
         <ReactEcharts
           style={{ width: "100%", height: "100vh" }}
           option={option}
+          lazyUpdate={true}
+          notMerge={true}
           className="chartDiv"
         />
       </div>

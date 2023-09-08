@@ -1,0 +1,92 @@
+[
+  {
+    "topic": "Starting a Small Business",
+    "description": "This topic would cover aspects such as the steps involved in starting a small startup, legal requirements, registration processes, and the general challenges and opportunities faced by small businesses.",
+    "cluster_id": 0
+  },
+  {
+    "topic": "Startup Growth Strategies",
+    "description": "This topic would focus on techniques and strategies that help startups grow, including marketing and branding, scaling operations, attracting funding, and acquiring customers. It would also cover factors that can contribute to the success of small startups.",
+    "cluster_id": 0
+  },
+  {
+    "topic": "Streamlining Contract Signing Process",
+    "description": "This topic would delve into different methods and tools available for simplifying the contract signing process for startups. It would discuss digital signatures, contract management platforms, legal considerations, and best practices to ensure efficient and secure contract signing procedures.",
+    "cluster_id": 0
+  },
+  {
+    "topic": "Employment Issues",
+    "description": "This topic encompasses tags such as job, discriminated, consultant contract, not paying, internal employee, laid off, unemployment, garden leave, flawed, unjust and unfair, age, and HR. It revolves around various issues related to employment, including discrimination, contract disputes, payment problems, layoffs, unfair treatment, and HR-related concerns.",
+    "cluster_id": 1
+  },
+  {
+    "topic": "Communication Problems",
+    "description": "This topic is highlighted by the tag \"2 times he cancelled our 1-1 meeting.\" It suggests a lack of effective communication between the parties involved, potentially indicating difficulties in maintaining professional relationships and resolving conflicts.",
+    "cluster_id": 1
+  },
+  {
+    "topic": "Job Security",
+    "description": "This topic focuses on tags like laid off, internal employee, employment, and garden leave. It signifies concerns related to job stability, internal positions, and potential periods of unemployment or temporary leave.",
+    "cluster_id": 1
+  },
+  {
+    "topic": "Lack of Communication",
+    "description": "This topic focuses on the issue of not receiving feedback or any form of communication from the manager or interviewer. It highlights the frustration and confusion that arises when there is a lack of information or guidance in the job application process.",
+    "cluster_id": 2
+  },
+  {
+    "topic": "Job Rejection",
+    "description": "This topic centers around the feeling of being rejected without any explanation or feedback. It captures the disappointment and uncertainty that accompanies being turned down for a job opportunity.",
+    "cluster_id": 2
+  },
+  {
+    "topic": "Compensation and Benefits",
+    "description": "This topic may include tags such as social security contributions, pay too much, and promotion. It focuses on the efforts individuals put into justifying their contributions and the potential rewards they expect, such as promotions and adequate compensation.",
+    "cluster_id": 3
+  },
+  {
+    "topic": "Employee Engagement and Retention",
+    "description": "This topic can encompass tags like contribute more, efforts and inputs to justify, recruiting process, and risk. It revolves around encouraging employees to contribute more to their roles, engaging them through effective recruiting processes, and minimizing risks associated with turnover.",
+    "cluster_id": 3
+  },
+  {
+    "topic": "Performance Evaluation and Incentives",
+    "description": "This topic may involve tags like contribute, efforts and inputs to justify, recruiting process, and risk. It focuses on evaluating employee contributions, incentivizing them to contribute more, and ensuring a fair recruiting process to attract top talent.",
+    "cluster_id": 3
+  },
+  {
+    "topic": "Relocating to Berlin",
+    "description": "This topic encompasses tags such as \"start a new life in Berlin\" and \"moved to Germany.\" It revolves around the idea of moving to Berlin and starting a fresh life in a new country.",
+    "cluster_id": 4
+  },
+  {
+    "topic": "Language Learning and Communication",
+    "description": "This topic is centered around the tag \"language barrier\" and emphasizes the challenges related to acquiring language skills in a foreign country. It covers issues related to overcoming language barriers and improving German language skills.",
+    "cluster_id": 4
+  },
+  {
+    "topic": "Job Search Challenges",
+    "description": "This topic encompasses tags like open position, administrative requirement, perfect match, excessive experience, and no clearly defined tasks. It focuses on the difficulties individuals face in finding suitable job opportunities and the hurdles encountered during the application process.",
+    "cluster_id": 5
+  },
+  {
+    "topic": "Organizational Communication",
+    "description": "This topic involves tags such as communication, psychological impact, intentions of the management, uncertainties, and performance. It explores how effective communication between management and employees can impact psychological well-being, performance, and clarity regarding job expectations.",
+    "cluster_id": 5
+  },
+  {
+    "topic": "Workplace transitions",
+    "description": "This topic includes tags like \"I was moved to another team\" and \"didn't know I was hired.\" It revolves around changes and adjustments in the workplace, such as reassignments, new roles, or unexpected hires.",
+    "cluster_id": 6
+  },
+  {
+    "topic": "Job expectations and performance",
+    "description": "Tags like \"what was expected of me,\" \"I felt I was failing,\" and \"getting exhausted\" revolve around the theme of meeting job expectations and concerns about performance. This topic encompasses feelings of uncertainty, stress, and performance-related challenges.",
+    "cluster_id": 6
+  },
+  {
+    "topic": "Work-life balance",
+    "description": "Tags like \"outside of the office\" indicate a desire to separate work from personal life. This topic focuses on finding a balance between professional demands and personal well-being, including activities and experiences outside of work.",
+    "cluster_id": 6
+  }
+]
