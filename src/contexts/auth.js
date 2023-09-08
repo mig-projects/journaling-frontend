@@ -30,28 +30,43 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Sign in or sign out according to Supabase event.
     const getUser = async () => {
-      const { data } = await supaClient.auth.getUser();
-      const { user: currentUser } = data;
-      setUser(currentUser ?? null);
-      setLoading(false);
+      try {
+        const { data, error } = await supaClient.auth.getUser();
+        if (error) {
+          console.error("Error fetching user:", error);
+          setLoading(false);
+          return;
+        }
+        const { user: currentUser } = data;
+        setUser(currentUser ?? null);
+        setLoading(false);
+      } catch (err) {
+        console.error("An unexpected error occurred:", err);
+        setLoading(false);
+      }
     };
 
     getUser();
 
     const { subscription } = supaClient.auth.onAuthStateChange(
       async (event, session) => {
-        if (!session && event === "SIGNED_OUT") {
-          setUser(null);
-          setIsRegisteredUser(null);
-        } else if (session) {
-          if (event === "PASSWORD_RECOVERY") {
-            setPasswordRecoveryMode(true);
+        try {
+          if (!session && event === "SIGNED_OUT") {
+            setUser(null);
+            setIsRegisteredUser(null);
+          } else if (session) {
+            if (event === "PASSWORD_RECOVERY") {
+              setPasswordRecoveryMode(true);
+            }
+            setUser(session.user);
+            await fetchRegistrationStatus(session.user.id);
           }
-          setUser(session.user);
-          await fetchRegistrationStatus(session.user.id);
+        } catch (err) {
+          console.error("An error occurred during auth state change:", err);
         }
       }
     );
+
     return () => {
       subscription?.unsubscribe();
     };
