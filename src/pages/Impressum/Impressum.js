@@ -1,10 +1,9 @@
 import React from "react";
-import { Container, Typography, Link, Box, Paper } from "@mui/material";
-import "./Impressum.css";
+import "../StaticLayout.css";
 
 const Impressum = () => {
   return (
-    <div className="impressumContainer">
+    <div className="termsContainer">
       <h3 id="f07d28bf-15f8-4852-92b4-ee400a30b8f1" class="">
         Impressum
       </h3>
