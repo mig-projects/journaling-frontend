@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/SignUp";
 import Impressum from "./pages/Impressum/Impressum";
 import Privacy from "./pages/Privacy/Privacy";
+import CommunitySignup from "./pages/CommunitySignup/CommunitySignup";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/join-community" element={<CommunitySignup />} />
         </Routes>
       </Router>
     </AuthProvider>

@@ -195,6 +195,8 @@ export default function Home() {
               <Stack spacing={8} direction="row" className="footerGrid">
                 <Chip
                   variant="contained"
+                  component="a"
+                  href="/join-community"
                   className="newsletterButton"
                   label="Sign Up to Our Newsletter!"
                   icon={<MailOutlineIcon className="newsletterIcon" />}
