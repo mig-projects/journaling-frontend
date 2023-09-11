@@ -28,18 +28,28 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Sign in or sign out according to Supabase event.
     const getUser = async () => {
       try {
-        const { data, error } = await supaClient.auth.getUser();
-        if (error) {
-          console.error("Error fetching user:", error);
+        const session = supaClient.auth.session();
+
+        if (session) {
+          const { data, error } = await supaClient.auth.getUser();
+
+          if (error) {
+            console.error("Error fetching user:", error);
+            setLoading(false);
+            return;
+          }
+
+          const { user: currentUser } = data;
+          setUser(currentUser ?? null);
           setLoading(false);
-          return;
+        } else {
+          // Session has expired, sign out the user
+          supaClient.auth.signOut();
+          setUser(null);
+          setLoading(false);
         }
-        const { user: currentUser } = data;
-        setUser(currentUser ?? null);
-        setLoading(false);
       } catch (err) {
         console.error("An unexpected error occurred:", err);
         setLoading(false);
@@ -48,6 +58,7 @@ export const AuthProvider = ({ children }) => {
 
     getUser();
 
+    // Handle sign in, sign out, and password recovery with event listening.
     const { subscription } = supaClient.auth.onAuthStateChange(
       async (event, session) => {
         try {
