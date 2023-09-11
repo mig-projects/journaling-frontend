@@ -1,0 +1,16 @@
+.formContainer {
+  padding: 5% 33%;
+  text-align: center;
+}
+
+.termsContainer {
+  padding: 50px 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.signupForm {
+  width: 100%;
+  max-width: 400px;
+}

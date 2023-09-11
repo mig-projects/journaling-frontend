@@ -3,6 +3,7 @@ import { Button, TextField, Typography, CircularProgress } from "@mui/material";
 import { useAuth } from "../../contexts/auth";
 import { supaClient } from "../../services/supabase";
 import { useNavigate } from "react-router-dom";
+import "../StaticLayout.css";
 
 const RecoverPassword = () => {
   const { user, loading, passwordRecoveryMode, setPasswordRecoveryMode } =

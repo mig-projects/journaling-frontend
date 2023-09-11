@@ -1,9 +1,9 @@
 import React from "react";
-import "./Privacy.css";
+import "../StaticLayout.css";
 
 const Privacy = () => {
   return (
-    <div className="privacyContainer">
+    <div className="termsContainer">
       <h3>Privacy Policy</h3>
       <p id="6e546b09-c5de-4b5a-810c-120422cbe3fe" class="">
         MIGR-AI-TION (the “Data Processor”) shares your concerns about privacy.

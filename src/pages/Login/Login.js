@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { supaClient } from "../../services/supabase";
 
 import { CircularProgress } from "@mui/material";
-import "./Login.css";
+import "../StaticLayout.css";
 
 const Login = () => {
   const { user, loading, isRegisteredUser } = useAuth();
@@ -21,7 +21,7 @@ const Login = () => {
   }, [isRegisteredUser]);
 
   return (
-    <div className="loginContainer">
+    <div className="formContainer">
       {loading ? (
         <CircularProgress />
       ) : !user ? (
