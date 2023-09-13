@@ -28,11 +28,9 @@
   }
 
   .mainBox {
-
     display: flex;
     justify-content: center;
     padding: 60px 30px 60px 30px;
-
 
     .introText {
       font-size: 14px;
@@ -46,11 +44,9 @@
     .bold {
       font-weight: bold;
     }
-
   }
 
   @media (max-width: 900px) {
-
     .uploadGrid,
     .discoverGrid {
       justify-content: center;
@@ -80,7 +76,7 @@
 
 .gridContainer {
   max-width: 600px;
-  background-color: #7438E2;
+  background-color: #7438e2;
   border: solid 3px #f7f7f7;
   border-radius: 16px;
   box-shadow: 3px 3px 5px #d3cece;
@@ -95,30 +91,29 @@
 
   .githubSignupButton {
     background: #f7f7f7;
-    color: #7438E2;
+    color: #7438e2;
     border-radius: 15px;
     box-shadow: 3px 3px 5px #d3cece;
   }
 
   .githubSignupButton:hover {
     background: #f7f7f7;
-    color: #B2EDE7;
+    color: #b2ede7;
   }
 
   .newsletterButton {
     color: white;
-    background-color: #7438E2;
+    background-color: #7438e2;
     border-radius: 15px;
+    font-weight: 500;
     box-shadow: 3px 3px 5px #d3cece;
+    font-family: "Roboto", sans-serif;
   }
 
   .newsletterButton:hover {
-    background-color: #B2EDE7;
+    background-color: #b2ede7;
   }
-
 }
-
-
 
 .uploadIcon,
 .discoveryIcon {
@@ -147,17 +142,16 @@
 }
 
 .uploadPopOver {
-  color: #B2EDE7;
+  color: #b2ede7;
   filter: drop-shadow(3px 3px 3px #5a18d5);
 }
 
 .discoverPopoverText {
-  color: #B2EDE7;
+  color: #b2ede7;
   filter: drop-shadow(3px 3px 3px #5a18d5);
 }
 
 @media (min-width: 601px) {
-
   .uploadPopOver,
   .discoverPopoverText {
     font-size: 60px !important;
@@ -170,12 +164,8 @@
   justify-content: center;
   margin: 50px;
 
-  .newsletterIcon.MuiChip-root {
-    color: white;
-  }
-
   .gitHubSignUpIcon.MuiChip-root {
-    color: #7438E2;
+    color: #7438e2;
   }
 }
 
@@ -220,9 +210,6 @@
   }
 }
 
-
-
-
 .legalDiv {
   display: flex;
   justify-content: center;
@@ -237,11 +224,9 @@
   color: gray;
 
   /* margin: 50px; */
-
 }
 
-
 .important-words {
-  color: #7438E2;
+  color: #7438e2;
   font-weight: bold;
 }

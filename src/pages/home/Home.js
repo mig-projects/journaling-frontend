@@ -198,18 +198,11 @@ export default function Home() {
                   component="a"
                   href="/join-community"
                   className="newsletterButton"
-                  label="Sign Up to Our Newsletter!"
-                  icon={<MailOutlineIcon className="newsletterIcon" />}
+                  label="Join Our Community"
+                  icon={
+                    <MailOutlineIcon color="white" className="newsletterIcon" />
+                  }
                 />
-
-                {isRegisteredUser && (
-                  <Chip
-                    variant="contained"
-                    className="githubSignupButton"
-                    label="Join Our Open-source Community !"
-                    icon={<LanguageIcon className="gitHubSignUpIcon" />}
-                  />
-                )}
               </Stack>
             </div>
           </div>
