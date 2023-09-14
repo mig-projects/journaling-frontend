@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import tagClusters from "../../../../data/tag_clustering_results.json";
-import GPT_topics from "../../../../data/GPT_topics.json";
+import GPT_topics from "../../../../data/GPT_topics_one.json";
 
 const COLOR_PALETTE = [
   "#FFADAD",
