@@ -46,9 +46,6 @@ export default function Navbar() {
           ) : (
             <div className="navbar-buttons-wrapper">
               <MDBNavbarNav className="ml-auto">
-                <MDBNavbarLink href="/signup" className="signup-button">
-                  Sign Up
-                </MDBNavbarLink>
                 <MDBNavbarLink href="/login" className="login-button">
                   Login
                 </MDBNavbarLink>
