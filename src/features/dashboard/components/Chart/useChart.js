@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import tagClusters from "../../../../data/tag_clustering_results.json";
-import GPT_topics from "../../../../data/GPT_topics_one.json";
 
 const COLOR_PALETTE = [
   "#FFADAD",
@@ -13,7 +11,7 @@ const COLOR_PALETTE = [
   "#a280df",
 ];
 
-const useChart = ({ loading, graph, LIMIT }) => {
+const useChart = ({ loading, graph, tagClusters, AITopics, LIMIT }) => {
   const [option, setOption] = useState({});
 
   useEffect(() => {
@@ -69,7 +67,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
   };
 
   const getClusterId = (name) => {
-    return tagClusters.find((n) => n.tag_name === name)?.kmeans_clusters || -1;
+    return tagClusters.find((n) => n.tag_name === name)?.cluster_id || -1;
   };
 
   const retrieveCategory = (name, categories) => {
@@ -162,7 +160,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
   const createOptionSpec = (graph, limitResults) => {
     let option = {};
     if (Object.keys(graph).length > 0) {
-      const categories = createLegendSpec(GPT_topics);
+      const categories = createLegendSpec(AITopics);
       console.log(categories);
       const plottedNodes = createDataSpec(
         graph.nodes,

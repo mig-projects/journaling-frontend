@@ -8,10 +8,15 @@ import { mockGraph } from "../mockGraph";
 // Returns:
 // - loading (boolean)
 // - graph (nodes: Array<any>, links: Array<any>, type: string)
+// - tagClusters (Array<{tag_name: str, cluster_id: int}>)
+// - AITopics (Array<{cluster_id: int, topic: str, description: str}>)
+
 const usePreprocessing = ({ MOCK, user }) => {
   const { fetchData } = useApi({ user });
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
+  const [tagClusters, setTagClusters] = useState([]);
+  const [AITopics, setAITopics] = useState([]);
 
   // Log-transform and project to desired min-max interval
   const transformNodes = (nodes, min = 15, max = 50) => {
@@ -50,6 +55,12 @@ const usePreprocessing = ({ MOCK, user }) => {
         nodes: transformNodes(nodes),
         type: "userData",
       });
+
+      const clusters = await fetchData("select", "cluster_assignments");
+      const topics = await fetchData("select", "cluster_descriptions");
+
+      setTagClusters(clusters);
+      setAITopics(topics);
     };
 
     if (MOCK) {
@@ -60,7 +71,7 @@ const usePreprocessing = ({ MOCK, user }) => {
     setLoading(false);
   }, []);
 
-  return { loading, graph };
+  return { loading, graph, tagClusters, AITopics };
 };
 
 export default usePreprocessing;
