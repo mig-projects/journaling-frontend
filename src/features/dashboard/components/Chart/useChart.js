@@ -97,11 +97,11 @@ const useChart = ({ loading, graph, tagClusters, AITopics, LIMIT }) => {
             borderWidth: 2,
             borderColor: "#f0eded",
           },
-      // emphasis: {
-      //   focus: "adjacency",
-      //   scale: true,
-      //   label: { show: true },
-      // },
+      emphasis: {
+        focus: "adjacency",
+        scale: true,
+        label: { show: true },
+      },
       label: { show: !isUserTag(n) },
     }));
     if (limitResults) {
@@ -182,6 +182,20 @@ const useChart = ({ loading, graph, tagClusters, AITopics, LIMIT }) => {
         // },
         backgroundColor: "#f7f7f7",
         tooltip: {},
+        graphic: [
+          {
+            type: "text",
+            left: 10,
+            bottom: 65,
+            style: {
+              text: "What the AI says:",
+              textAlign: "center",
+              fontStyle: "bold italic",
+              fill: "#333",
+              fontSize: 14,
+            },
+          },
+        ],
         legend: [
           {
             // color: COLOR_PALETTE,
