@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextField, Typography, CircularProgress } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  CircularProgress,
+  Checkbox,
+  FormControlLabel,
+  Alert,
+} from "@mui/material";
 import { supaClient } from "../../services/supabase";
 import { useNavigate } from "react-router-dom";
+import "../StaticLayout.css";
 
 const CommunitySignup = () => {
   const navigate = useNavigate();

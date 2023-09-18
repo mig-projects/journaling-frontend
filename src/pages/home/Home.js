@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import UploadForm from "../../features/upload/UploadForm";
 
@@ -25,18 +25,26 @@ import { useAuth } from "../../contexts/auth";
 import Chart from "../../features/dashboard/components/Chart/Chart";
 import { CircularProgress, Link } from "@mui/material";
 import RecoverPassword from "../RecoverPassword/RecoverPassword";
+import { supaClient } from "../../services/supabase";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const [discoveryMode, setDiscoveryMode] = React.useState(false);
-  const [uploadMode, setUploadMode] = React.useState(false);
-  const [anchorElUpload, setAnchorElUpload] = React.useState(null);
-  const [anchorElDiscover, setAnchorElDiscover] = React.useState(null);
-  const {
-    isRegisteredUser,
-    loading,
-    passwordRecoveryMode,
-    setPasswordRecoveryMode,
-  } = useAuth();
+  const [discoveryMode, setDiscoveryMode] = useState(false);
+  const [uploadMode, setUploadMode] = useState(false);
+  const [anchorElUpload, setAnchorElUpload] = useState(null);
+  const [anchorElDiscover, setAnchorElDiscover] = useState(null);
+  const [message, setMessage] = useState({ type: "", message: "" });
+  const navigate = useNavigate();
+  const { isRegisteredUser, loading, passwordRecoveryMode, userType } =
+    useAuth();
+
+  useEffect(() => {
+    if (!isRegisteredUser && ["discord", "newsletter"].includes(userType)) {
+      const confirmUserType = userType;
+      supaClient.auth.signOut();
+      navigate("confirm-email", { state: { type: confirmUserType } });
+    }
+  }, [isRegisteredUser, userType]);
 
   const showUpload = () => {
     setUploadMode(true);

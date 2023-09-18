@@ -8,6 +8,7 @@ import Signup from "./pages/Signup/SignUp";
 import Impressum from "./pages/Impressum/Impressum";
 import Privacy from "./pages/Privacy/Privacy";
 import CommunitySignup from "./pages/CommunitySignup/CommunitySignup";
+import ConfirmEmail from "./pages/ConfirmEmail/ConfirmEmail";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/join-community" element={<CommunitySignup />} />
+          <Route path="confirm-email" element={<ConfirmEmail />} />
         </Routes>
       </Router>
     </AuthProvider>
