@@ -12,16 +12,26 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isRegisteredUser, setIsRegisteredUser] = useState(false);
   const [passwordRecoveryMode, setPasswordRecoveryMode] = useState(false);
+  const [userType, setUserType] = useState("");
 
   const fetchRegistrationStatus = async (userId) => {
     const { data, error } = await supaClient
       .from("user_metadata")
-      .select("validated")
+      .select(`validated, has_newsletter, requests_discord`)
       .eq("id", userId)
       .single();
 
     if (data) {
       setIsRegisteredUser(data.validated);
+      setUserType(
+        data.validated
+          ? "app-user"
+          : data.requests_discord
+          ? "discord"
+          : data.has_newsletter
+          ? "newsletter"
+          : ""
+      );
     } else {
       console.error("Error fetching user metadata:", error);
     }
@@ -30,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const session = supaClient.auth.session();
+        const session = supaClient.auth.getSession();
 
         if (session) {
           const { data, error } = await supaClient.auth.getUser();
@@ -86,6 +96,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     signOut: () => supaClient.auth.signOut(),
     isRegisteredUser,
+    userType,
     user,
     passwordRecoveryMode,
     setPasswordRecoveryMode,
