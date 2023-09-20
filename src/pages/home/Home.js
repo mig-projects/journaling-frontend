@@ -200,18 +200,23 @@ export default function Home() {
             <br />
 
             <div className="buttonContainer">
-              <Stack spacing={8} direction="row" className="footerGrid">
-                <Chip
-                  variant="contained"
-                  component="a"
-                  href="/join-community"
-                  className="newsletterButton"
-                  label="Join Our Community"
-                  icon={
-                    <MailOutlineIcon color="white" className="newsletterIcon" />
-                  }
-                />
-              </Stack>
+              {!isRegisteredUser && (
+                <Stack spacing={8} direction="row" className="footerGrid">
+                  <Chip
+                    variant="contained"
+                    component="a"
+                    href="/join-community"
+                    className="newsletterButton"
+                    label="Join Our Community"
+                    icon={
+                      <MailOutlineIcon
+                        color="white"
+                        className="newsletterIcon"
+                      />
+                    }
+                  />
+                </Stack>
+              )}
             </div>
           </div>
           <hr classname="horizontal" />
