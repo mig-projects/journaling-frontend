@@ -16,7 +16,8 @@ const usePreprocessing = ({ MOCK, user }) => {
   const [tagClusters, setTagClusters] = useState([]);
   const [AITopics, setAITopics] = useState([]);
 
-  // Log-transform and project to desired min-max interval
+  // Pre-process the nodes for dashboard display.
+  // So far just normalize node size to the desired range.
   const transformNodes = (nodes, min = 15, max = 50) => {
     const logNodes = nodes.map((node) => ({
       ...node,

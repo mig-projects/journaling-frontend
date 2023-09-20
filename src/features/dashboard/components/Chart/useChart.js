@@ -11,6 +11,9 @@ const COLOR_PALETTE = [
   "#a280df",
 ];
 
+// This hook is reponsible for generating the option spec required by the chart,
+// as well as any interaction handlers needed for the data visualization.
+// Expects graph object containing nodes, links, clusters (assignments) and topics (as described in legend).
 const useChart = ({ loading, graph, LIMIT }) => {
   const [option, setOption] = useState({});
 
@@ -38,7 +41,9 @@ const useChart = ({ loading, graph, LIMIT }) => {
     };
   };
 
-  // This function concatenates the topics for a given cluster, and create a paragraph to describe each topic on hover.
+  // Function to create legend specification for the chart, including the related description to display in tooltip.
+  // Inputs: topics (array), numTopics (number - optional, default is 7)
+  // Output: Array of legend data specifications
   const createLegendSpec = (topics, numTopics = 7) => {
     const defaultObject = { name: "", description: "", cluster_id: 0 };
     const maxClusterId = Math.max(...topics.map((topic) => topic.cluster_id));
@@ -71,6 +76,9 @@ const useChart = ({ loading, graph, LIMIT }) => {
     return legend;
   };
 
+  // Function to get cluster ID for a given name
+  // Input: name (string)
+  // Output: Cluster ID (number)
   const getClusterId = (name) => {
     const matchingClusters = graph.clusters.filter((n) => n.tag_name === name);
 
@@ -84,6 +92,9 @@ const useChart = ({ loading, graph, LIMIT }) => {
     }
   };
 
+  // Function to retrieve category for a given name
+  // Inputs: name (string), categories (array)
+  // Output: Category name (string)
   const retrieveCategory = (name, categories) => {
     const clusterId = getClusterId(name);
     return (
@@ -92,6 +103,10 @@ const useChart = ({ loading, graph, LIMIT }) => {
     );
   };
 
+  // Function to create node specification for the chart.
+  // This includes categories, as well as highlights, with different color and style.
+  // Inputs: nodes (array), categories (array), limitResults (boolean - optional, default is false)
+  // Output: Array of node specifications
   const createDataSpec = (nodes, categories, limitResults = false) => {
     const isUserTag = (n) => {
       return n.tagType === "highlight";
@@ -129,6 +144,10 @@ const useChart = ({ loading, graph, LIMIT }) => {
     return newNodes;
   };
 
+  // Function to create link specification for the chart.
+  // This includes visible links (co-occurrence) as well as non-visible ones (assignment to same cluster) for spatial proximity of cluster.
+  // Inputs: links (array), nodes (array), limitResults (boolean - optional, default is false)
+  // Output: Array of link specifications
   const createLinkSpec = (links, nodes, limitResults = false) => {
     let newLinks = links.map((l) => ({
       ...l,
@@ -174,16 +193,25 @@ const useChart = ({ loading, graph, LIMIT }) => {
     return newLinks;
   };
 
+  // Function to create the overall option specification for the chart, as will be consumed by e-charts API.
+  // Inputs: graph (object), limitResults (boolean)
+  // Output: Option specification object
   const createOptionSpec = (graph, limitResults) => {
     let option = {};
+
     if (Object.keys(graph).length > 0) {
+      // Create array of categories that will be used as legend.
       const categories = createLegendSpec(graph.topics);
       // console.log(categories);
+
+      // Create the nodes to be plotted.
       const plottedNodes = createDataSpec(
         graph.nodes,
         categories,
         limitResults
       );
+
+      // Create the links connecting nodes to one another.
       const plottedLinks = createLinkSpec(
         graph.links,
         plottedNodes,
@@ -267,6 +295,9 @@ const useChart = ({ loading, graph, LIMIT }) => {
     return option;
   };
 
+  // Function to handle click events on the chart
+  // Input: params (object)
+  // Output: None
   const clickHandler = (params) => {
     // console.log(params);
     // if (Object.keys(option).length > 0 && params.dataType === "node") {

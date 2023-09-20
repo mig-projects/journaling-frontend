@@ -101,12 +101,15 @@ export const useUploadForm = () => {
 
   // Make sure data contains all the required fields before enabling submit.
   const validateData = useCallback(() => {
+    // text input is mandatory field
     if (memoryState.textMemory === "") {
       return false;
     }
+    // highlights are mandatory (at least one)
     if (memoryState.userTags.length === 0) {
       return false;
     }
+    // categories are mandatory (at least one)
     if (!memoryState.tagStates.some((tag) => tag.selected)) {
       return false;
     }

@@ -1,6 +1,10 @@
 import { supaClient } from "../services/supabase";
 
+// Custom error class for upload errors
 export class UploadError extends Error {
+  // Constructor for the custom error class
+  // Inputs: message (string), operation (string), data (object), originalError (object)
+  // Output: An instance of UploadError
   constructor(message, operation, data, originalError) {
     super(message);
     this.name = "UploadError";
@@ -11,7 +15,9 @@ export class UploadError extends Error {
 }
 
 export const useApi = ({ user }) => {
-  // Frame supabase call with error handling
+  // Function to perform write operations with error handling
+  // Inputs: operation (string), table (string), data (object)
+  // Output: None. Throws an error if operation fails.
   const writeOrThrowError = async (operation, table, data) => {
     let error;
     if (operation === "insert") {
@@ -30,7 +36,9 @@ export const useApi = ({ user }) => {
     }
   };
 
-  // Fetch data with select statement or with RPC.
+  // Function to fetch data using select statement or RPC
+  // Inputs: operation (string), source (string), query (string - optional, default is "*")
+  // Output: Data fetched from the database. Throws an error if operation fails.
   const fetchData = async (operation, source, query = "*") => {
     let result;
     if (operation === "select") {
@@ -53,9 +61,11 @@ export const useApi = ({ user }) => {
     return data;
   };
 
+  // Function to upload and insert image
+  // Inputs: userId (string), memoryKey (string), imgData (object), imgDir (string)
+  // Output: None. Throws an error if operation fails.
   const uploadAndInsertImage = async (userId, memoryKey, imgData, imgDir) => {
     try {
-      // console.log(imgData);
       const result = await fetch(imgData);
       const blob = await result.blob();
       const file = new File([blob], "File name", { type: "image/png" });
@@ -91,11 +101,9 @@ export const useApi = ({ user }) => {
     }
   };
 
-  // addEntry writes the memory and its associated tags in Supabase.
-  // Note: This is not a transaction, which means data might be uploaded partially if error happens during execution.
-  // Making this a transaction would require moving the logic to a SQL function in Supabase and using RPC.
-  // Guarantees data integrity but more complex and harder to troubleshoot errors.
-
+  // Function to add an entry in the database
+  // Inputs: userId (string), memoryState (object), canvasState (object)
+  // Output: Boolean value indicating success of operation. Throws an error if operation fails.
   const addEntry = async (userId, memoryState, canvasState) => {
     const { textMemory, tagStates, userTags, communityTags } = memoryState;
     const { photo, drawing } = canvasState;
