@@ -178,7 +178,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
     let option = {};
     if (Object.keys(graph).length > 0) {
       const categories = createLegendSpec(graph.topics);
-      console.log(categories);
+      // console.log(categories);
       const plottedNodes = createDataSpec(
         graph.nodes,
         categories,
@@ -263,12 +263,12 @@ const useChart = ({ loading, graph, LIMIT }) => {
         ],
       };
     }
-    console.log("New option: ", option);
+    // console.log("New option: ", option);
     return option;
   };
 
   const clickHandler = (params) => {
-    console.log(params);
+    // console.log(params);
     // if (Object.keys(option).length > 0 && params.dataType === "node") {
     //   const clickedNodeId = params.data.id;
     //   const neighborNodeIds = option.series[0].links
@@ -279,9 +279,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
     //     .map((link) =>
     //       link.source === clickedNodeId ? link.target : link.source
     //     );
-
     //   console.log("Neighbor node ids:", neighborNodeIds);
-
     //   const newNodes = option.series[0].nodes.map((node) => ({
     //     ...node,
     //     label: { show: neighborNodeIds.includes(node.id) },
