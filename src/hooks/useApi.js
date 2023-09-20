@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { supaClient } from "../services/supabase";
 
 // Custom error class for upload errors
@@ -39,7 +40,7 @@ export const useApi = ({ user }) => {
   // Function to fetch data using select statement or RPC
   // Inputs: operation (string), source (string), query (string - optional, default is "*")
   // Output: Data fetched from the database. Throws an error if operation fails.
-  const fetchData = async (operation, source, query = "*") => {
+  const fetchData = useCallback(async (operation, source, query = "*") => {
     let result;
     if (operation === "select") {
       result = await supaClient.from(source).select(query);
@@ -59,7 +60,7 @@ export const useApi = ({ user }) => {
       );
     }
     return data;
-  };
+  }, []);
 
   // Function to upload and insert image
   // Inputs: userId (string), memoryKey (string), imgData (object), imgDir (string)
