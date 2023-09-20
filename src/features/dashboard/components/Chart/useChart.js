@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 
-const COLOR_PALETTE = [
-  "#FFADAD",
-  "#CAFFBF",
-  "#FFD6A5",
-  "#A0C4FF",
-  "#FFC6FF",
-  "#FDFFB6",
-  "#9BF6FF",
-  "#a280df",
-];
+// const COLOR_PALETTE = [
+//   "#FFADAD",
+//   "#CAFFBF",
+//   "#FFD6A5",
+//   "#A0C4FF",
+//   "#FFC6FF",
+//   "#FDFFB6",
+//   "#9BF6FF",
+//   "#a280df",
+// ];
 
 // This hook is reponsible for generating the option spec required by the chart,
 // as well as any interaction handlers needed for the data visualization.

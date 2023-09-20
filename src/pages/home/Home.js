@@ -18,7 +18,6 @@ import Popover from "@mui/material/Popover";
 
 import Chip from "@mui/material/Chip";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LanguageIcon from "@mui/icons-material/Language";
 
 import "./Home.css";
 import { useAuth } from "../../contexts/auth";
@@ -33,7 +32,7 @@ export default function Home() {
   const [uploadMode, setUploadMode] = useState(false);
   const [anchorElUpload, setAnchorElUpload] = useState(null);
   const [anchorElDiscover, setAnchorElDiscover] = useState(null);
-  const [message, setMessage] = useState({ type: "", message: "" });
+  // const [message, setMessage] = useState({ type: "", message: "" });
   const navigate = useNavigate();
   const { isRegisteredUser, loading, passwordRecoveryMode, userType } =
     useAuth();
@@ -44,7 +43,7 @@ export default function Home() {
       supaClient.auth.signOut();
       navigate("confirm-email", { state: { type: confirmUserType } });
     }
-  }, [isRegisteredUser, userType]);
+  }, [isRegisteredUser, userType, navigate]);
 
   const showUpload = () => {
     setUploadMode(true);

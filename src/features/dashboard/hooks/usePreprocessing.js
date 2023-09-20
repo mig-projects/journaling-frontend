@@ -13,8 +13,6 @@ const usePreprocessing = ({ MOCK, user }) => {
   const { fetchData } = useApi({ user });
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
-  const [tagClusters, setTagClusters] = useState([]);
-  const [AITopics, setAITopics] = useState([]);
 
   // Pre-process the nodes for dashboard display.
   // So far just normalize node size to the desired range.
@@ -66,7 +64,7 @@ const usePreprocessing = ({ MOCK, user }) => {
       initializeGraph();
     }
     setLoading(false);
-  }, []);
+  }, [MOCK, fetchData]);
 
   return { loading, graph };
 };

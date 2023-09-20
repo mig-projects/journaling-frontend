@@ -30,7 +30,7 @@ const Chart = () => {
     if (!isRegisteredUser) {
       navigate("/login");
     }
-  }, [isRegisteredUser]);
+  }, [isRegisteredUser, navigate]);
 
   if (loading) {
     return <CircularProgress />;

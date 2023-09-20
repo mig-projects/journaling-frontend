@@ -31,7 +31,7 @@ export const useUploadForm = () => {
     if (!isRegisteredUser) {
       navigate("/login");
     }
-  }, [isRegisteredUser]);
+  }, [isRegisteredUser, navigate]);
 
   // Fetch categories and initialize tagStates on component mount
   useEffect(() => {
@@ -63,7 +63,7 @@ export const useUploadForm = () => {
     };
 
     initializeTagStates();
-  }, []);
+  }, [fetchData]);
 
   // Asynchronous handler for submit button.
   const submitData = useCallback(async () => {
@@ -97,7 +97,7 @@ export const useUploadForm = () => {
       }));
       return;
     }
-  }, [user, memoryState, canvasState]);
+  }, [user, memoryState, canvasState, addEntry]);
 
   // Make sure data contains all the required fields before enabling submit.
   const validateData = useCallback(() => {
