@@ -11,7 +11,7 @@ const COLOR_PALETTE = [
   "#a280df",
 ];
 
-const useChart = ({ loading, graph, tagClusters, AITopics, LIMIT }) => {
+const useChart = ({ loading, graph, LIMIT }) => {
   const [option, setOption] = useState({});
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const useChart = ({ loading, graph, tagClusters, AITopics, LIMIT }) => {
   };
 
   const getClusterId = (name) => {
-    return tagClusters.find((n) => n.tag_name === name)?.cluster_id || -1;
+    return graph.clusters.find((n) => n.tag_name === name)?.cluster_id || -1;
   };
 
   const retrieveCategory = (name, categories) => {
@@ -160,7 +160,7 @@ const useChart = ({ loading, graph, tagClusters, AITopics, LIMIT }) => {
   const createOptionSpec = (graph, limitResults) => {
     let option = {};
     if (Object.keys(graph).length > 0) {
-      const categories = createLegendSpec(AITopics);
+      const categories = createLegendSpec(graph.topics);
       console.log(categories);
       const plottedNodes = createDataSpec(
         graph.nodes,

@@ -7,9 +7,7 @@ import { mockGraph } from "../mockGraph";
 // - Transforming data
 // Returns:
 // - loading (boolean)
-// - graph (nodes: Array<any>, links: Array<any>, type: string)
-// - tagClusters (Array<{tag_name: str, cluster_id: int}>)
-// - AITopics (Array<{cluster_id: int, topic: str, description: str}>)
+// - graph (nodes: Array<any>, links: Array<any>, type: string, clusters: Array<{tag_name: str, cluster_id: int}>, topics: Array<{cluster_id: int, topic: str, description: str}>)
 
 const usePreprocessing = ({ MOCK, user }) => {
   const { fetchData } = useApi({ user });
@@ -45,6 +43,8 @@ const usePreprocessing = ({ MOCK, user }) => {
     const initializeGraph = async () => {
       const nodes = await fetchData("rpc", "get_nodes");
       const links = await fetchData("rpc", "get_links");
+      const clusters = await fetchData("select", "cluster_assignments");
+      const topics = await fetchData("select", "cluster_descriptions");
 
       setGraph({
         links: links.map((link) => ({
@@ -54,13 +54,9 @@ const usePreprocessing = ({ MOCK, user }) => {
         })),
         nodes: transformNodes(nodes),
         type: "userData",
+        clusters: clusters,
+        topics: topics,
       });
-
-      const clusters = await fetchData("select", "cluster_assignments");
-      const topics = await fetchData("select", "cluster_descriptions");
-
-      setTagClusters(clusters);
-      setAITopics(topics);
     };
 
     if (MOCK) {
@@ -71,7 +67,7 @@ const usePreprocessing = ({ MOCK, user }) => {
     setLoading(false);
   }, []);
 
-  return { loading, graph, tagClusters, AITopics };
+  return { loading, graph };
 };
 
 export default usePreprocessing;

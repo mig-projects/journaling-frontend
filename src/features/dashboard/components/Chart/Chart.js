@@ -15,13 +15,13 @@ const Chart = () => {
   const { user, isRegisteredUser } = useAuth();
 
   // Use custom hook to preprocess data
-  const { loading, graph, tagClusters, AITopics } = usePreprocessing({
+  const { loading, graph } = usePreprocessing({
     MOCK,
     user,
   });
 
   // Use custom hook to configure chart
-  const { option } = useChart({ loading, graph, tagClusters, AITopics, LIMIT });
+  const { option } = useChart({ loading, graph, LIMIT });
 
   const navigate = useNavigate();
 
