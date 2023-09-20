@@ -135,7 +135,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
         label: { show: !isUserTag(n) },
       }));
       if (limitResults) {
-        newNodes = newNodes.filter((n) => parseInt(n.id) < 10);
+        newNodes = newNodes.slice(0, 10);
       }
 
       // console.log("New nodes:", newNodes);
@@ -158,7 +158,9 @@ const useChart = ({ loading, graph, LIMIT }) => {
 
     if (limitResults) {
       newLinks = newLinks.filter(
-        (link) => parseInt(link.source) < 10 && parseInt(link.target) < 10
+        (link) =>
+          nodes.map((node) => node.id).includes(link.source) &&
+          nodes.map((node) => node.id).includes(link.target)
       );
     }
 
@@ -264,6 +266,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
           series: [
             {
               type: "graph",
+              legendHoverLink: false,
               layout: "force",
               nodes: plottedNodes,
               links: plottedLinks,
