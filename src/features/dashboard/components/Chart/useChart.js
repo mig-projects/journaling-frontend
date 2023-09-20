@@ -39,25 +39,30 @@ const useChart = ({ loading, graph, LIMIT }) => {
   };
 
   // This function concatenates the topics for a given cluster, and create a paragraph to describe each topic on hover.
-  const createLegendSpec = (topics) => {
-    const defaultObject = { name: "", description: "" };
-    const legend = topics.reduce((acc, cur) => {
-      const clusterId = cur.cluster_id;
-      if (acc[clusterId] !== defaultObject) {
-        acc[clusterId].name = [acc[clusterId].name, cur.topic].join(", ");
-        acc[clusterId].description = [
-          acc[clusterId].description,
-          [`<b>${cur.topic}</b>`, cur.description].join(": "),
-        ].join("<br/>");
-      } else {
-        acc[clusterId] = {
+  const createLegendSpec = (topics, numTopics = 7) => {
+    const defaultObject = { name: "", description: "", cluster_id: 0 };
+    const maxClusterId = Math.max(...topics.map((topic) => topic.cluster_id));
+
+    const legend = Array(numTopics).fill(defaultObject);
+
+    topics.forEach((cur) => {
+      // Projecting the latest clusters in range [0, 6]
+      const legendIndex = cur.cluster_id + numTopics - (maxClusterId + 1);
+
+      if (legend[legendIndex] === defaultObject) {
+        legend[legendIndex] = {
           name: cur.topic,
           description: [`<b>${cur.topic}</b>`, cur.description].join(": "),
+          cluster_id: cur.cluster_id,
         };
+      } else if (legendIndex >= 0) {
+        legend[legendIndex].name += `, ${cur.topic}`;
+        legend[
+          legendIndex
+        ].description += `<br/><b>${cur.topic}</b>: ${cur.description}`;
       }
+    });
 
-      return acc;
-    }, Array(7).fill(defaultObject));
     legend.push({
       name: "Main Category",
       description: "This represents the primary categories assigned by users.",
@@ -67,12 +72,24 @@ const useChart = ({ loading, graph, LIMIT }) => {
   };
 
   const getClusterId = (name) => {
-    return graph.clusters.find((n) => n.tag_name === name)?.cluster_id || -1;
+    const matchingClusters = graph.clusters.filter((n) => n.tag_name === name);
+
+    if (matchingClusters.length > 0) {
+      return matchingClusters.reduce(
+        (maxId, cluster) => Math.max(maxId, cluster.cluster_id),
+        -1
+      );
+    } else {
+      return -1;
+    }
   };
 
   const retrieveCategory = (name, categories) => {
     const clusterId = getClusterId(name);
-    return categories[clusterId]?.name || "Unclassified";
+    return (
+      categories.find((cat) => cat.cluster_id === clusterId)?.name ||
+      "Unclassified"
+    );
   };
 
   const createDataSpec = (nodes, categories, limitResults = false) => {
