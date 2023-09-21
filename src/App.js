@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/join-community" element={<CommunitySignup />} />
-          <Route path="confirm-email" element={<ConfirmEmail />} />
+          <Route path="confirm-email/:userType" element={<ConfirmEmail />} />
         </Routes>
       </Router>
     </AuthProvider>

@@ -118,9 +118,9 @@ const CommunitySignup = () => {
             Become part of the MIGR-AI-TION community
           </Typography>
           <Typography mb={1} mt={1}>
-            We bring together a diverse community of profiles to widen our
-            research on intersectional perspectives. Join MIGR-AI-TION to share
-            your experience, connect with experts and be part of the change.
+            We bring together diverse perspectives to widen our research on
+            intersectional discrimination. Join MIGR-AI-TION to share your
+            experience, connect with experts and be part of the change.
           </Typography>
           {message.type === "error" && (
             <Alert severity="warning">{message.message}</Alert>

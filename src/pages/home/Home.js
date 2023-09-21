@@ -32,16 +32,18 @@ export default function Home() {
   const [uploadMode, setUploadMode] = useState(false);
   const [anchorElUpload, setAnchorElUpload] = useState(null);
   const [anchorElDiscover, setAnchorElDiscover] = useState(null);
-  // const [message, setMessage] = useState({ type: "", message: "" });
   const navigate = useNavigate();
   const { isRegisteredUser, loading, passwordRecoveryMode, userType } =
     useAuth();
 
   useEffect(() => {
+    const signOutAndRedirect = async (userType) => {
+      await supaClient.auth.signOut();
+      navigate(`/confirm-email/${userType}`);
+    };
+
     if (!isRegisteredUser && ["discord", "newsletter"].includes(userType)) {
-      const confirmUserType = userType;
-      supaClient.auth.signOut();
-      navigate("confirm-email");
+      signOutAndRedirect(userType);
     }
   }, [isRegisteredUser, userType, navigate]);
 
