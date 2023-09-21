@@ -41,7 +41,7 @@ export default function Home() {
     if (!isRegisteredUser && ["discord", "newsletter"].includes(userType)) {
       const confirmUserType = userType;
       supaClient.auth.signOut();
-      navigate("confirm-email", { state: { type: confirmUserType } });
+      navigate("confirm-email");
     }
   }, [isRegisteredUser, userType, navigate]);
 
@@ -218,7 +218,7 @@ export default function Home() {
               )}
             </div>
           </div>
-          <hr classname="horizontal" />
+          <hr className="horizontal" />
           <div className="mainContainer">
             <div className="fundedLogosDiv">
               <br />
@@ -227,7 +227,7 @@ export default function Home() {
                 <Grid item xs={12} md={3} className="logosGridItem">
                   <img src={EU} alt="EU-logo" className="fundedLogo-EU" />
                 </Grid>
-                <Grid itemxs={12} md={3} className="logosGridItem">
+                <Grid item xs={12} md={3} className="logosGridItem">
                   <img src={BMBF} alt="BMBF-logo" className="fundedLogo-BMBF" />
                 </Grid>
                 <Grid item xs={12} md={3} className="logosGridItem">
