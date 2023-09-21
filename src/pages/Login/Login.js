@@ -14,32 +14,37 @@ const Login = () => {
   // Navigate back to home page.
   useEffect(() => {
     if (isRegisteredUser) {
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      navigate("/", {
+        state: {
+          message: {
+            type: "info",
+            message: "You're logged in!",
+          },
+        },
+      });
+    } else if (user && !isRegisteredUser) {
+      navigate("/", {
+        state: {
+          message: {
+            type: "info",
+            message:
+              "You're account is pending approval. Reach out to the website's administrator for more details.",
+          },
+        },
+      });
     }
-  }, [isRegisteredUser]);
+  }, [user, isRegisteredUser, navigate]);
 
   return (
     <div className="formContainer">
-      {loading ? (
-        <CircularProgress />
-      ) : !user ? (
+      {loading && <CircularProgress />}
+      {!user && (
         <Auth
           supabaseClient={supaClient}
           providers={[]}
           className="loginForm"
-          redirectTo={
-            "https://https://quiet-kelpie-4caf69.netlify.app/reset-password"
-          }
+          redirectTo={"https://app.migr-ai-tion.com/reset-password"}
         />
-      ) : isRegisteredUser ? (
-        <span>You're logged in!</span>
-      ) : (
-        <span>
-          You're account is pending approval. Reach out to the website's
-          administrator for more details.
-        </span>
       )}
     </div>
   );
