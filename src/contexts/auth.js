@@ -79,8 +79,10 @@ export const AuthProvider = ({ children }) => {
             if (event === "PASSWORD_RECOVERY") {
               setPasswordRecoveryMode(true);
             }
+            setLoading(true);
             setUser(session.user);
             await fetchRegistrationStatus(session.user.id);
+            setLoading(false);
           }
         } catch (err) {
           console.error("An error occurred during auth state change:", err);
