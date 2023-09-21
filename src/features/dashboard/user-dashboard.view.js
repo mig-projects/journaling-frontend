@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -19,6 +18,10 @@ import ImageListItem from "@material-ui/core/ImageListItem";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 import Carousel from "react-material-ui-carousel";
+
+// ----------------------------------- //
+/* LEGACY DASHBOARD - NOT USED ANYMORE */
+// ------------------------------------ /
 
 const images = [
   {

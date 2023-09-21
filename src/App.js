@@ -9,6 +9,7 @@ import Impressum from "./pages/Impressum/Impressum";
 import Privacy from "./pages/Privacy/Privacy";
 import CommunitySignup from "./pages/CommunitySignup/CommunitySignup";
 import ConfirmEmail from "./pages/ConfirmEmail/ConfirmEmail";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/join-community" element={<CommunitySignup />} />
           <Route path="confirm-email/:userType" element={<ConfirmEmail />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </AuthProvider>
