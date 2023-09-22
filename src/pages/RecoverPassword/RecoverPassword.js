@@ -49,7 +49,7 @@ const RecoverPassword = () => {
   };
 
   return (
-    <div className="loginContainer">
+    <div className="formContainer">
       {loading ? (
         <CircularProgress />
       ) : !passwordRecoveryMode ? (
