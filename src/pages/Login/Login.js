@@ -17,7 +17,7 @@ const Login = () => {
       navigate("/", {
         state: {
           message: {
-            type: "info",
+            type: "success",
             message: "You're logged in!",
           },
         },
@@ -28,7 +28,7 @@ const Login = () => {
           message: {
             type: "info",
             message:
-              "You're account is pending approval. Reach out to the website's administrator for more details.",
+              "Your account is pending approval. Reach out to the website administrator for more details.",
           },
         },
       });
