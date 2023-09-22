@@ -39,6 +39,7 @@ export default function Home() {
   const location = useLocation();
 
   useEffect(() => {
+    // This handles the case where a non-registered user gets signed in by confirmation URL.
     const signOutAndRedirect = async (userType) => {
       await supaClient.auth.signOut();
       navigate(`/confirm-email/${userType}`);

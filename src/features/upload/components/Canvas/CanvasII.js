@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useCallback, useState } from "react";
 import "./Canvas.css";
 
 import {
-  createTheme,
   Grid,
   Typography,
-  ThemeProvider,
   Button,
   ButtonGroup,
   Slider,
@@ -62,14 +60,6 @@ export default function CanvasII({ setCanvasState }) {
     height: null,
   });
   const [src, setSrc] = useState("");
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#7438E2",
-      },
-    },
-  });
 
   useEffect(
     (event) => {
@@ -223,8 +213,8 @@ export default function CanvasII({ setCanvasState }) {
       <div>
         <Typography>
           <li>
-            Make a <span className="important-words">collage</span> using your photograph and
-            our painting tool.
+            Make a <span className="important-words">collage</span> using your
+            photograph and our painting tool.
           </li>
           <br />
           <br />
@@ -266,49 +256,43 @@ export default function CanvasII({ setCanvasState }) {
           <Grid item xs={11}>
             <div className="columnTwo">
               <div className="brushSize">
-                <ThemeProvider theme={theme}>
-                  <Typography className="brushSizeText">Brush size:</Typography>
-                  <ButtonGroup
-                    variant="text"
-                    aria-label="text button group"
-                    className="brushSizeButtons"
-                  >
-                    <Button onClick={setBrushSmall}>s</Button>
-                    <Button onClick={setBrushMedium}>m</Button>
-                    <Button onClick={setBrushLarge}>l</Button>
-                  </ButtonGroup>
-                </ThemeProvider>
+                <Typography className="brushSizeText">Brush size:</Typography>
+                <ButtonGroup
+                  variant="text"
+                  aria-label="text button group"
+                  className="brushSizeButtons"
+                >
+                  <Button onClick={setBrushSmall}>s</Button>
+                  <Button onClick={setBrushMedium}>m</Button>
+                  <Button onClick={setBrushLarge}>l</Button>
+                </ButtonGroup>
               </div>
               <div className="opacityDiv">
-                <ThemeProvider theme={theme}>
-                  <Typography className="opacity">Transparency:</Typography>
-                  <Box width={100} className="slider">
-                    <Slider
-                      size="Small steps"
-                      min={10}
-                      max={100}
-                      step={10}
-                      aria-label="Small"
-                      valueLabelDisplay="auto"
-                      onChange={selectTransparency}
-                      value={value}
-                    />
-                  </Box>
-                </ThemeProvider>
+                <Typography className="opacity">Transparency:</Typography>
+                <Box width={100} className="slider">
+                  <Slider
+                    size="Small steps"
+                    min={10}
+                    max={100}
+                    step={10}
+                    aria-label="Small"
+                    valueLabelDisplay="auto"
+                    onChange={selectTransparency}
+                    value={value}
+                  />
+                </Box>
               </div>
             </div>
           </Grid>
           <Grid item xs={11}>
             <div className="columnThree">
               <div className="erase">
-                <ThemeProvider theme={theme}>
-                  <Chip
-                    className="erase-clear-chip"
-                    avatar={<Avatar alt="erase" src={RubberIcon} />}
-                    label="Erase"
-                    onClick={erase}
-                  />
-                </ThemeProvider>
+                <Chip
+                  className="erase-clear-chip"
+                  avatar={<Avatar alt="erase" src={RubberIcon} />}
+                  label="Erase"
+                  onClick={erase}
+                />
               </div>
             </div>
           </Grid>

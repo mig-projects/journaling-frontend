@@ -7,9 +7,20 @@ import {
   FormControlLabel,
   Alert,
   Box,
+  createTheme,
+  ThemeProvider,
 } from "@mui/material";
 import { supaClient } from "../../services/supabase";
 import "../StaticLayout.css";
+import { textFormTheme } from "../../themes/theme";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#a280df",
+    },
+  },
+});
 
 const CommunitySignup = () => {
   const [newUser, setNewUser] = useState({
@@ -90,97 +101,101 @@ const CommunitySignup = () => {
     <div className="formContainer">
       {message.type === "success" ? (
         <div>
-          <Typography>{message.message}</Typography>
-          {newUser && newUser.requests_discord ? (
-            <Box>
-              <Typography mb={2} mt={2}>
-                Creating a safe space for our community members is our top
-                priority. Book a screening call with our founder Jie Liang Lin
-                below.
-              </Typography>
-              <Button
-                href="https://calendly.com/jielianglin/findhr-discord-intro-call"
-                variant="contained"
-                className="homeButton"
-              >
-                Book a call
+          <ThemeProvider theme={textFormTheme}>
+            <Typography mb={2}>{message.message}</Typography>
+            {newUser && newUser.requests_discord ? (
+              <Box>
+                <Typography mb={2}>
+                  Creating a safe space for our community members is our top
+                  priority. Book a screening call with our founder Jie Liang Lin
+                  below.
+                </Typography>
+                <Button
+                  href="https://calendly.com/jielianglin/findhr-discord-intro-call"
+                  variant="contained"
+                  className="homeButton"
+                >
+                  Book a call
+                </Button>
+              </Box>
+            ) : (
+              <Button href="/" variant="contained" className="homeButton">
+                Back to Home
               </Button>
-            </Box>
-          ) : (
-            <Button href="/" variant="contained" className="homeButton">
-              Back to Home
-            </Button>
-          )}
+            )}
+          </ThemeProvider>
         </div>
       ) : (
         <div>
-          <Typography variant="h5">
-            Become part of the MIGR-AI-TION community
-          </Typography>
-          <Typography mb={1} mt={1}>
-            We bring together diverse perspectives to widen our research on
-            intersectional discrimination. Join MIGR-AI-TION to share your
-            experience, connect with experts and be part of the change.
-          </Typography>
-          {message.type === "error" && (
-            <Alert severity="warning">{message.message}</Alert>
-          )}
-          <form onSubmit={handleNewsletterSignup}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Enter your name"
-              value={newUser.fullName}
-              onChange={handleChange("fullName")}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Enter your email"
-              type="email"
-              value={newUser.email}
-              onChange={handleChange("email")}
-            />
-            <Box display="flex" flexDirection="column" mb={2}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    onChange={handleChange("has_newsletter")}
-                  />
-                }
-                label="I agree to receiving the Migr-ai-tion newsletter."
+          <ThemeProvider theme={textFormTheme}>
+            <Typography variant="h5">
+              Become part of the MIGR-AI-TION community
+            </Typography>
+            <Typography mb={1} mt={1}>
+              We bring together diverse perspectives to widen our research on
+              intersectional discrimination. Join MIGR-AI-TION to share your
+              experience, connect with experts and be part of the change.
+            </Typography>
+            {message.type === "error" && (
+              <Alert severity="warning">{message.message}</Alert>
+            )}
+            <form onSubmit={handleNewsletterSignup}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Enter your name"
+                value={newUser.fullName}
+                onChange={handleChange("fullName")}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    onChange={handleChange("requests_discord")}
-                  />
-                }
-                label="I would like to request access to the Discord community."
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Enter your email"
+                type="email"
+                value={newUser.email}
+                onChange={handleChange("email")}
               />
-              {newUser.requests_discord && (
-                <Alert severity="info">
-                  Great! You'll be invited to book a short call with our founder
-                  before joining Discord.
-                </Alert>
-              )}
-            </Box>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={disableButton}
-            >
-              Join now
-            </Button>
-          </form>
+              <Box display="flex" flexDirection="column" mb={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      onChange={handleChange("has_newsletter")}
+                    />
+                  }
+                  label="I agree to receiving the Migr-ai-tion newsletter."
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      onChange={handleChange("requests_discord")}
+                    />
+                  }
+                  label="I would like to request access to the Discord community."
+                />
+                {newUser.requests_discord && (
+                  <Alert severity="info">
+                    Great! You'll be invited to book a short call with our
+                    founder before joining Discord.
+                  </Alert>
+                )}
+              </Box>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={disableButton}
+              >
+                Join now
+              </Button>
+            </form>
+          </ThemeProvider>
         </div>
       )}
     </div>

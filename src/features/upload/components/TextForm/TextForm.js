@@ -1,20 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { InteractiveHighlighter } from "react-interactive-highlighter";
 import "./TextForm.css";
 import useTextForm from "./useTextForm";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#a280df",
-    },
-  },
-});
+import { textFormTheme } from "../../../../themes/theme";
 
 export const TextForm = ({ memoryState, setMemoryState }) => {
   const {
@@ -107,7 +100,7 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
                 <span className="textMandatory">*</span>
               </li>
             </Typography>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={textFormTheme}>
               <TextField
                 id="community-tag-input"
                 label="Enter community tags"
@@ -166,7 +159,7 @@ export const TextForm = ({ memoryState, setMemoryState }) => {
               </li>
             </Typography>
             <br />
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={textFormTheme}>
               <TextField
                 id="filled-multiline-static"
                 label="My Thoughts"
