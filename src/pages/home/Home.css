@@ -185,21 +185,16 @@
   max-width: 600px;
 }
 
-.fundedLogosDiv {
-  display: block;
-  margin: 0 auto;
-  max-width: 900px;
-}
-
 .logosGridContainer {
   margin: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  .logosGridItem {
-    display: flex;
-    justify-content: center;
+  .fundedLogosDiv {
+    display: block;
+    margin: 0 auto;
+    max-width: 900px;
 
     .fundedLogo-OKF,
     .fundedLogo-BMBF {
