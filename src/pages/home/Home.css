@@ -31,9 +31,10 @@
     justify-content: center;
 
     .coverImg {
-      display: flex;
       min-width: 50px;
+      width: 100%;
       max-width: 600px;
+      object-fit: contain;
     }
   }
 
@@ -209,12 +210,15 @@
     }
 
     .fundedLogo-EU {
+      max-width: 80%;
+      object-fit: contain;
       height: 30px;
       margin: 20px;
     }
 
     .fundedLogo-PTF,
     .fundedLogo-HTW {
+      max-width: 80%;
       height: 50px;
       margin: 20px;
     }
