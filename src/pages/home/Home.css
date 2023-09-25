@@ -25,13 +25,15 @@
   }
 
   .coverPicDiv {
+    display: flex;
+    justify-content: center;
     padding: 10px 0px;
-    max-width: 600px;
+    width: 600px;
 
     .coverImg {
       min-width: 50px;
 
-      max-width: 100%;
+      max-width: 80%;
       object-fit: contain;
     }
   }
