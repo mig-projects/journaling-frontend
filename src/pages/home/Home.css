@@ -26,12 +26,12 @@
 
   .coverPicDiv {
     padding: 10px 0px;
-    max-width: 100%;
+    max-width: 600px;
 
     .coverImg {
       min-width: 50px;
-      width: 100%;
-      max-width: 600px;
+
+      max-width: 100%;
       object-fit: contain;
     }
   }

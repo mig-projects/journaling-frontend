@@ -241,16 +241,16 @@ export default function Home() {
             <br />
             {/* <Stack spacing={8} direction="row" className="fundedGrid"> */}
             <Grid container spacing={1} className="logosGridContainer">
-              <Grid item xs={12} sm={3} className="logosGridItem">
+              <Grid item xs={12} md={3} className="logosGridItem">
                 <img src={EU} alt="EU-logo" className="fundedLogo-EU" />
               </Grid>
-              <Grid item xs={12} sm={3} className="logosGridItem">
+              <Grid item xs={12} md={3} className="logosGridItem">
                 <img src={BMBF} alt="BMBF-logo" className="fundedLogo-BMBF" />
               </Grid>
-              <Grid item xs={12} sm={3} className="logosGridItem">
+              <Grid item xs={12} md={3} className="logosGridItem">
                 <img src={PTF} alt="PTF-logo" className="fundedLogo-PTF" />
               </Grid>
-              <Grid item xs={12} sm={3} className="logosGridItem">
+              <Grid item xs={12} md={3} className="logosGridItem">
                 <img src={HTW} alt="HTW-logo" className="fundedLogo-HTW" />
               </Grid>
             </Grid>
