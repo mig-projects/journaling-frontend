@@ -25,10 +25,8 @@
   }
 
   .coverPicDiv {
-    display: flex;
     padding: 10px 0px;
     max-width: 100%;
-    justify-content: center;
 
     .coverImg {
       min-width: 50px;
