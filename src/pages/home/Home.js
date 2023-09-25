@@ -236,7 +236,7 @@ export default function Home() {
           </div>
         </div>
         <hr className="horizontal" />
-        <div className="mainContainer">
+        <div className="logosGridContainer">
           <div className="fundedLogosDiv">
             <br />
             {/* <Stack spacing={8} direction="row" className="fundedGrid"> */}
