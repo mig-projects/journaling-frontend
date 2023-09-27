@@ -1,24 +1,8 @@
 import React from "react";
 import ReactEcharts from "echarts-for-react";
 import { CircularProgress } from "@mui/material";
-import { useAuth } from "../../../../contexts/auth";
-import usePreprocessing from "../../hooks/usePreprocessing";
-import useChart from "./useChart";
 
-const MOCK = false;
-const LIMIT = false;
-
-const Chart = () => {
-  // Use custom hook to preprocess data
-  const { user } = useAuth();
-  const { loading, graph } = usePreprocessing({
-    MOCK,
-    user,
-  });
-
-  // Use custom hook to configure chart
-  const { option } = useChart({ loading, graph, LIMIT });
-
+const Chart = ({ loading, option }) => {
   if (loading) {
     return <CircularProgress />;
   } else {

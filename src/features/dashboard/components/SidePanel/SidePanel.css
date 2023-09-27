@@ -1,0 +1,17 @@
+.sidePanelContainer {
+  width: 25%; /* This will make the div occupy 20% of its parent container's width */
+  border: 1px solid #f0eded; /* This sets a black border of 1px around the div */
+
+  .sidePanelTitle {
+    font-weight: 600;
+  }
+
+  .titleContainer {
+    border: 1px solid #f0eded;
+    padding: 5px;
+  }
+
+  .findingColumn {
+    white-space: nowrap;
+  }
+}

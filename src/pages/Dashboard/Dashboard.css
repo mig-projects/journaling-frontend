@@ -1,8 +1,21 @@
-.chartContainer {
+.dashboardMain {
   display: flex;
   flex-direction: column;
   align-items: center;
 
   justify-content: space-evenly;
   padding: 5% 5%;
+
+  .chartContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+
+    .chart {
+      position: relative;
+      width: 100%;
+      border: 1px solid #f0eded; /* This sets a black border of 1px around the div */
+    }
+  }
 }

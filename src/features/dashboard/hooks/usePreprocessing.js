@@ -28,6 +28,7 @@ const usePreprocessing = ({ MOCK, user }) => {
     const normalizedNodes = logNodes.map((node) => ({
       id: node.node_type + "||" + node.name,
       name: node.name,
+      count: node.count,
       size:
         ((node.size - minLogSize) / (maxLogSize - minLogSize)) * (max - min) +
           min || min,

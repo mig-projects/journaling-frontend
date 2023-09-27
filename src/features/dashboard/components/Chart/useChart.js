@@ -230,18 +230,40 @@ const useChart = ({ loading, graph, LIMIT }) => {
           //   text: "",
           // },
           backgroundColor: "#f7f7f7",
-          tooltip: createListingTooltip(plottedNodes),
+          tooltip: { show: false },
+          // createListingTooltip(plottedNodes),
           graphic: [
             {
               type: "text",
               left: 10,
               bottom: 65,
               style: {
-                text: "What the AI says:",
+                text: "Hover to read more about AI topics:",
                 textAlign: "center",
                 fontStyle: "bold italic",
                 fill: "#333",
                 fontSize: 14,
+              },
+            },
+            {
+              type: "text",
+              right: 20,
+              top: 20,
+              style: {
+                text: "What's this map?",
+                textAlign: "center",
+                borderWidth: 2,
+                fontStyle: "bold italic",
+                cursor: "pointer",
+                fill: "#333",
+                fontSize: 14,
+              },
+              tooltip: {
+                show: true,
+                renderMode: "html",
+                formatter: (params) => {
+                  return "Explaining what this map is.";
+                },
               },
             },
           ],
@@ -284,6 +306,9 @@ const useChart = ({ loading, graph, LIMIT }) => {
                 show: true,
                 position: "right",
               },
+              labelLayout: {
+                hideOverlap: true,
+              },
               force: {
                 initLayout: null,
                 repulsion: 500,
@@ -306,7 +331,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
   // Input: params (object)
   // Output: None
   const clickHandler = (params) => {
-    // console.log(params);
+    console.log(params);
     // if (Object.keys(option).length > 0 && params.dataType === "node") {
     //   const clickedNodeId = params.data.id;
     //   const neighborNodeIds = option.series[0].links
