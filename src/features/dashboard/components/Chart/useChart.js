@@ -40,7 +40,12 @@ const useChart = ({ loading, graph, LIMIT }) => {
   // Inputs: topics (array), numTopics (number - optional, default is 7)
   // Output: Array of legend data specifications
   const createLegendSpec = useCallback((topics, numTopics = 7) => {
-    const defaultObject = { name: "", description: "", cluster_id: 0 };
+    const defaultObject = {
+      name: "",
+      description: "",
+      cluster_id: 0,
+      itemStyle: {},
+    };
     const maxClusterId = Math.max(...topics.map((topic) => topic.cluster_id));
 
     const legend = Array(numTopics).fill(defaultObject);
@@ -54,6 +59,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
           name: cur.topic,
           description: [`<b>${cur.topic}</b>`, cur.description].join(": "),
           cluster_id: cur.cluster_id,
+          itemStyle: { opacity: 0.4 },
         };
       } else if (legendIndex >= 0) {
         legend[legendIndex].name += `, ${cur.topic}`;
@@ -66,6 +72,9 @@ const useChart = ({ loading, graph, LIMIT }) => {
     legend.push({
       name: "Main Category",
       description: "This represents the primary categories assigned by users.",
+      itemStyle: {
+        color: "#7438e2",
+      },
     });
     legend.push({ name: "Unclassified", description: "Unclassified nodes." });
     return legend;
@@ -123,7 +132,6 @@ const useChart = ({ loading, graph, LIMIT }) => {
               borderColor: "#f0eded",
             }
           : {
-              // color: "#7438e2",
               borderWidth: 2,
               borderColor: "#f0eded",
             },
@@ -152,7 +160,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
     let newLinks = links.map((l) => ({
       ...l,
       value: l.value,
-      lineStyle: { color: "#8CD1CA", curveness: 0.1 },
+      lineStyle: { color: "#8CD1CA", opacity: 0.2, curveness: 0.1 },
       label: { show: false },
     }));
 
