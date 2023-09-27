@@ -49,16 +49,46 @@ const usePreprocessing = ({ MOCK, user }) => {
     }));
   };
 
+  // This function takes a node in input, and returns the graph adjacent to this node.
+  const reduceGraph = (node) => {
+    const newLinks = fullLinks.filter(
+      (link) => link.source === node.id || link.target === node.id
+    );
+    const newNodes = fullNodes.filter(
+      (node) =>
+        newLinks.map((link) => link.source).includes(node.id) ||
+        newLinks.map((link) => link.target).includes(node.id)
+    );
+    setGraph((prevState) => ({
+      links: newLinks,
+      nodes: newNodes,
+      type: "userData",
+      topics: prevState.topics,
+    }));
+  };
+
+  const expandGraph = () => {
+    setGraph((prevState) => ({
+      nodes: transformNodes(fullNodes),
+      links: transformLinks(fullLinks),
+      type: "userData",
+      topics: prevState.topics,
+    }));
+  };
+
   useEffect(() => {
     setLoading(true);
     const initializeGraph = async () => {
-      const nodes = await fetchData("rpc", "get_nodes");
-      const links = await fetchData("rpc", "get_links");
+      let nodes = await fetchData("rpc", "get_nodes");
+      let links = await fetchData("rpc", "get_links");
       const topics = await fetchData("rpc", "get_topics");
 
+      nodes = transformNodes(nodes);
+      links = transformLinks(links);
+
       setGraph({
-        nodes: transformNodes(nodes),
-        links: transformLinks(links),
+        nodes: nodes,
+        links: links,
         type: "userData",
         topics: topics,
       });
@@ -75,7 +105,7 @@ const usePreprocessing = ({ MOCK, user }) => {
     setLoading(false);
   }, [MOCK, fetchData]);
 
-  return { loading, graph };
+  return { loading, graph, reduceGraph, expandGraph };
 };
 
 export default usePreprocessing;

@@ -8,11 +8,12 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  Link,
   TableRow,
   CircularProgress,
 } from "@mui/material";
 
-const SidePanel = ({ graph, loading }) => {
+const SidePanel = ({ graph, loading, reduceGraph }) => {
   return (
     <div className="sidePanelContainer">
       {loading ? (
@@ -41,7 +42,9 @@ const SidePanel = ({ graph, loading }) => {
                       <TableRow key={node.id}>
                         <TableCell>{node.name}</TableCell>
                         <TableCell className="findingColumn">
-                          {node.count} findings
+                          <Link onClick={() => reduceGraph(node)}>
+                            {node.count} findings
+                          </Link>
                         </TableCell>
                       </TableRow>
                     ))}

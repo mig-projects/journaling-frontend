@@ -15,7 +15,7 @@ const Dashboard = () => {
   // Get user and registration status from authentication context
   const { isRegisteredUser, user } = useAuth();
   // Use custom hook to preprocess data
-  const { loading, graph } = usePreprocessing({
+  const { loading, graph, reduceGraph, expandGraph } = usePreprocessing({
     MOCK,
     user,
   });
@@ -53,9 +53,14 @@ const Dashboard = () => {
       <br />
 
       <div className="chartContainer">
-        <SidePanel graph={graph} loading={loading} />
+        <SidePanel graph={graph} loading={loading} reduceGraph={reduceGraph} />
         <div className="chart">
-          <Chart option={option} loading={loading} />
+          <Chart
+            option={option}
+            loading={loading}
+            reduceGraph={reduceGraph}
+            expandGraph={expandGraph}
+          />
         </div>
       </div>
     </div>
