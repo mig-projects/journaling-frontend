@@ -2,7 +2,7 @@ import "./Dashboard.css";
 import Chart from "../../features/dashboard/components/Chart/Chart";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import SidePanel from "../../features/dashboard/components/SidePanel/SidePanel";
 import useChart from "../../features/dashboard/components/Chart/useChart";
@@ -53,7 +53,7 @@ const Dashboard = () => {
       <br />
 
       <div className="chartContainer">
-        <SidePanel graph={graph} />
+        <SidePanel graph={graph} loading={loading} />
         <div className="chart">
           <Chart option={option} loading={loading} />
         </div>

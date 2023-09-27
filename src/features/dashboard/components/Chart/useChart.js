@@ -39,35 +39,13 @@ const useChart = ({ loading, graph, LIMIT }) => {
   // Function to create legend specification for the chart, including the related description to display in tooltip.
   // Inputs: topics (array), numTopics (number - optional, default is 7)
   // Output: Array of legend data specifications
-  const createLegendSpec = useCallback((topics, numTopics = 7) => {
-    const defaultObject = {
-      name: "",
-      description: "",
-      cluster_id: 0,
-      itemStyle: {},
-    };
-    const maxClusterId = Math.max(...topics.map((topic) => topic.cluster_id));
-
-    const legend = Array(numTopics).fill(defaultObject);
-
-    topics.forEach((cur) => {
-      // Projecting the latest clusters in range [0, 6]
-      const legendIndex = cur.cluster_id + numTopics - (maxClusterId + 1);
-
-      if (legend[legendIndex] === defaultObject) {
-        legend[legendIndex] = {
-          name: cur.topic,
-          description: [`<b>${cur.topic}</b>`, cur.description].join(": "),
-          cluster_id: cur.cluster_id,
-          itemStyle: { opacity: 0.4 },
-        };
-      } else if (legendIndex >= 0) {
-        legend[legendIndex].name += `, ${cur.topic}`;
-        legend[
-          legendIndex
-        ].description += `<br/><b>${cur.topic}</b>: ${cur.description}`;
-      }
-    });
+  const createLegendSpec = useCallback((topics) => {
+    const legend = topics.map((cur) => ({
+      name: cur.ai_topic,
+      description: [`<b>${cur.ai_topic}</b>`, cur.ai_description].join(": "),
+      clusterId: cur.cluster,
+      itemStyle: { opacity: 0.4 },
+    }));
 
     legend.push({
       name: "Main Category",
@@ -86,7 +64,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
   // Output: Array of node specifications
   const createDataSpec = useCallback(
     (graph, categories, limitResults = false) => {
-      const { nodes, clusters } = graph;
+      const { nodes } = graph;
 
       const isUserTag = (n) => {
         return n.tagType === "highlight";
@@ -95,35 +73,18 @@ const useChart = ({ loading, graph, LIMIT }) => {
       // Function to retrieve category for a given name
       // Inputs: name (string), categories (array)
       // Output: Category name (string)
-      const retrieveCategory = (name, categories) => {
-        const clusterId = getClusterId(name);
+      const retrieveCategory = (clusterId, categories) => {
         return (
-          categories.find((cat) => cat.cluster_id === clusterId)?.name ||
+          categories.find((cat) => cat.clusterId === clusterId)?.name ||
           "Unclassified"
         );
-      };
-
-      // Function to get cluster ID for a given name
-      // Input: name (string)
-      // Output: Cluster ID (number)
-      const getClusterId = (name) => {
-        const matchingClusters = clusters.filter((n) => n.tag_name === name);
-
-        if (matchingClusters.length > 0) {
-          return matchingClusters.reduce(
-            (maxId, cluster) => Math.max(maxId, cluster.cluster_id),
-            -1
-          );
-        } else {
-          return -1;
-        }
       };
 
       let newNodes = nodes.map((n) => ({
         ...n,
         symbolSize: isUserTag(n) ? 15 : n.size,
         category: isUserTag(n)
-          ? retrieveCategory(n.name, categories)
+          ? retrieveCategory(n.cluster, categories)
           : "Main Category",
         itemStyle: isUserTag(n)
           ? {
@@ -213,10 +174,11 @@ const useChart = ({ loading, graph, LIMIT }) => {
       if (Object.keys(graph).length > 0) {
         // Create array of categories that will be used as legend.
         const categories = createLegendSpec(graph.topics);
-        // console.log(categories);
+        // console.log("Categories:", categories);
 
         // Create the nodes to be plotted.
         const plottedNodes = createDataSpec(graph, categories, limitResults);
+        // console.log("Nodes:", plottedNodes);
 
         // Create the links connecting nodes to one another.
         const plottedLinks = createLinkSpec(
@@ -224,6 +186,7 @@ const useChart = ({ loading, graph, LIMIT }) => {
           plottedNodes,
           limitResults
         );
+        // console.log("Links:", plottedLinks);
 
         option = {
           // title: {
