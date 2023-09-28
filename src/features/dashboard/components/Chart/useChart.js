@@ -11,10 +11,12 @@ import { useCallback, useEffect, useState } from "react";
 //   "#a280df",
 // ];
 
+const LIMIT = false;
+
 // This hook is reponsible for generating the option spec required by the chart,
 // as well as any interaction handlers needed for the data visualization.
 // Expects graph object containing nodes, links, clusters (assignments) and topics (as described in legend).
-const useChart = ({ loading, graph, LIMIT }) => {
+const useChart = ({ loading, graph, expandGraph }) => {
   const [option, setOption] = useState({});
 
   const createListingTooltip = useCallback((nodes, addTooltip = false) => {
@@ -54,7 +56,11 @@ const useChart = ({ loading, graph, LIMIT }) => {
         color: "#7438e2",
       },
     });
-    legend.push({ name: "Unclassified", description: "Unclassified nodes." });
+    legend.push({
+      name: "Unclassified",
+      description: "Unclassified nodes.",
+      itemStyle: { opacity: 0.4 },
+    });
     return legend;
   }, []);
 
@@ -192,44 +198,96 @@ const useChart = ({ loading, graph, LIMIT }) => {
           // title: {
           //   text: "",
           // },
-          backgroundColor: "#f7f7f7",
+          backgroundColor: "#fff",
           tooltip: { show: false },
-          // createListingTooltip(plottedNodes),
           graphic: [
             {
               type: "text",
               left: 10,
               bottom: 65,
               style: {
-                text: "Hover to read more about AI topics:",
+                text: "AI TOPICS",
                 textAlign: "center",
-                fontStyle: "bold italic",
+                fontStyle: "bold",
+
                 fill: "#333",
-                fontSize: 14,
+                fontSize: 16,
               },
             },
             {
-              type: "text",
+              type: "group",
               right: 20,
               top: 20,
-              style: {
-                text: "What's this map?",
-                textAlign: "center",
-                borderWidth: 2,
-                fontStyle: "bold italic",
-                cursor: "pointer",
-                fill: "#333",
-                fontSize: 14,
-              },
-              tooltip: {
-                show: true,
-                renderMode: "html",
-                formatter: (params) => {
-                  return "Explaining what this map is.";
+              children: [
+                {
+                  type: "rect",
+                  shape: {
+                    width: 182,
+                    height: 50,
+                    r: 8,
+                  },
+                  style: {
+                    fill: "#fff",
+                    stroke: "#d9d9d9",
+                    lineWidth: 2,
+                  },
                 },
-              },
+                {
+                  type: "text",
+                  left: 32.5,
+                  top: 17.5,
+                  style: {
+                    text: "What's this map?",
+                    textAlign: "center",
+                    textBaseline: "middle",
+                    fontSize: 16,
+                    fontWeight: 500,
+                  },
+                  tooltip: {
+                    show: true,
+                    renderMode: "html",
+                    formatter: (params) => {
+                      return "Explaining what this map is.";
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              type: "group",
+              left: 20,
+              top: 20,
+              children: [
+                {
+                  type: "rect",
+                  shape: {
+                    width: 182,
+                    height: 50,
+                    r: 8,
+                  },
+                  style: {
+                    fill: "rgba(217, 217, 217, 0.6)",
+                    stroke: "#d9d9d9",
+                    lineWidth: 2,
+                  },
+                },
+                {
+                  type: "text",
+                  left: 32.5,
+                  top: 17.5,
+                  style: {
+                    text: "Back to full view",
+                    textAlign: "center",
+                    textBaseline: "middle",
+                    fontSize: 16,
+                    fontWeight: 500,
+                  },
+                  onclick: expandGraph,
+                },
+              ],
             },
           ],
+
           legend: [
             {
               // color: COLOR_PALETTE,
