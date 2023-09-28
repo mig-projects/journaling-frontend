@@ -1,16 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 
-// const COLOR_PALETTE = [
-//   "#FFADAD",
-//   "#CAFFBF",
-//   "#FFD6A5",
-//   "#A0C4FF",
-//   "#FFC6FF",
-//   "#FDFFB6",
-//   "#9BF6FF",
-//   "#a280df",
-// ];
-
 const LIMIT = false;
 
 // This hook is reponsible for generating the option spec required by the chart,
@@ -18,25 +7,6 @@ const LIMIT = false;
 // Expects graph object containing nodes, links, clusters (assignments) and topics (as described in legend).
 const useChart = ({ loading, graph }) => {
   const [option, setOption] = useState({});
-
-  const createListingTooltip = useCallback((nodes, addTooltip = false) => {
-    const listFormatter = (params) => {
-      if (params.dataType === "node") {
-        const node = nodes.find((n) => n.id === params.data.id);
-        // const tags = node.tags
-        //   ? node.tags.join("</li><li>")
-        //   : "No tags available";
-        return `Category: ${node.name}`;
-      }
-    };
-
-    return addTooltip
-      ? {
-          triggerOn: "click",
-          formatter: listFormatter,
-        }
-      : {};
-  }, []);
 
   // Function to create legend specification for the chart, including the related description to display in tooltip.
   // Inputs: topics (array), numTopics (number - optional, default is 7)
@@ -46,20 +16,22 @@ const useChart = ({ loading, graph }) => {
       name: cur.ai_topic,
       description: [`<b>${cur.ai_topic}</b>`, cur.ai_description].join(": "),
       clusterId: cur.cluster,
-      itemStyle: { opacity: 0.4 },
+      itemStyle: { color: cur?.color },
     }));
 
     legend.push({
       name: "Main Category",
       description: "This represents the primary categories assigned by users.",
       itemStyle: {
-        color: "#7438e2",
+        borderColor: "#7438E2",
+        borderWidth: 2,
+        color: "#c3c3c3",
       },
     });
     legend.push({
       name: "Unclassified",
       description: "Unclassified nodes.",
-      itemStyle: { opacity: 0.4 },
+      itemStyle: { color: "#a280df80" },
     });
     return legend;
   }, []);
@@ -73,7 +45,7 @@ const useChart = ({ loading, graph }) => {
       const { nodes } = graph;
 
       const isUserTag = (n) => {
-        return n.tagType === "highlight";
+        return n.tagType.endsWith("highlight");
       };
 
       // Function to retrieve category for a given name
@@ -92,22 +64,15 @@ const useChart = ({ loading, graph }) => {
         category: isUserTag(n)
           ? retrieveCategory(n.cluster, categories)
           : "Main Category",
-        itemStyle: isUserTag(n)
-          ? {
-              // color: COLOR_PALETTE[getClusterId(n.name)],
-              borderWidth: 1,
-              borderColor: "#f0eded",
-            }
-          : {
-              borderWidth: 2,
-              borderColor: "#f0eded",
-            },
-        emphasis: {
-          focus: "adjacency",
-          scale: true,
-          label: { show: true },
-        },
-        label: { show: !isUserTag(n) },
+        itemStyle:
+          n.tagType === "center-category"
+            ? {
+                borderColor: "#c3c3c3",
+                borderWidth: 1,
+                color: "#7438E2",
+              }
+            : {},
+        label: { show: graph.state === "nodeView" || !isUserTag(n) },
       }));
       if (limitResults) {
         newNodes = newNodes.slice(0, 10);
@@ -204,7 +169,7 @@ const useChart = ({ loading, graph }) => {
             {
               type: "text",
               left: 10,
-              bottom: 65,
+              bottom: "17%",
               style: {
                 text: "AI TOPICS",
                 textAlign: "center",
@@ -291,7 +256,6 @@ const useChart = ({ loading, graph }) => {
 
           legend: [
             {
-              // color: COLOR_PALETTE,
               data: categories,
               orient: "horizontal",
 
@@ -307,7 +271,7 @@ const useChart = ({ loading, graph }) => {
                   width: 50,
                 },
               },
-              bottom: 10,
+              bottom: "12%",
               left: "center",
               textStyle: {
                 fontStyle: "italic",
@@ -346,46 +310,17 @@ const useChart = ({ loading, graph }) => {
       // console.log("New option: ", option);
       return option;
     },
-    [createDataSpec, createLegendSpec, createLinkSpec, createListingTooltip]
+    [createDataSpec, createLegendSpec, createLinkSpec]
   );
-
-  // Function to handle click events on the chart
-  // Input: params (object)
-  // Output: None
-  const clickHandler = (params) => {
-    console.log(params);
-    // if (Object.keys(option).length > 0 && params.dataType === "node") {
-    //   const clickedNodeId = params.data.id;
-    //   const neighborNodeIds = option.series[0].links
-    //     .filter(
-    //       (link) =>
-    //         link.source === clickedNodeId || link.target === clickedNodeId
-    //     )
-    //     .map((link) =>
-    //       link.source === clickedNodeId ? link.target : link.source
-    //     );
-    //   console.log("Neighbor node ids:", neighborNodeIds);
-    //   const newNodes = option.series[0].nodes.map((node) => ({
-    //     ...node,
-    //     label: { show: neighborNodeIds.includes(node.id) },
-    //   }));
-    //   setOption((prevState) => {
-    //     const newOption = { ...prevState };
-    //     newOption.series[0].nodes = newNodes;
-    //     newOption.series[0].animation = false;
-    //     return newOption;
-    //   });
-    // }
-  };
 
   useEffect(() => {
     if (!loading && Object.keys(graph).length > 0) {
       const newOption = createOptionSpec(graph, LIMIT);
       setOption(newOption);
     }
-  }, [loading, graph, LIMIT, createOptionSpec]);
+  }, [loading, graph, createOptionSpec]);
 
-  return { option, clickHandler };
+  return { option };
 };
 
 export default useChart;

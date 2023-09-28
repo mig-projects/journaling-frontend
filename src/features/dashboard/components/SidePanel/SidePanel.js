@@ -1,58 +1,18 @@
 import React from "react";
 import "./SidePanel.css";
-import {
-  Table,
-  Typography,
-  Box,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  Link,
-  TableRow,
-  CircularProgress,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import FullView from "./components/FullView/FullView";
+import NodeView from "./components/NodeView/NodeView";
 
 const SidePanel = ({ graph, loading, reduceGraph }) => {
   return (
     <div className="sidePanelContainer">
       {loading ? (
         <CircularProgress />
-      ) : graph.nodes ? (
-        <>
-          <Box className="titleContainer">
-            <Typography className="sidePanelTitle">
-              Mapping Employment Discrimination with Intersectional Migrants in
-              the Tech Sector
-            </Typography>
-          </Box>
-          <Box>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>CATEGORIES</TableCell>
-                    <TableCell className="findingColumn">BASED ON</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {graph.nodes
-                    .filter((node) => node.tagType === "category")
-                    .map((node) => (
-                      <TableRow key={node.id}>
-                        <TableCell>{node.name}</TableCell>
-                        <TableCell className="findingColumn">
-                          <Link onClick={() => reduceGraph(node)}>
-                            {node.count} findings
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-        </>
+      ) : graph.state === "fullView" ? (
+        <FullView nodes={graph.nodes} reduceGraph={reduceGraph} />
+      ) : graph.state === "nodeView" ? (
+        <NodeView nodes={graph.nodes} topics={graph.topics} />
       ) : (
         <div>
           The data couldn't be loaded. Please try refreshing the page or contact

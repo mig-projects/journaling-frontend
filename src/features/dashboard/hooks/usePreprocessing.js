@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { useApi } from "../../../hooks/useApi";
-import { mockGraph } from "../mockGraph";
 
 // Hook for dashboard preprocessing logic
 // - Pulling data from Supabase
@@ -8,6 +7,16 @@ import { mockGraph } from "../mockGraph";
 // Returns:
 // - loading (boolean)
 // - graph (nodes: Array<any>, links: Array<any>, topics: Array<{cluster: int, ai_topic: str, ai_description: str}>)
+
+const COLOR_PALETTE = [
+  "#5BAFF980",
+  "#EC8B5E80",
+  "#D1BCFA80",
+  "#8BDA9380",
+  "#F2CA6B80",
+  "#FDFFB680",
+  "#9BF6FF80",
+];
 
 const usePreprocessing = ({ user }) => {
   const { fetchData } = useApi({ user });
@@ -32,6 +41,7 @@ const usePreprocessing = ({ user }) => {
       name: node.name,
       count: node.count,
       cluster: node.cluster,
+      highlightCount: node.highlight_count,
       size:
         ((node.size - minLogSize) / (maxLogSize - minLogSize)) * (max - min) +
           min || min,
@@ -49,17 +59,28 @@ const usePreprocessing = ({ user }) => {
     }));
   };
 
+  const transformTopics = (topics) => {
+    return topics.map((topic, index) => ({
+      ...topic,
+      color: COLOR_PALETTE[index],
+    }));
+  };
+
   // This function takes a node in input, and returns the graph adjacent to this node.
   const reduceGraph = useCallback(
     (node) => {
       const newLinks = fullLinks.filter(
         (link) => link.source === node.id || link.target === node.id
       );
-      const newNodes = fullNodes.filter(
-        (node) =>
-          newLinks.map((link) => link.source).includes(node.id) ||
-          newLinks.map((link) => link.target).includes(node.id)
-      );
+      const newNodes = fullNodes
+        .filter(
+          (n) =>
+            newLinks.map((link) => link.source).includes(n.id) ||
+            newLinks.map((link) => link.target).includes(n.id)
+        )
+        .map((n) =>
+          n.id === node.id ? { ...n, tagType: "center-" + n.tagType } : n
+        );
       setGraph((prevState) => ({
         links: newLinks,
         nodes: newNodes,
@@ -84,10 +105,11 @@ const usePreprocessing = ({ user }) => {
     const initializeGraph = async () => {
       let nodes = await fetchData("rpc", "get_nodes");
       let links = await fetchData("rpc", "get_links");
-      const topics = await fetchData("rpc", "get_topics");
+      let topics = await fetchData("rpc", "get_topics");
 
       nodes = transformNodes(nodes);
       links = transformLinks(links);
+      topics = transformTopics(topics);
 
       setGraph({
         nodes: nodes,

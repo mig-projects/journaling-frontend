@@ -14,8 +14,10 @@
 
     .chart {
       position: relative;
+      max-height: 90vh;
+      overflow: hidden;
       width: 100%;
-      border: 1px solid #f0eded; /* This sets a black border of 1px around the div */
+      border: 1px solid #f0eded;
     }
   }
 }
