@@ -2,26 +2,18 @@ import "./Dashboard.css";
 import Chart from "../../features/dashboard/components/Chart/Chart";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Typography } from "@mui/material";
 import SidePanel from "../../features/dashboard/components/SidePanel/SidePanel";
-import useChart from "../../features/dashboard/components/Chart/useChart";
 import usePreprocessing from "../../features/dashboard/hooks/usePreprocessing";
-
-const MOCK = false;
-const LIMIT = false;
 
 const Dashboard = () => {
   // Get user and registration status from authentication context
   const { isRegisteredUser, user } = useAuth();
   // Use custom hook to preprocess data
   const { loading, graph, reduceGraph, expandGraph } = usePreprocessing({
-    MOCK,
     user,
   });
-
-  // Use custom hook to configure chart
-  const { option } = useChart({ loading, graph, LIMIT });
 
   const navigate = useNavigate();
 
@@ -56,7 +48,7 @@ const Dashboard = () => {
         <SidePanel graph={graph} loading={loading} reduceGraph={reduceGraph} />
         <div className="chart">
           <Chart
-            option={option}
+            graph={graph}
             loading={loading}
             reduceGraph={reduceGraph}
             expandGraph={expandGraph}

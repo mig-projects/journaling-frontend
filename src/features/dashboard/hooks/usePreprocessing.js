@@ -7,9 +7,9 @@ import { mockGraph } from "../mockGraph";
 // - Transforming data
 // Returns:
 // - loading (boolean)
-// - graph (nodes: Array<any>, links: Array<any>, type: string topics: Array<{cluster: int, ai_topic: str, ai_description: str}>)
+// - graph (nodes: Array<any>, links: Array<any>, topics: Array<{cluster: int, ai_topic: str, ai_description: str}>)
 
-const usePreprocessing = ({ MOCK, user }) => {
+const usePreprocessing = ({ user }) => {
   const { fetchData } = useApi({ user });
   const [fullNodes, setFullNodes] = useState([]);
   const [fullLinks, setFullLinks] = useState([]);
@@ -62,22 +62,19 @@ const usePreprocessing = ({ MOCK, user }) => {
     setGraph((prevState) => ({
       links: newLinks,
       nodes: newNodes,
-      type: "userData",
       topics: prevState.topics,
     }));
   };
 
   const expandGraph = () => {
     setGraph((prevState) => ({
-      nodes: transformNodes(fullNodes),
-      links: transformLinks(fullLinks),
-      type: "userData",
+      nodes: fullNodes,
+      links: fullLinks,
       topics: prevState.topics,
     }));
   };
 
   useEffect(() => {
-    setLoading(true);
     const initializeGraph = async () => {
       let nodes = await fetchData("rpc", "get_nodes");
       let links = await fetchData("rpc", "get_links");
@@ -89,7 +86,6 @@ const usePreprocessing = ({ MOCK, user }) => {
       setGraph({
         nodes: nodes,
         links: links,
-        type: "userData",
         topics: topics,
       });
 
@@ -97,13 +93,11 @@ const usePreprocessing = ({ MOCK, user }) => {
       setFullNodes(nodes);
     };
 
-    if (MOCK) {
-      setGraph(mockGraph);
-    } else {
-      initializeGraph();
-    }
+    // Execute async initialization
+    setLoading(true);
+    initializeGraph();
     setLoading(false);
-  }, [MOCK, fetchData]);
+  }, [fetchData]);
 
   return { loading, graph, reduceGraph, expandGraph };
 };
