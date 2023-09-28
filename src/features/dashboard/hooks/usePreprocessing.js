@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useApi } from "../../../hooks/useApi";
 import { mockGraph } from "../mockGraph";
 
@@ -50,29 +50,35 @@ const usePreprocessing = ({ user }) => {
   };
 
   // This function takes a node in input, and returns the graph adjacent to this node.
-  const reduceGraph = (node) => {
-    const newLinks = fullLinks.filter(
-      (link) => link.source === node.id || link.target === node.id
-    );
-    const newNodes = fullNodes.filter(
-      (node) =>
-        newLinks.map((link) => link.source).includes(node.id) ||
-        newLinks.map((link) => link.target).includes(node.id)
-    );
-    setGraph((prevState) => ({
-      links: newLinks,
-      nodes: newNodes,
-      topics: prevState.topics,
-    }));
-  };
+  const reduceGraph = useCallback(
+    (node) => {
+      const newLinks = fullLinks.filter(
+        (link) => link.source === node.id || link.target === node.id
+      );
+      const newNodes = fullNodes.filter(
+        (node) =>
+          newLinks.map((link) => link.source).includes(node.id) ||
+          newLinks.map((link) => link.target).includes(node.id)
+      );
+      setGraph((prevState) => ({
+        links: newLinks,
+        nodes: newNodes,
+        topics: prevState.topics,
+        state: "nodeView",
+      }));
+    },
+    [fullLinks, fullNodes]
+  );
 
-  const expandGraph = () => {
+  // Return to view on the full dataset
+  const expandGraph = useCallback(() => {
     setGraph((prevState) => ({
       nodes: fullNodes,
       links: fullLinks,
       topics: prevState.topics,
+      state: "fullView",
     }));
-  };
+  }, [fullLinks, fullNodes]);
 
   useEffect(() => {
     const initializeGraph = async () => {
@@ -87,6 +93,7 @@ const usePreprocessing = ({ user }) => {
         nodes: nodes,
         links: links,
         topics: topics,
+        state: "fullView",
       });
 
       setFullLinks(links);

@@ -8,12 +8,17 @@ const Chart = ({ loading, graph, expandGraph, reduceGraph }) => {
   const { option } = useChart({
     loading,
     graph,
-    expandGraph,
   });
 
-  const nodeClickHandler = (params) => {
-    if (params?.dataType === "node") {
+  const clickHandler = (params) => {
+    console.log(params);
+    if (params.componentType === "series" && params?.dataType === "node") {
       reduceGraph(params.data);
+    } else if (
+      params.componentType === "graphic" &&
+      params.name === "fullView"
+    ) {
+      expandGraph();
     }
   };
 
@@ -28,7 +33,7 @@ const Chart = ({ loading, graph, expandGraph, reduceGraph }) => {
         notMerge={true}
         className="chartDiv"
         onEvents={{
-          click: nodeClickHandler,
+          click: clickHandler,
         }}
       />
     );

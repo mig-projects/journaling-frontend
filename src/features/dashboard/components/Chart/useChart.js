@@ -16,7 +16,7 @@ const LIMIT = false;
 // This hook is reponsible for generating the option spec required by the chart,
 // as well as any interaction handlers needed for the data visualization.
 // Expects graph object containing nodes, links, clusters (assignments) and topics (as described in legend).
-const useChart = ({ loading, graph, expandGraph }) => {
+const useChart = ({ loading, graph }) => {
   const [option, setOption] = useState({});
 
   const createListingTooltip = useCallback((nodes, addTooltip = false) => {
@@ -260,6 +260,7 @@ const useChart = ({ loading, graph, expandGraph }) => {
               children: [
                 {
                   type: "rect",
+                  name: "fullView",
                   shape: {
                     width: 182,
                     height: 50,
@@ -273,6 +274,7 @@ const useChart = ({ loading, graph, expandGraph }) => {
                 },
                 {
                   type: "text",
+                  name: "fullView",
                   left: 32.5,
                   top: 17.5,
                   style: {
@@ -282,7 +284,6 @@ const useChart = ({ loading, graph, expandGraph }) => {
                     fontSize: 16,
                     fontWeight: 500,
                   },
-                  onclick: expandGraph,
                 },
               ],
             },
