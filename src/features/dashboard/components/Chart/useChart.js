@@ -60,7 +60,7 @@ const useChart = ({ loading, graph }) => {
 
       let newNodes = nodes.map((n) => ({
         ...n,
-        symbolSize: isUserTag(n) ? 15 : n.size,
+        symbolSize: n.size,
         category: isUserTag(n)
           ? retrieveCategory(n.cluster, categories)
           : "Main Category",

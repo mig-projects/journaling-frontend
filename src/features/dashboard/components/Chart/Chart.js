@@ -25,18 +25,20 @@ const Chart = ({ loading, graph, expandGraph, reduceGraph }) => {
   if (loading) {
     return <CircularProgress />;
   } else {
-    return (
-      <ReactEcharts
-        style={{ width: "100%", height: "100vh" }}
-        option={option}
-        lazyUpdate={true}
-        notMerge={true}
-        className="chartDiv"
-        onEvents={{
-          click: clickHandler,
-        }}
-      />
-    );
+    if (Object.keys(option).length > 0) {
+      return (
+        <ReactEcharts
+          style={{ width: "100%", height: "100vh" }}
+          option={option}
+          lazyUpdate={true}
+          notMerge={true}
+          className="chartDiv"
+          onEvents={{
+            click: clickHandler,
+          }}
+        />
+      );
+    }
   }
 };
 export default Chart;
