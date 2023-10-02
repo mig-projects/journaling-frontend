@@ -110,7 +110,7 @@ export default function Home() {
           </div>
 
           <div className="mainBox">
-            <Typography variant="h7" className="introText">
+            <Typography className="introText">
               Welcome to{" "}
               <span className="important-words">
                 MIGR-AI-TION's Research App
@@ -261,16 +261,16 @@ export default function Home() {
 
           <div className="legalDiv">
             <Stack spacing={2} direction="row" className="legalGrid">
-              <Typography />
-              <Link color="inherit" href="/privacy">
-                Data Privacy
-              </Link>
-              <Typography />
-              <Typography />
-              <Link color="inherit" href="/impressum">
-                Impressum
-              </Link>
-              <Typography />
+              <Typography>
+                <Link color="inherit" href="/privacy">
+                  Data Privacy
+                </Link>
+              </Typography>
+              <Typography>
+                <Link color="inherit" href="/impressum">
+                  Impressum
+                </Link>
+              </Typography>
             </Stack>
           </div>
         </div>

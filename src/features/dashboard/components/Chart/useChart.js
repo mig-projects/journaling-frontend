@@ -173,10 +173,10 @@ const useChart = ({ loading, graph }) => {
               style: {
                 text: "AI TOPICS",
                 textAlign: "center",
-                fontStyle: "bold",
-
+                fontFamily: "Inter",
+                fontWeight: 500,
                 fill: "#333",
-                fontSize: 16,
+                fontSize: 14,
               },
             },
             {
@@ -203,10 +203,11 @@ const useChart = ({ loading, graph }) => {
                   top: 17.5,
                   style: {
                     text: "What's this map?",
+                    fontFamily: "Inter",
                     textAlign: "center",
                     textBaseline: "middle",
                     fontSize: 16,
-                    fontWeight: 500,
+                    fontWeight: 400,
                   },
                   tooltip: {
                     show: true,
@@ -248,6 +249,7 @@ const useChart = ({ loading, graph }) => {
                     textBaseline: "middle",
                     fontSize: 16,
                     fontWeight: 500,
+                    fontFamily: "Inter",
                   },
                 },
               ],
@@ -258,6 +260,11 @@ const useChart = ({ loading, graph }) => {
             {
               data: categories,
               orient: "horizontal",
+              textStyle: {
+                fontFamily: "Inter",
+                fontWeight: 400,
+                fontSize: 14,
+              },
 
               tooltip: {
                 show: true,
@@ -274,7 +281,9 @@ const useChart = ({ loading, graph }) => {
               bottom: "12%",
               left: "center",
               textStyle: {
-                fontStyle: "italic",
+                fontFamily: "Inter",
+                fontWeight: 400,
+                fontSize: 14,
                 color: "#333", // Text color for the legend
               },
             },

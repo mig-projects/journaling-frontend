@@ -20,6 +20,7 @@
 
 .brand-name {
   font-size: 24px;
+  font-family: "Inter";
   padding: 10px;
   color: #7438e2;
 }
@@ -30,10 +31,9 @@
   align-items: center;
 }
 
-.login-button,
-.logout-button,
-.signup-button {
+.nav-button {
   margin-left: auto;
+  font-family: "Inter";
   padding: 10px;
 }
 

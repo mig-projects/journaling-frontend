@@ -39,14 +39,14 @@ export default function Navbar() {
 
         <MDBCollapse navbar show={showNavExternal} className="navbar-collapse">
           {user ? (
-            <MDBNavbarLink onClick={signOut} className="logout-button">
-              <MDBIcon fas icon="user-circle" className="avatar" size="lg" />{" "}
+            <MDBNavbarLink onClick={signOut} className="logout nav-button">
+              <MDBIcon fas icon="user-circle" className="avatar" size="lg" />
               Logout
             </MDBNavbarLink>
           ) : (
             <div className="navbar-buttons-wrapper">
               <MDBNavbarNav className="ml-auto">
-                <MDBNavbarLink href="/login" className="login-button">
+                <MDBNavbarLink href="/login" className="login nav-button">
                   Login
                 </MDBNavbarLink>
               </MDBNavbarNav>

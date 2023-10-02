@@ -1,6 +1,9 @@
 import { createTheme } from "@mui/material";
 
 export const appTheme = createTheme({
+  typography: {
+    fontFamily: "Inter",
+  },
   palette: {
     primary: {
       // purple
@@ -17,6 +20,9 @@ export const appTheme = createTheme({
 });
 
 export const textFormTheme = createTheme({
+  typography: {
+    fontFamily: "Inter",
+  },
   palette: {
     primary: {
       // purple
