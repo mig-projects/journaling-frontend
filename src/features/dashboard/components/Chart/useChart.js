@@ -260,6 +260,7 @@ const useChart = ({ loading, graph }) => {
             {
               data: categories,
               orient: "horizontal",
+              backgroundColor: "#fff",
               textStyle: {
                 fontFamily: "Inter",
                 fontWeight: 400,
