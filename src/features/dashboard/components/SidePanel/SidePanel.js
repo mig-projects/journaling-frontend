@@ -9,7 +9,7 @@ const SidePanel = ({ graph, loading, reduceGraph }) => {
     <div className="sidePanelContainer">
       {loading ? (
         <CircularProgress />
-      ) : graph.state === "fullView" ? (
+      ) : ["fullView", "communityView"].includes(graph.state) ? (
         <FullView nodes={graph.nodes} reduceGraph={reduceGraph} />
       ) : graph.state === "nodeView" ? (
         <NodeView nodes={graph.nodes} topics={graph.topics} />

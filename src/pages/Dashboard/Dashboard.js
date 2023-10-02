@@ -2,18 +2,37 @@ import "./Dashboard.css";
 import Chart from "../../features/dashboard/components/Chart/Chart";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Typography, Select, MenuItem, Button } from "@mui/material";
 import SidePanel from "../../features/dashboard/components/SidePanel/SidePanel";
 import usePreprocessing from "../../features/dashboard/hooks/usePreprocessing";
+import MapInfoButton from "../../features/dashboard/components/MapInfoButton/MapInfoButton";
 
 const Dashboard = () => {
   // Get user and registration status from authentication context
   const { isRegisteredUser, user } = useAuth();
+  const [selectedCommunity, setSelectedCommunity] = useState([]);
+
   // Use custom hook to preprocess data
-  const { loading, graph, reduceGraph, expandGraph } = usePreprocessing({
-    user,
-  });
+  const { loading, graph, reduceGraph, expandGraph, filterGraphByCommunity } =
+    usePreprocessing({
+      user,
+    });
+
+  const handleCommunityChange = (event) => {
+    setSelectedCommunity(event.target.value);
+    filterGraphByCommunity(event.target.value);
+  };
+
+  const expandAndReset = () => {
+    expandGraph();
+    setSelectedCommunity([]);
+  };
+
+  const reduceAndReset = (node) => {
+    reduceGraph(node);
+    setSelectedCommunity([]);
+  };
 
   const navigate = useNavigate();
 
@@ -45,14 +64,45 @@ const Dashboard = () => {
       <br />
 
       <div className="chartContainer">
-        <SidePanel graph={graph} loading={loading} reduceGraph={reduceGraph} />
+        <SidePanel
+          graph={graph}
+          loading={loading}
+          reduceGraph={reduceAndReset}
+        />
         <div className="chart">
-          <Chart
-            graph={graph}
-            loading={loading}
-            reduceGraph={reduceGraph}
-            expandGraph={expandGraph}
-          />
+          <Select
+            className="communitySelect overlayButton"
+            value={selectedCommunity}
+            onChange={handleCommunityChange}
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return "Community Tags";
+              }
+
+              return selected.join(", ");
+            }}
+            displayEmpty
+            multiple
+            inputProps={{ "aria-label": "Without label" }}
+          >
+            {graph?.communities &&
+              graph.communities.map((community, index) => (
+                <MenuItem key={index} value={community}>
+                  {community}
+                </MenuItem>
+              ))}
+          </Select>
+
+          <Chart graph={graph} loading={loading} reduceGraph={reduceAndReset} />
+          <div className="buttonContainer">
+            <Button
+              className="backButton overlayButton"
+              onClick={expandAndReset}
+            >
+              Back to full view
+            </Button>
+            <MapInfoButton />
+          </div>
         </div>
       </div>
     </div>

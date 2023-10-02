@@ -12,12 +12,10 @@ import { useCallback } from "react";
 
 const NodeView = ({ nodes, topics }) => {
   const centerNode = nodes.find((n) => n.tagType.startsWith("center")); // Retrieve central node for nodeView.
-  console.log(topics);
   const tagType = centerNode.tagType.split("-")[1];
 
   const retrieveColor = useCallback(
     (clusterId) => {
-      console.log(clusterId);
       return (
         topics.find((topic) => topic.cluster === clusterId)?.color ||
         "#a280df80" // topic color, or unclassified

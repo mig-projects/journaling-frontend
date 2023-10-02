@@ -3,7 +3,7 @@ import ReactEcharts from "echarts-for-react";
 import { CircularProgress } from "@mui/material";
 import useChart from "./useChart";
 
-const Chart = ({ loading, graph, expandGraph, reduceGraph }) => {
+const Chart = ({ loading, graph, reduceGraph }) => {
   // Use custom hook to configure chart
   const { option } = useChart({
     loading,
@@ -11,14 +11,8 @@ const Chart = ({ loading, graph, expandGraph, reduceGraph }) => {
   });
 
   const clickHandler = (params) => {
-    console.log(params);
     if (params.componentType === "series" && params?.dataType === "node") {
       reduceGraph(params.data);
-    } else if (
-      params.componentType === "graphic" &&
-      params.name === "fullView"
-    ) {
-      expandGraph();
     }
   };
 

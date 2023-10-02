@@ -19,6 +19,17 @@ const usePreprocessing = ({ user }) => {
   // Pre-process the nodes for dashboard display.
   // So far just normalize node size to the desired range.
   const transformNodes = (nodes, min = 15, max = 50) => {
+    // Transform function for community tags
+
+    const capitalizeFirstLetters = (arr) => {
+      return arr
+        .filter((str) => str)
+        .map((str) => {
+          return str.charAt(0).toUpperCase() + str.slice(1);
+        });
+    };
+
+    // Log transform for node size
     const logNodes = nodes.map((node) => ({
       ...node,
       size: Math.log10(node.count + 1),
@@ -27,12 +38,14 @@ const usePreprocessing = ({ user }) => {
     const maxLogSize = Math.max(...logNodes.map((node) => node.size));
     const minLogSize = Math.min(...logNodes.map((node) => node.size));
 
+    // Normalizing sizes to provided min-max + other transforms.
     const normalizedNodes = logNodes.map((node) => ({
       id: node.node_type + "||" + node.name,
       name: node.name,
       count: node.count,
       cluster: node.cluster,
       highlightCount: node.highlight_count,
+      communityTags: capitalizeFirstLetters(node.community_tags),
       size:
         ((node.size - minLogSize) / (maxLogSize - minLogSize)) * (max - min) +
           min || min,
@@ -76,7 +89,38 @@ const usePreprocessing = ({ user }) => {
         links: newLinks,
         nodes: newNodes,
         topics: prevState.topics,
+        communities: prevState.communities,
         state: "nodeView",
+      }));
+    },
+    [fullLinks, fullNodes]
+  );
+
+  const getCommunities = (nodes) => {
+    const allTags = nodes.reduce((acc, cur) => {
+      return acc.concat(cur.communityTags);
+    }, []);
+
+    return [...new Set(allTags)].sort();
+  };
+
+  // Returning the subset of nodes who have been connected to a given community tag.
+  const filterGraphByCommunity = useCallback(
+    (selectedTags) => {
+      const newNodes = fullNodes.filter((node) => {
+        return node.communityTags.some((tag) => selectedTags.includes(tag));
+      });
+      const newLinks = fullLinks.filter(
+        (link) =>
+          newNodes.map((node) => node.id).includes(link.source) ||
+          newNodes.map((node) => node.id).includes(link.target)
+      );
+      setGraph((prevState) => ({
+        links: newLinks,
+        nodes: newNodes,
+        topics: prevState.topics,
+        communities: prevState.communities,
+        state: "communityView",
       }));
     },
     [fullLinks, fullNodes]
@@ -88,6 +132,7 @@ const usePreprocessing = ({ user }) => {
       nodes: fullNodes,
       links: fullLinks,
       topics: prevState.topics,
+      communities: prevState.communities,
       state: "fullView",
     }));
   }, [fullLinks, fullNodes]);
@@ -101,11 +146,13 @@ const usePreprocessing = ({ user }) => {
       nodes = transformNodes(nodes);
       links = transformLinks(links);
       topics = transformTopics(topics);
+      const communities = getCommunities(nodes);
 
       setGraph({
         nodes: nodes,
         links: links,
         topics: topics,
+        communities: communities,
         state: "fullView",
       });
 
@@ -119,7 +166,7 @@ const usePreprocessing = ({ user }) => {
     setLoading(false);
   }, [fetchData]);
 
-  return { loading, graph, reduceGraph, expandGraph };
+  return { loading, graph, reduceGraph, expandGraph, filterGraphByCommunity };
 };
 
 export default usePreprocessing;

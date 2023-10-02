@@ -74,7 +74,11 @@ const useChart = ({ loading, graph }) => {
                 color: chartColorPalette.category.secondary,
               }
             : {},
-        label: { show: graph.state === "nodeView" || !isUserTag(n) },
+        label: {
+          show:
+            ["nodeView", "communityView"].includes(graph.state) ||
+            !isUserTag(n),
+        },
       }));
       if (limitResults) {
         newNodes = newNodes.slice(0, 10);
@@ -181,81 +185,6 @@ const useChart = ({ loading, graph }) => {
                 fontSize: 14,
               },
             },
-            {
-              type: "group",
-              right: 20,
-              top: 20,
-              children: [
-                {
-                  type: "rect",
-                  shape: {
-                    width: 182,
-                    height: 50,
-                    r: 8,
-                  },
-                  style: {
-                    fill: "#fff",
-                    stroke: "#d9d9d9",
-                    lineWidth: 2,
-                  },
-                },
-                {
-                  type: "text",
-                  left: 32.5,
-                  top: 17.5,
-                  style: {
-                    text: "What's this map?",
-                    fontFamily: "Inter",
-                    textAlign: "center",
-                    textBaseline: "middle",
-                    fontSize: 16,
-                    fontWeight: 400,
-                  },
-                  tooltip: {
-                    show: true,
-                    renderMode: "html",
-                    formatter: (params) => {
-                      return "Explaining what this map is.";
-                    },
-                  },
-                },
-              ],
-            },
-            {
-              type: "group",
-              left: 20,
-              top: 20,
-              children: [
-                {
-                  type: "rect",
-                  name: "fullView",
-                  shape: {
-                    width: 182,
-                    height: 50,
-                    r: 8,
-                  },
-                  style: {
-                    fill: "rgba(217, 217, 217, 0.6)",
-                    stroke: "#d9d9d9",
-                    lineWidth: 2,
-                  },
-                },
-                {
-                  type: "text",
-                  name: "fullView",
-                  left: 32.5,
-                  top: 17.5,
-                  style: {
-                    text: "Back to full view",
-                    textAlign: "center",
-                    textBaseline: "middle",
-                    fontSize: 16,
-                    fontWeight: 500,
-                    fontFamily: "Inter",
-                  },
-                },
-              ],
-            },
           ],
 
           legend: [
@@ -266,6 +195,7 @@ const useChart = ({ loading, graph }) => {
               textStyle: {
                 fontFamily: "Inter",
                 fontWeight: 400,
+                color: "#333", // Text color for the legend
                 fontSize: 14,
               },
 
@@ -283,12 +213,6 @@ const useChart = ({ loading, graph }) => {
               },
               bottom: "12%",
               left: "center",
-              textStyle: {
-                fontFamily: "Inter",
-                fontWeight: 400,
-                fontSize: 14,
-                color: "#333", // Text color for the legend
-              },
             },
           ],
           series: [
