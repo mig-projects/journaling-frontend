@@ -34,3 +34,21 @@ export const textFormTheme = createTheme({
     },
   },
 });
+
+// Defining the colors of nodes in the chart.
+export const chartColorPalette = {
+  category: {
+    primary: "#c3c3c3",
+    secondary: "#7438E2",
+  }, // category default
+  finding: "#F5C2C0", // finding default (unclassified)
+  clusters: [
+    "#4352D1",
+    "#ED6F78",
+    "#F2C947",
+    "#9DCF62",
+    "#FCF467",
+    "#5FCAD2",
+    "#4CA58A",
+  ],
+};

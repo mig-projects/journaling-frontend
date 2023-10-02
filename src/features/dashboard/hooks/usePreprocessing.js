@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useApi } from "../../../hooks/useApi";
+import { chartColorPalette } from "../../../themes/theme";
 
 // Hook for dashboard preprocessing logic
 // - Pulling data from Supabase
@@ -7,16 +8,6 @@ import { useApi } from "../../../hooks/useApi";
 // Returns:
 // - loading (boolean)
 // - graph (nodes: Array<any>, links: Array<any>, topics: Array<{cluster: int, ai_topic: str, ai_description: str}>)
-
-const COLOR_PALETTE = [
-  "#5BAFF980",
-  "#EC8B5E80",
-  "#D1BCFA80",
-  "#8BDA9380",
-  "#F2CA6B80",
-  "#FDFFB680",
-  "#9BF6FF80",
-];
 
 const usePreprocessing = ({ user }) => {
   const { fetchData } = useApi({ user });
@@ -62,7 +53,7 @@ const usePreprocessing = ({ user }) => {
   const transformTopics = (topics) => {
     return topics.map((topic, index) => ({
       ...topic,
-      color: COLOR_PALETTE[index],
+      color: chartColorPalette.clusters[index],
     }));
   };
 

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { chartColorPalette } from "../../../../themes/theme";
 
 const LIMIT = false;
 
@@ -23,15 +24,15 @@ const useChart = ({ loading, graph }) => {
       name: "Main Category",
       description: "This represents the primary categories assigned by users.",
       itemStyle: {
-        borderColor: "#7438E2",
+        borderColor: chartColorPalette.category.secondary,
         borderWidth: 2,
-        color: "#c3c3c3",
+        color: chartColorPalette.category.primary,
       },
     });
     legend.push({
       name: "Unclassified",
       description: "Unclassified nodes.",
-      itemStyle: { color: "#a280df80" },
+      itemStyle: { color: chartColorPalette.finding },
     });
     return legend;
   }, []);
@@ -67,9 +68,10 @@ const useChart = ({ loading, graph }) => {
         itemStyle:
           n.tagType === "center-category"
             ? {
-                borderColor: "#c3c3c3",
+                // inverting colors for focused node
+                borderColor: chartColorPalette.category.primary,
                 borderWidth: 1,
-                color: "#7438E2",
+                color: chartColorPalette.category.secondary,
               }
             : {},
         label: { show: graph.state === "nodeView" || !isUserTag(n) },
