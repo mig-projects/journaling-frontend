@@ -66,6 +66,7 @@
       .backButton {
         margin-right: 10px;
         color: black;
+        font-size: 16px;
         height: 40px;
         text-transform: none; /* Prevents automatic uppercase transformation */
       }
