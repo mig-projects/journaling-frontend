@@ -45,7 +45,7 @@ export default function Home() {
       navigate(`/confirm-email/${userType}`);
     };
 
-    if (!isRegisteredUser && ["discord", "newsletter"].includes(userType)) {
+    if (userType === "newsletter") {
       signOutAndRedirect(userType);
     }
   }, [isRegisteredUser, userType, navigate]);
