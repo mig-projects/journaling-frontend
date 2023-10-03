@@ -9,6 +9,7 @@ import {
   Box,
   createTheme,
   ThemeProvider,
+  CircularProgress,
 } from "@mui/material";
 import { supaClient } from "../../services/supabase";
 import "../StaticLayout.css";
@@ -27,8 +28,8 @@ const CommunitySignup = () => {
     fullName: "",
     email: "",
     has_newsletter: false,
-    requests_discord: false,
   });
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", message: "" });
   const [disableButton, setDisableButton] = useState(true);
 
@@ -44,11 +45,7 @@ const CommunitySignup = () => {
   };
 
   useEffect(() => {
-    if (
-      newUser.fullName &&
-      newUser.email &&
-      (newUser.has_newsletter || newUser.requests_discord)
-    ) {
+    if (newUser.fullName && newUser.email && newUser.has_newsletter) {
       setDisableButton(false);
     } else {
       setDisableButton(true);
@@ -57,6 +54,7 @@ const CommunitySignup = () => {
 
   const handleNewsletterSignup = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const tempPassword = Math.random().toString(36).slice(-8);
     // Sign up the new user
@@ -67,7 +65,6 @@ const CommunitySignup = () => {
         data: {
           full_name: newUser.fullName,
           has_newsletter: newUser.has_newsletter,
-          requests_discord: newUser.requests_discord,
         },
       },
     });
@@ -80,49 +77,26 @@ const CommunitySignup = () => {
         message: "This email is already in use. Please use another one.",
       });
     } else {
-      let successMessage = "Thank you for signing up to our ";
-
-      if (newUser.has_newsletter && newUser.requests_discord) {
-        successMessage += "newsletter and Discord community";
-      } else if (newUser.has_newsletter) {
-        successMessage += "newsletter";
-      } else if (newUser.requests_discord) {
-        successMessage += "Discord community";
-      }
-      successMessage += `, ${newUser.fullName}.`;
+      let successMessage = `Thank you for signing up to our newsletter, ${newUser.fullName}.`;
       setMessage({
         type: "success",
         message: successMessage,
       });
     }
+    setLoading(false);
   };
 
   return (
     <div className="formContainer">
+      {loading && <CircularProgress />}
       {message.type === "success" ? (
         <div>
           <ThemeProvider theme={textFormTheme}>
             <Typography mb={2}>{message.message}</Typography>
-            {newUser && newUser.requests_discord ? (
-              <Box>
-                <Typography mb={2}>
-                  Creating a safe space for our community members is our top
-                  priority. Book a screening call with our founder Jie Liang Lin
-                  below.
-                </Typography>
-                <Button
-                  href="https://calendly.com/jielianglin/findhr-discord-intro-call"
-                  variant="contained"
-                  className="homeButton"
-                >
-                  Book a call
-                </Button>
-              </Box>
-            ) : (
-              <Button href="/" variant="contained" className="homeButton">
-                Back to Home
-              </Button>
-            )}
+
+            <Button href="/" variant="contained" className="homeButton">
+              Back to Home
+            </Button>
           </ThemeProvider>
         </div>
       ) : (
@@ -169,21 +143,6 @@ const CommunitySignup = () => {
                   }
                   label="I agree to receiving the Migr-ai-tion newsletter."
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="primary"
-                      onChange={handleChange("requests_discord")}
-                    />
-                  }
-                  label="I would like to request access to the Discord community."
-                />
-                {newUser.requests_discord && (
-                  <Alert severity="info">
-                    Great! You'll be invited to book a short call with our
-                    founder before joining Discord.
-                  </Alert>
-                )}
               </Box>
               <Button
                 type="submit"

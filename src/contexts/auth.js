@@ -17,20 +17,14 @@ export const AuthProvider = ({ children }) => {
   const fetchRegistrationStatus = async (userId) => {
     const { data, error } = await supaClient
       .from("user_metadata")
-      .select(`validated, has_newsletter, requests_discord`)
+      .select(`validated, has_newsletter`)
       .eq("id", userId)
       .single();
 
     if (data) {
       setIsRegisteredUser(data.validated);
       setUserType(
-        data.validated
-          ? "app-user"
-          : data.requests_discord
-          ? "discord"
-          : data.has_newsletter
-          ? "newsletter"
-          : ""
+        data.validated ? "app-user" : data.has_newsletter ? "newsletter" : ""
       );
     } else {
       console.error("Error fetching user metadata:", error);
