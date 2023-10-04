@@ -9,17 +9,11 @@
     max-width: 600px;
   }
 
-  .important-words {
-    color: #7438e2;
-    font-weight: bold;
-  }
-
   .coverPicDiv {
     display: flex;
     justify-content: center;
     padding: 10px 0px;
     width: 600px;
-    max-width: 100vw;
 
     .coverImg {
       min-width: 50px;
@@ -47,72 +41,35 @@
       font-weight: bold;
     }
   }
+
+  .uploadGrid,
+  .discoverGrid {
+    justify-content: center;
+  }
+
+  .uploadIcon,
+  .discoveryIcon {
+    max-width: 250px;
+  }
 }
 
-.gridDiv {
-  .gridContainer {
-    width: 80vw;
-    display: flex;
-    justify-content: center;
+@media screen and (min-width: 601px) {
+  .uploadGrid {
+    margin: 0 10px 0 0;
+  }
+}
 
-    .uploadGrid,
-    .discoverGrid {
-      width: calc(
-        50% - 10px
-      ); /* Subtracting 10px (5px for each button) for in-between spacing */
-      max-width: 295px;
-      height: auto;
-      aspect-ratio: 1; /* Square buttons */
-      border-radius: 16px;
-      border: solid 3px #f7f7f7;
-      box-shadow: 3px 3px 5px #d3cece;
-      background-color: #7438e2;
-      display: flex;
-      justify-content: center;
-      flex-grow: 1;
-
-      .button {
-        background-color: transparent;
-        border: none;
-        width: 100%;
-        height: 100%;
-        background-color: transparent;
-        border: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    .uploadIcon,
-    .discoveryIcon {
-      max-width: 250px;
-    }
+@media screen and (max-width: 600px) {
+  .uploadIcon {
+    width: 150px;
   }
 
-  @media screen and (min-width: 601px) {
-    .uploadGrid {
-      margin: 0 10px 0 0;
-    }
+  .discoveryIcon {
+    width: 150px;
   }
 
-  @media screen and (max-width: 600px) {
-    .uploadIcon {
-      width: 150px;
-    }
-
-    .discoveryIcon {
-      width: 150px;
-    }
-
-    .uploadPopOverText,
-    .discoverPopoverText {
-      font-size: 50px !important;
-    }
-
-    .uploadGrid {
-      margin: 0 0 10px;
-    }
+  .uploadGrid {
+    margin: 0 0 10px;
   }
 }
 
