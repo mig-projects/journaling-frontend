@@ -15,7 +15,7 @@ export class UploadError extends Error {
   }
 }
 
-export const useApi = ({ user }) => {
+export const useApi = () => {
   // Function to perform write operations with error handling
   // Inputs: operation (string), table (string), data (object)
   // Output: None. Throws an error if operation fails.

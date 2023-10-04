@@ -9,8 +9,8 @@ import { chartColorPalette } from "../../../themes/theme";
 // - loading (boolean)
 // - graph (nodes: Array<any>, links: Array<any>, topics: Array<{cluster: int, ai_topic: str, ai_description: str}>)
 
-const usePreprocessing = ({ user }) => {
-  const { fetchData } = useApi({ user });
+const usePreprocessing = () => {
+  const { fetchData } = useApi();
   const [fullNodes, setFullNodes] = useState([]);
   const [fullLinks, setFullLinks] = useState([]);
   const [graph, setGraph] = useState({});

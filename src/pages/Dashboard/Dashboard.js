@@ -10,14 +10,12 @@ import MapInfoButton from "../../features/dashboard/components/MapInfoButton/Map
 
 const Dashboard = () => {
   // Get user and registration status from authentication context
-  const { isRegisteredUser, user } = useAuth();
+  // const { user } = useAuth();
   const [selectedCommunity, setSelectedCommunity] = useState([]);
 
   // Use custom hook to preprocess data
   const { loading, graph, reduceGraph, expandGraph, filterGraphByCommunity } =
-    usePreprocessing({
-      user,
-    });
+    usePreprocessing();
 
   const handleCommunityChange = (event) => {
     setSelectedCommunity(event.target.value);
@@ -33,23 +31,6 @@ const Dashboard = () => {
     reduceGraph(node);
     setSelectedCommunity([]);
   };
-
-  const navigate = useNavigate();
-
-  // Effect hook to redirect unregistered users to home page
-  useEffect(() => {
-    if (!isRegisteredUser) {
-      navigate("/", {
-        state: {
-          message: {
-            type: "info",
-            message:
-              "Please login with an approved account to access this page.",
-          },
-        },
-      });
-    }
-  }, [isRegisteredUser, navigate]);
 
   return (
     <div className="dashboardMain">
