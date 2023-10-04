@@ -100,16 +100,20 @@
   display: flex;
   justify-content: center;
 
-  .githubSignupButton {
+  .discordSignupButton {
     background: #f7f7f7;
     color: #7438e2;
     border-radius: 15px;
     box-shadow: 3px 3px 5px #d3cece;
   }
 
-  .githubSignupButton:hover {
+  .discordSignupButton:hover {
     background: #f7f7f7;
     color: #b2ede7;
+
+    .discordSignupIcon.MuiSvgIcon-root {
+      color: #b2ede7;
+    }
   }
 
   .newsletterButton {
@@ -174,17 +178,12 @@
   display: flex;
   justify-content: center;
   margin: 50px;
-
-  .gitHubSignUpIcon.MuiChip-root {
-    color: #7438e2;
-  }
 }
 
 .horizontal {
   display: block;
   margin: 0 auto;
-  width: 80%;
-  max-width: 600px;
+  width: 100%;
 }
 
 .logosGridContainer {

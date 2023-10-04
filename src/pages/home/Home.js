@@ -18,6 +18,7 @@ import Popover from "@mui/material/Popover";
 
 import Chip from "@mui/material/Chip";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import PeopleIcon from "@mui/icons-material/People";
 
 import "./Home.css";
 import { useAuth } from "../../contexts/auth";
@@ -219,20 +220,30 @@ export default function Home() {
           <br />
 
           <div className="buttonContainer">
-            {!isRegisteredUser && (
-              <Stack spacing={8} direction="row" className="footerGrid">
+            <Stack spacing={8} direction="row" className="footerGrid">
+              {!isRegisteredUser && (
                 <Chip
                   variant="contained"
                   component="a"
                   href="/join-community"
                   className="newsletterButton"
-                  label="Join Our Community"
+                  label="Newsletter Sign-up"
                   icon={
                     <MailOutlineIcon color="white" className="newsletterIcon" />
                   }
                 />
-              </Stack>
-            )}
+              )}
+              <Chip
+                variant="contained"
+                className="discordSignupButton"
+                component="a"
+                href="https://discord.gg/7sz8DHpbTG"
+                label="Join Discord"
+                icon={
+                  <PeopleIcon color="primary" className="discordSignupIcon" />
+                }
+              />
+            </Stack>
           </div>
         </div>
         <hr className="horizontal" />
