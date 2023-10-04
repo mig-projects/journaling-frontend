@@ -7,21 +7,12 @@ import {
   FormControlLabel,
   Alert,
   Box,
-  createTheme,
   ThemeProvider,
   CircularProgress,
 } from "@mui/material";
 import { supaClient } from "../../services/supabase";
 import "../StaticLayout.css";
 import { textFormTheme } from "../../themes/theme";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#a280df",
-    },
-  },
-});
 
 const CommunitySignup = () => {
   const [newUser, setNewUser] = useState({
