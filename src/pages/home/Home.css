@@ -1,18 +1,3 @@
-@media screen and (max-width: 600px) {
-  .uploadIcon {
-    width: 150px;
-  }
-
-  .discoveryIcon {
-    width: 150px;
-  }
-
-  .uploadPopOver,
-  .discoverPopoverText {
-    font-size: 50px !important;
-  }
-}
-
 .mainContainer {
   margin: 50px;
   display: flex;
@@ -24,11 +9,17 @@
     max-width: 600px;
   }
 
+  .important-words {
+    color: #7438e2;
+    font-weight: bold;
+  }
+
   .coverPicDiv {
     display: flex;
     justify-content: center;
     padding: 10px 0px;
     width: 600px;
+    max-width: 100vw;
 
     .coverImg {
       min-width: 50px;
@@ -56,41 +47,84 @@
       font-weight: bold;
     }
   }
-
-  @media screen and (max-width: 900px) {
-    .uploadGrid,
-    .discoverGrid {
-      justify-content: center;
-    }
-
-    .uploadGrid {
-      border-bottom: solid 3px #f7f7f7;
-    }
-  }
-}
-
-@media screen and (min-width: 901px) {
-  .uploadGrid {
-    border-right: solid 3px #f7f7f7;
-  }
-
-  .uploadPopOver,
-  .discoverPopoverText {
-    font-size: 60px;
-  }
 }
 
 .gridDiv {
-  display: flex;
-  justify-content: center;
+  .gridContainer {
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+
+    .uploadGrid,
+    .discoverGrid {
+      width: calc(
+        50% - 10px
+      ); /* Subtracting 10px (5px for each button) for in-between spacing */
+      max-width: 295px;
+      height: auto;
+      aspect-ratio: 1; /* Square buttons */
+      border-radius: 16px;
+      border: solid 3px #f7f7f7;
+      box-shadow: 3px 3px 5px #d3cece;
+      background-color: #7438e2;
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+
+      .button {
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .uploadIcon,
+    .discoveryIcon {
+      max-width: 250px;
+    }
+  }
+
+  @media screen and (min-width: 601px) {
+    .uploadGrid {
+      margin: 0 10px 0 0;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .uploadIcon {
+      width: 150px;
+    }
+
+    .discoveryIcon {
+      width: 150px;
+    }
+
+    .uploadPopOverText,
+    .discoverPopoverText {
+      font-size: 50px !important;
+    }
+
+    .uploadGrid {
+      margin: 0 0 10px;
+    }
+  }
 }
 
-.gridContainer {
-  max-width: 600px;
-  background-color: #7438e2;
-  border: solid 3px #f7f7f7;
-  border-radius: 16px;
-  box-shadow: 3px 3px 5px #d3cece;
+.uploadPopOverText,
+.discoverPopoverText {
+  color: #b2ede7;
+  filter: drop-shadow(3px 3px 3px #5a18d5);
+  font-size: 60px !important;
+
+  @media screen and (max-width: 600px) {
+    font-size: 50px !important;
+  }
 }
 
 .buttonContainer {
@@ -127,50 +161,6 @@
 
   .newsletterButton:hover {
     background-color: #b2ede7;
-  }
-}
-
-.uploadIcon,
-.discoveryIcon {
-  max-width: 250px;
-}
-
-.uploadGrid {
-  display: flex;
-  justify-content: center;
-  max-width: 250px;
-
-  .button {
-    background-color: transparent;
-    border: none;
-  }
-}
-
-.discoverGrid {
-  display: flex;
-  justify-content: center;
-
-  .button {
-    background-color: transparent;
-    border: none;
-  }
-}
-
-.uploadPopOver {
-  color: #b2ede7;
-  filter: drop-shadow(3px 3px 3px #5a18d5);
-}
-
-.discoverPopoverText {
-  color: #b2ede7;
-  filter: drop-shadow(3px 3px 3px #5a18d5);
-}
-
-@media screen and (min-width: 601px) {
-  .uploadPopOver,
-  .discoverPopoverText {
-    font-size: 60px !important;
-    filter: drop-shadow(3px 3px 3px #5a18d5);
   }
 }
 
@@ -233,9 +223,4 @@
   color: gray;
 
   /* margin: 50px; */
-}
-
-.important-words {
-  color: #7438e2;
-  font-weight: bold;
 }

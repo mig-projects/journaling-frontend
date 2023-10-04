@@ -133,10 +133,10 @@ export default function Home() {
 
             <hr />
           </div>
-          {isRegisteredUser && (
-            <div className="gridDiv">
-              <Grid container spacing={0} className="gridContainer">
-                <Grid item xs={12} md={6} className="uploadGrid">
+          <div className="gridDiv">
+            <Grid container spacing={0} className="gridContainer">
+              {isRegisteredUser && (
+                <Grid item xs={12} sm={5} className="uploadGrid">
                   <button className="button" onClick={showUpload}>
                     <img
                       src={upload}
@@ -170,53 +170,53 @@ export default function Home() {
                     onClose={hideUploadPopover}
                     disableRestoreFocus
                   >
-                    <Typography sx={{ p: 1 }} className="uploadPopOver">
+                    <Typography sx={{ p: 1 }} className="uploadPopOverText">
                       <b>Upload</b>
                     </Typography>
                   </Popover>
                 </Grid>
-                <Grid item xs={12} md={6} className="discoverGrid">
-                  <button className="button" onClick={showDiscover}>
-                    <img
-                      src={discovery}
-                      alt="discovery"
-                      className="discoveryIcon"
-                      onMouseEnter={showDiscoverPopover}
-                      onMouseLeave={hideDiscoverPopover}
-                    />
-                  </button>
-                  <Popover
-                    id="mouse-over-popover"
-                    sx={{
-                      pointerEvents: "none",
-                    }}
-                    PaperProps={{
-                      elevation: 0,
-                      sx: {
-                        backgroundColor: "transparent",
-                      },
-                    }}
-                    open={openDiscoverPopover}
-                    anchorEl={anchorElDiscover}
-                    anchorOrigin={{
-                      vertical: "center",
-                      horizontal: "center",
-                    }}
-                    transformOrigin={{
-                      vertical: "center",
-                      horizontal: "center",
-                    }}
-                    onClose={hideDiscoverPopover}
-                    disableRestoreFocus
-                  >
-                    <Typography sx={{ p: 1 }} className="discoverPopoverText">
-                      <b>Discover</b>
-                    </Typography>
-                  </Popover>
-                </Grid>
+              )}
+              <Grid item xs={12} sm={5} className="discoverGrid">
+                <button className="button" onClick={showDiscover}>
+                  <img
+                    src={discovery}
+                    alt="discovery"
+                    className="discoveryIcon"
+                    onMouseEnter={showDiscoverPopover}
+                    onMouseLeave={hideDiscoverPopover}
+                  />
+                </button>
+                <Popover
+                  id="mouse-over-popover"
+                  sx={{
+                    pointerEvents: "none",
+                  }}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      backgroundColor: "transparent",
+                    },
+                  }}
+                  open={openDiscoverPopover}
+                  anchorEl={anchorElDiscover}
+                  anchorOrigin={{
+                    vertical: "center",
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "center",
+                    horizontal: "center",
+                  }}
+                  onClose={hideDiscoverPopover}
+                  disableRestoreFocus
+                >
+                  <Typography sx={{ p: 1 }} className="discoverPopoverText">
+                    <b>Discover</b>
+                  </Typography>
+                </Popover>
               </Grid>
-            </div>
-          )}
+            </Grid>
+          </div>
           <br />
 
           <div className="buttonContainer">
