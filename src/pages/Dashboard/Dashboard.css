@@ -25,9 +25,11 @@
       top: 20px;
       left: 20px;
       z-index: 100;
+      border-radius: 8px;
+      background-color: #eeeeee;
     }
 
-    .overlayButton {
+    .backButton {
       background-color: #eeeeee;
       border: 1px solid #d9d9d9;
       border-radius: 8px;

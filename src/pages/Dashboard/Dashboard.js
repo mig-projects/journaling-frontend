@@ -1,6 +1,6 @@
 import "./Dashboard.css";
 import Chart from "../../features/dashboard/components/Chart/Chart";
-import { Typography, Select, MenuItem, Button } from "@mui/material";
+import { Select, MenuItem, Button } from "@mui/material";
 import SidePanel from "../../features/dashboard/components/SidePanel/SidePanel";
 import MapInfoButton from "../../features/dashboard/components/MapInfoButton/MapInfoButton";
 import { useGraph } from "../../contexts/graph";
@@ -28,7 +28,7 @@ const Dashboard = () => {
         <SidePanel />
         <div className="chart">
           <Select
-            className="communitySelect overlayButton"
+            className="communitySelect"
             value={currentCommunities}
             onChange={handleCommunityChange}
             renderValue={(selected) => {
