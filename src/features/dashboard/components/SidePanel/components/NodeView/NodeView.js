@@ -29,7 +29,6 @@ const NodeView = () => {
     <div>
       <Box className="titleContainer">
         <Typography className="sidePanelTitle">
-          Relationships to{" "}
           <span className="boldTitle">{currentNode?.name || "Unknown"}</span>
         </Typography>
         <Typography>

@@ -210,7 +210,7 @@ const useChart = () => {
 
           legend: [
             {
-              data: categories.filter((cat) => cat.name != "Main Category"),
+              data: categories.filter((cat) => cat.name !== "Main Category"),
               orient: "horizontal",
               backgroundColor: "#fff",
               textStyle: {

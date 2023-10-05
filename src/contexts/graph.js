@@ -182,10 +182,12 @@ export const GraphProvider = ({ children }) => {
     };
 
     const newGraph = computeGraph();
-    if (newGraph.nodes.length === 0) {
+    setRenderGraph(newGraph);
+
+    // Managing case where community tags
+    if (newGraph.nodes.length === 0 && currentCommunities.length > 0) {
       setCurrentNode({});
     }
-    setRenderGraph(newGraph);
   }, [
     currentNode,
     communities,
@@ -193,6 +195,7 @@ export const GraphProvider = ({ children }) => {
     initialGraph,
     filterGraphByCommunity,
     filterGraphByNode,
+    countFindings,
   ]);
 
   useEffect(() => {
@@ -214,7 +217,7 @@ export const GraphProvider = ({ children }) => {
     // Execute async initialization
     setLoading(true);
     initializeGraph().finally(() => setLoading(false));
-  }, []);
+  }, [fetchData]);
 
   return (
     <GraphContext.Provider

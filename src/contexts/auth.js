@@ -34,13 +34,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const session = supaClient.auth.getSession();
+        const { data: session } = await supaClient.auth.getSession();
 
         if (session) {
           const { data, error } = await supaClient.auth.getUser();
 
           if (error) {
-            console.error("Error fetching user:", error);
             setLoading(false);
             return;
           }
