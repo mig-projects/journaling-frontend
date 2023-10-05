@@ -64,7 +64,7 @@ export const GraphProvider = ({ children }) => {
       name: node.name,
       count: node.count,
       cluster: node.cluster,
-      findingCount: node.highlight_count,
+      description: node.cat_description,
       communityTags: capitalizeFirstLetters(node.community_tags),
       size:
         ((node.size - minLogSize) / (maxLogSize - minLogSize)) * (max - min) +
