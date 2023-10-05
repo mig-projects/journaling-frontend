@@ -185,7 +185,7 @@ const useChart = () => {
               left: 10,
               bottom: "17%",
               style: {
-                text: "AI TOPICS",
+                text: "AI GROUPINGS",
                 textAlign: "center",
                 fontFamily: "Inter",
                 fontWeight: 500,
