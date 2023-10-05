@@ -46,7 +46,6 @@ const useChart = () => {
   const createDataSpec = useCallback(
     (renderGraph, categories, limitResults = false) => {
       const { nodes } = renderGraph;
-      console.log(currentNode);
 
       const isUserTag = (n) => {
         return n.tagType.endsWith("highlight");
@@ -86,7 +85,6 @@ const useChart = () => {
       if (limitResults) {
         newNodes = newNodes.slice(0, 10);
       }
-      console.log(newNodes);
 
       // console.log("New nodes:", newNodes);
       return newNodes;
@@ -174,9 +172,6 @@ const useChart = () => {
         // console.log("Links:", plottedLinks);
 
         option = {
-          // title: {
-          //   text: "",
-          // },
           backgroundColor: "#fff",
           tooltip: { show: false },
           graphic: [
@@ -184,6 +179,7 @@ const useChart = () => {
               type: "text",
               left: 10,
               bottom: "17%",
+              z: 10,
               style: {
                 text: "AI GROUPINGS",
                 textAlign: "center",
@@ -191,6 +187,23 @@ const useChart = () => {
                 fontWeight: 500,
                 fill: "#333",
                 fontSize: 14,
+              },
+              tooltip: {
+                show: true,
+                formatter: (params) => {
+                  return "AI analysis facilitates the iterative designation of central themes. We are using semantic clustering and LLM to provide additional insights into emerging patterns and themes from the incoming data. Unprocessed inputs are marked ‘Unclassified’ in the legend. ";
+                },
+                extraCssText: "max-width: 50%; white-space: normal;",
+                textStyle: {
+                  fontFamily: "Inter",
+                  color: "#333", // Text color for the legend
+                  fontSize: 14,
+                },
+                position: function (point, params, dom, rect, size) {
+                  // Calculate the new position here
+                  // The tooltip will be positioned above the legend item, aligned left or right depending on legend side
+                  return [point[0], point[1] - size.contentSize[1]];
+                },
               },
             },
           ],
@@ -217,6 +230,17 @@ const useChart = () => {
                 },
                 textStyle: {
                   width: 50,
+                  fontFamily: "Inter",
+                },
+                position: function (point, params, dom, rect, size) {
+                  // Calculate the new position here
+                  // The tooltip will be positioned above the legend item, aligned left or right depending on legend side
+                  const x =
+                    point[0] < size.viewSize[0] / 2
+                      ? point[0]
+                      : point[0] - size.contentSize[0];
+                  const y = point[1] - size.contentSize[1];
+                  return [x, y];
                 },
               },
               bottom: "12%",
