@@ -6,15 +6,15 @@ import NodeView from "./components/NodeView/NodeView";
 import { useGraph } from "../../../../contexts/graph";
 
 const SidePanel = () => {
-  const { loading, graph, reduceGraph } = useGraph();
+  const { loading, currentNode } = useGraph();
   return (
     <div className="sidePanelContainer">
       {loading ? (
         <CircularProgress />
-      ) : ["fullView", "communityView"].includes(graph.state) ? (
-        <FullView nodes={graph.nodes} reduceGraph={reduceGraph} />
-      ) : graph.state === "nodeView" ? (
-        <NodeView nodes={graph.nodes} topics={graph.topics} />
+      ) : Object.keys(currentNode).length === 0 ? (
+        <FullView />
+      ) : currentNode.id ? (
+        <NodeView />
       ) : (
         <div>
           The data couldn't be loaded. Please try refreshing the page or contact

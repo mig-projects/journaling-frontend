@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { chartColorPalette } from "../../../../themes/theme";
+import { useGraph } from "../../../../contexts/graph";
 
 const LIMIT = false;
 
 // This hook is reponsible for generating the option spec required by the chart,
 // as well as any interaction handlers needed for the data visualization.
-// Expects graph object containing nodes, links, clusters (assignments) and topics (as described in legend).
-const useChart = ({ loading, graph }) => {
+// Expects renderGraph object containing nodes, links, clusters (assignments) and topics (as described in legend).
+const useChart = () => {
+  const { loading, renderGraph, currentNode, currentCommunities } = useGraph();
   const [option, setOption] = useState({});
 
   // Function to create legend specification for the chart, including the related description to display in tooltip.
@@ -38,12 +40,13 @@ const useChart = ({ loading, graph }) => {
   }, []);
 
   // Function to create node specification for the chart.
-  // This includes categories, as well as highlights, with different color and style.
+  // This includes categories, as well as findings, with different color and style.
   // Inputs: nodes (array), categories (array), limitResults (boolean - optional, default is false)
   // Output: Array of node specifications
   const createDataSpec = useCallback(
-    (graph, categories, limitResults = false) => {
-      const { nodes } = graph;
+    (renderGraph, categories, limitResults = false) => {
+      const { nodes } = renderGraph;
+      console.log(currentNode);
 
       const isUserTag = (n) => {
         return n.tagType.endsWith("highlight");
@@ -66,28 +69,29 @@ const useChart = ({ loading, graph }) => {
           ? retrieveCategory(n.cluster, categories)
           : "Main Category",
         itemStyle:
-          n.tagType === "center-category"
+          n.id === currentNode.id && n.tagType === "category"
             ? {
-                // inverting colors for focused node
+                // inverting colors for current node
+                color: chartColorPalette.category.secondary,
                 borderColor: chartColorPalette.category.primary,
                 borderWidth: 1,
-                color: chartColorPalette.category.secondary,
               }
             : {},
         label: {
           show:
-            ["nodeView", "communityView"].includes(graph.state) ||
+            Object.keys(currentNode).length + currentCommunities.length > 0 ||
             !isUserTag(n),
         },
       }));
       if (limitResults) {
         newNodes = newNodes.slice(0, 10);
       }
+      console.log(newNodes);
 
       // console.log("New nodes:", newNodes);
       return newNodes;
     },
-    []
+    [currentNode, currentCommunities]
   );
 
   // Function to create link specification for the chart.
@@ -142,24 +146,28 @@ const useChart = ({ loading, graph }) => {
   }, []);
 
   // Function to create the overall option specification for the chart, as will be consumed by e-charts API.
-  // Inputs: graph (object), limitResults (boolean)
+  // Inputs: renderGraph (object), limitResults (boolean)
   // Output: Option specification object
   const createOptionSpec = useCallback(
-    (graph, limitResults) => {
+    (renderGraph, limitResults) => {
       let option = {};
 
-      if (Object.keys(graph).length > 0) {
+      if (Object.keys(renderGraph).length > 0) {
         // Create array of categories that will be used as legend.
-        const categories = createLegendSpec(graph.topics);
+        const categories = createLegendSpec(renderGraph.topics);
         // console.log("Categories:", categories);
 
         // Create the nodes to be plotted.
-        const plottedNodes = createDataSpec(graph, categories, limitResults);
+        const plottedNodes = createDataSpec(
+          renderGraph,
+          categories,
+          limitResults
+        );
         // console.log("Nodes:", plottedNodes);
 
         // Create the links connecting nodes to one another.
         const plottedLinks = createLinkSpec(
-          graph.links,
+          renderGraph.links,
           plottedNodes,
           limitResults
         );
@@ -250,11 +258,11 @@ const useChart = ({ loading, graph }) => {
   );
 
   useEffect(() => {
-    if (!loading && Object.keys(graph).length > 0) {
-      const newOption = createOptionSpec(graph, LIMIT);
+    if (!loading && Object.keys(renderGraph).length > 0) {
+      const newOption = createOptionSpec(renderGraph, LIMIT);
       setOption(newOption);
     }
-  }, [loading, graph, createOptionSpec]);
+  }, [loading, renderGraph, createOptionSpec]);
 
   return { option };
 };

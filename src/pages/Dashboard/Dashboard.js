@@ -1,6 +1,5 @@
 import "./Dashboard.css";
 import Chart from "../../features/dashboard/components/Chart/Chart";
-import { useState } from "react";
 import { Typography, Select, MenuItem, Button } from "@mui/material";
 import SidePanel from "../../features/dashboard/components/SidePanel/SidePanel";
 import MapInfoButton from "../../features/dashboard/components/MapInfoButton/MapInfoButton";
@@ -8,19 +7,17 @@ import { useGraph } from "../../contexts/graph";
 
 const Dashboard = () => {
   // Get user and registration status from authentication context
-  const [selectedCommunity, setSelectedCommunity] = useState([]);
 
   // Use custom hook to preprocess data
-  const { graph, expandGraph, filterGraphByCommunity } = useGraph();
+  const {
+    expandGraph,
+    communities,
+    currentCommunities,
+    setCurrentCommunities,
+  } = useGraph();
 
   const handleCommunityChange = (event) => {
-    setSelectedCommunity(event.target.value);
-    filterGraphByCommunity(graph, event.target.value);
-  };
-
-  const expandAndReset = () => {
-    expandGraph();
-    setSelectedCommunity([]);
+    setCurrentCommunities(event.target.value);
   };
 
   // const reduceAndReset = (node) => {
@@ -44,7 +41,7 @@ const Dashboard = () => {
         <div className="chart">
           <Select
             className="communitySelect overlayButton"
-            value={selectedCommunity}
+            value={currentCommunities}
             onChange={handleCommunityChange}
             renderValue={(selected) => {
               if (selected.length === 0) {
@@ -57,8 +54,8 @@ const Dashboard = () => {
             multiple
             inputProps={{ "aria-label": "Without label" }}
           >
-            {graph?.communities &&
-              graph.communities.map((community, index) => (
+            {communities &&
+              communities.map((community, index) => (
                 <MenuItem key={index} value={community}>
                   {community}
                 </MenuItem>
@@ -67,10 +64,7 @@ const Dashboard = () => {
 
           <Chart />
           <div className="buttonContainer">
-            <Button
-              className="backButton overlayButton"
-              onClick={expandAndReset}
-            >
+            <Button className="backButton overlayButton" onClick={expandGraph}>
               Back to full view
             </Button>
             <MapInfoButton />

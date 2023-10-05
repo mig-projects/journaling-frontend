@@ -5,16 +5,13 @@ import useChart from "./useChart";
 import { useGraph } from "../../../../contexts/graph";
 
 const Chart = () => {
-  const { loading, graph, reduceGraph } = useGraph();
+  const { loading, setCurrentNode } = useGraph();
   // Use custom hook to configure chart
-  const { option } = useChart({
-    loading,
-    graph,
-  });
+  const { option } = useChart();
 
   const clickHandler = (params) => {
     if (params.componentType === "series" && params?.dataType === "node") {
-      reduceGraph(params.data);
+      setCurrentNode(params.data);
     }
   };
 

@@ -9,8 +9,10 @@ import {
   Link,
   TableRow,
 } from "@mui/material";
+import { useGraph } from "../../../../../../contexts/graph";
 
-const FullView = ({ nodes, reduceGraph }) => {
+const FullView = () => {
+  const { renderGraph, setCurrentNode } = useGraph();
   return (
     <div>
       <Box className="titleContainer">
@@ -31,7 +33,7 @@ const FullView = ({ nodes, reduceGraph }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {nodes
+              {renderGraph.nodes
                 .filter((node) => node.tagType === "category")
                 .map((node) => (
                   <TableRow key={node.id}>
@@ -39,9 +41,9 @@ const FullView = ({ nodes, reduceGraph }) => {
                     <TableCell className="findingColumn">
                       <Link
                         className="findingLink"
-                        onClick={() => reduceGraph(node)}
+                        onClick={() => setCurrentNode(node)}
                       >
-                        {node.highlightCount} findings
+                        {node.findingCount} findings
                       </Link>
                     </TableCell>
                   </TableRow>

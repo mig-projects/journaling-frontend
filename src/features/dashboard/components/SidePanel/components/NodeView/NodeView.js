@@ -9,19 +9,20 @@ import {
   TableRow,
 } from "@mui/material";
 import { useCallback } from "react";
+import { useGraph } from "../../../../../../contexts/graph";
 
-const NodeView = ({ nodes, topics }) => {
-  const centerNode = nodes.find((n) => n.tagType.startsWith("center")); // Retrieve central node for nodeView.
-  const tagType = centerNode.tagType.split("-")[1];
+const NodeView = () => {
+  const { renderGraph, currentNode } = useGraph();
+  const { tagType } = currentNode;
 
   const retrieveColor = useCallback(
     (clusterId) => {
       return (
-        topics.find((topic) => topic.cluster === clusterId)?.color ||
-        "#a280df80" // topic color, or unclassified
+        renderGraph.topics.find((topic) => topic.cluster === clusterId)
+          ?.color || "#a280df80" // topic color, or unclassified
       );
     },
-    [topics]
+    [renderGraph]
   );
 
   return (
@@ -29,13 +30,13 @@ const NodeView = ({ nodes, topics }) => {
       <Box className="titleContainer">
         <Typography className="sidePanelTitle">
           Relationships to{" "}
-          <span className="boldTitle">{centerNode?.name || "Unknown"}</span>
+          <span className="boldTitle">{currentNode?.name || "Unknown"}</span>
         </Typography>
         <Typography>
           {tagType === "category" &&
             "One to two sentences manually written for this category."}
           {tagType === "highlight" &&
-            `${centerNode.count} participants mentioned this finding.`}
+            `${currentNode.count} participants mentioned this finding.`}
         </Typography>
       </Box>
       <Box>
@@ -49,7 +50,7 @@ const NodeView = ({ nodes, topics }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nodes
+                {renderGraph.nodes
                   .filter((node) => node.tagType === "highlight")
                   .map((node) => (
                     <TableRow key={node.id}>
@@ -83,7 +84,7 @@ const NodeView = ({ nodes, topics }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nodes
+                {renderGraph.nodes
                   .filter((node) => node.tagType === "category")
                   .map((node) => (
                     <TableRow key={node.id}>
