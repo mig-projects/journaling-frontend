@@ -26,14 +26,6 @@ const Dashboard = () => {
 
   return (
     <div className="dashboardMain">
-      <Typography>
-        MIGR-AI-TION is conducting EU research on the relationships between
-        between workplace discrimination and algorithmic hiring bias. We are
-        working closely with a core group of eight intersectional migrant tech
-        workers based in Berlin, and a wider group of pre-selected participants
-        via Discord. The visualization maps the main themes emerging from our
-        collaborative research from September to November 2023.
-      </Typography>
       <br />
 
       <div className="chartContainer">
