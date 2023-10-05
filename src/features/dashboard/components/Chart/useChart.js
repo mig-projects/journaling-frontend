@@ -98,7 +98,7 @@ const useChart = ({ loading, graph }) => {
     let newLinks = links.map((l) => ({
       ...l,
       value: l.value,
-      lineStyle: { color: "#8CD1CA", opacity: 0.2, curveness: 0.1 },
+      lineStyle: { color: "#CECECE", opacity: 0.3, curveness: 0.1 },
       label: { show: false },
     }));
 
