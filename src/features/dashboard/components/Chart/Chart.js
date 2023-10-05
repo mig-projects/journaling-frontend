@@ -2,8 +2,10 @@ import React from "react";
 import ReactEcharts from "echarts-for-react";
 import { CircularProgress } from "@mui/material";
 import useChart from "./useChart";
+import { useGraph } from "../../../../contexts/graph";
 
-const Chart = ({ loading, graph, reduceGraph }) => {
+const Chart = () => {
+  const { loading, graph, reduceGraph } = useGraph();
   // Use custom hook to configure chart
   const { option } = useChart({
     loading,

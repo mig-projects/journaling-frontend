@@ -1,18 +1,30 @@
-import { useState, useEffect, useCallback } from "react";
-import { useApi } from "../../../hooks/useApi";
-import { chartColorPalette } from "../../../themes/theme";
+import { createContext, useContext } from "react";
 
-// Hook for dashboard preprocessing logic
+import { useState, useEffect, useCallback } from "react";
+import { useApi } from "../hooks/useApi";
+import { chartColorPalette } from "../themes/theme";
+
+// Context for providing graph for dashboard visualization
 // - Pulling data from Supabase
-// - Transforming data
+// - Transforming data on init
+// - Event handlers
 // Returns:
 // - loading (boolean)
 // - graph (nodes: Array<any>, links: Array<any>, topics: Array<{cluster: int, ai_topic: str, ai_description: str}>)
+// - Functions
 
-const usePreprocessing = () => {
+export const GraphContext = createContext();
+
+export const GraphProvider = ({ children }) => {
   const { fetchData } = useApi();
-  const [fullNodes, setFullNodes] = useState([]);
-  const [fullLinks, setFullLinks] = useState([]);
+  const [initialGraph, setInitialGraph] = useState({
+    nodes: [],
+    links: [],
+    topics: [],
+    communities: [],
+  });
+  const [currentNode, setCurrentNode] = useState({}); // Node used for node-centered view
+  const [currentCommunities, setCurrentCommunities] = useState({}); // Community filter
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -70,32 +82,6 @@ const usePreprocessing = () => {
     }));
   };
 
-  // This function takes a node in input, and returns the graph adjacent to this node.
-  const reduceGraph = useCallback(
-    (node) => {
-      const newLinks = fullLinks.filter(
-        (link) => link.source === node.id || link.target === node.id
-      );
-      const newNodes = fullNodes
-        .filter(
-          (n) =>
-            newLinks.map((link) => link.source).includes(n.id) ||
-            newLinks.map((link) => link.target).includes(n.id)
-        )
-        .map((n) =>
-          n.id === node.id ? { ...n, tagType: "center-" + n.tagType } : n
-        );
-      setGraph((prevState) => ({
-        links: newLinks,
-        nodes: newNodes,
-        topics: prevState.topics,
-        communities: prevState.communities,
-        state: "nodeView",
-      }));
-    },
-    [fullLinks, fullNodes]
-  );
-
   const getCommunities = (nodes) => {
     const allTags = nodes.reduce((acc, cur) => {
       return acc.concat(cur.communityTags);
@@ -104,38 +90,71 @@ const usePreprocessing = () => {
     return [...new Set(allTags)].sort();
   };
 
-  // Returning the subset of nodes who have been connected to a given community tag.
-  const filterGraphByCommunity = useCallback(
-    (selectedTags) => {
-      const newNodes = fullNodes.filter((node) => {
-        return node.communityTags.some((tag) => selectedTags.includes(tag));
-      });
-      const newLinks = fullLinks.filter(
-        (link) =>
-          newNodes.map((node) => node.id).includes(link.source) ||
-          newNodes.map((node) => node.id).includes(link.target)
+  // This function takes a node in input, and returns the graph adjacent to this node.
+  const reduceGraph = useCallback(
+    (node, selectedCommunity) => {
+      const newLinks = initialGraph.links.filter(
+        (link) => link.source === node.id || link.target === node.id
       );
+      const newNodes = initialGraph.nodes
+        .filter(
+          (n) =>
+            newLinks.map((link) => link.source).includes(n.id) ||
+            newLinks.map((link) => link.target).includes(n.id)
+        )
+        .map((n) =>
+          n.id === node.id ? { ...n, tagType: "center-" + n.tagType } : n
+        );
+
+      // if (selectedCommunity.length > 0) {
+      // }
       setGraph((prevState) => ({
         links: newLinks,
         nodes: newNodes,
         topics: prevState.topics,
         communities: prevState.communities,
-        state: "communityView",
+        state: "nodeView",
       }));
     },
-    [fullLinks, fullNodes]
+    [initialGraph]
   );
+
+  // Returning the subset of nodes who have been connected to a given community tag.
+  const filterGraphByCommunity = (graph, selectedTags) => {
+    // Limit to nodes including this community
+    let newNodes = initialGraph.nodes.filter((node) => {
+      return node.communityTags.some((tag) => selectedTags.includes(tag));
+    });
+
+    // Remove links not connected to any of the given nodes
+    const newLinks = initialGraph.links.filter(
+      (link) =>
+        newNodes.map((node) => node.id).includes(link.source) ||
+        newNodes.map((node) => node.id).includes(link.target)
+    );
+
+    // New category counts
+    newNodes = newNodes.map((node) => ({
+      ...node,
+      highlightCount: newLinks.filter((link) =>
+        [link.source, link.target].includes(node.id)
+      ).length,
+    }));
+
+    setGraph({
+      ...graph,
+      links: newLinks,
+      nodes: newNodes,
+      state: "communityView",
+    });
+  };
 
   // Return to view on the full dataset
   const expandGraph = useCallback(() => {
-    setGraph((prevState) => ({
-      nodes: fullNodes,
-      links: fullLinks,
-      topics: prevState.topics,
-      communities: prevState.communities,
-      state: "fullView",
-    }));
-  }, [fullLinks, fullNodes]);
+    setCurrentNode({});
+    setCurrentCommunities({});
+    setGraph(initialGraph);
+  }, [initialGraph]);
 
   useEffect(() => {
     const initializeGraph = async () => {
@@ -156,17 +175,33 @@ const usePreprocessing = () => {
         state: "fullView",
       });
 
-      setFullLinks(links);
-      setFullNodes(nodes);
+      setInitialGraph({
+        nodes: nodes,
+        links: links,
+        topics: topics,
+        communities: communities,
+        state: "fullView",
+      });
     };
 
     // Execute async initialization
     setLoading(true);
-    initializeGraph();
-    setLoading(false);
+    initializeGraph().finally(() => setLoading(false));
   }, [fetchData]);
 
-  return { loading, graph, reduceGraph, expandGraph, filterGraphByCommunity };
+  return (
+    <GraphContext.Provider
+      value={{
+        loading,
+        graph,
+        reduceGraph,
+        expandGraph,
+        filterGraphByCommunity,
+      }}
+    >
+      {children}
+    </GraphContext.Provider>
+  );
 };
 
-export default usePreprocessing;
+export const useGraph = () => useContext(GraphContext);

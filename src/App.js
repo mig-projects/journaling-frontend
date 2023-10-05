@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth";
+import { GraphProvider } from "./contexts/graph";
 import Navbar from "./features/navigation/Navbar";
 import Home from "./pages/home/Home";
 import Login from "./pages/Login/Login";
@@ -17,19 +18,24 @@ const App = () => {
   return (
     <ThemeProvider theme={appTheme}>
       <AuthProvider>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/join-community" element={<CommunitySignup />} />
-            <Route path="confirm-email/:userType" element={<ConfirmEmail />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </Router>
+        <GraphProvider>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/impressum" element={<Impressum />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/join-community" element={<CommunitySignup />} />
+              <Route
+                path="confirm-email/:userType"
+                element={<ConfirmEmail />}
+              />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+          </Router>
+        </GraphProvider>
       </AuthProvider>
     </ThemeProvider>
   );

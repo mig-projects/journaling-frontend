@@ -1,25 +1,21 @@
 import "./Dashboard.css";
 import Chart from "../../features/dashboard/components/Chart/Chart";
-import { useAuth } from "../../contexts/auth";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Typography, Select, MenuItem, Button } from "@mui/material";
 import SidePanel from "../../features/dashboard/components/SidePanel/SidePanel";
-import usePreprocessing from "../../features/dashboard/hooks/usePreprocessing";
 import MapInfoButton from "../../features/dashboard/components/MapInfoButton/MapInfoButton";
+import { useGraph } from "../../contexts/graph";
 
 const Dashboard = () => {
   // Get user and registration status from authentication context
-  // const { user } = useAuth();
   const [selectedCommunity, setSelectedCommunity] = useState([]);
 
   // Use custom hook to preprocess data
-  const { loading, graph, reduceGraph, expandGraph, filterGraphByCommunity } =
-    usePreprocessing();
+  const { graph, expandGraph, filterGraphByCommunity } = useGraph();
 
   const handleCommunityChange = (event) => {
     setSelectedCommunity(event.target.value);
-    filterGraphByCommunity(event.target.value);
+    filterGraphByCommunity(graph, event.target.value);
   };
 
   const expandAndReset = () => {
@@ -27,10 +23,9 @@ const Dashboard = () => {
     setSelectedCommunity([]);
   };
 
-  const reduceAndReset = (node) => {
-    reduceGraph(node);
-    setSelectedCommunity([]);
-  };
+  // const reduceAndReset = (node) => {
+  //   reduceGraph(node, selectedCommunity);
+  // };
 
   return (
     <div className="dashboardMain">
@@ -45,11 +40,7 @@ const Dashboard = () => {
       <br />
 
       <div className="chartContainer">
-        <SidePanel
-          graph={graph}
-          loading={loading}
-          reduceGraph={reduceAndReset}
-        />
+        <SidePanel />
         <div className="chart">
           <Select
             className="communitySelect overlayButton"
@@ -74,7 +65,7 @@ const Dashboard = () => {
               ))}
           </Select>
 
-          <Chart graph={graph} loading={loading} reduceGraph={reduceAndReset} />
+          <Chart />
           <div className="buttonContainer">
             <Button
               className="backButton overlayButton"

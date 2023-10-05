@@ -3,8 +3,10 @@ import "./SidePanel.css";
 import { CircularProgress } from "@mui/material";
 import FullView from "./components/FullView/FullView";
 import NodeView from "./components/NodeView/NodeView";
+import { useGraph } from "../../../../contexts/graph";
 
-const SidePanel = ({ graph, loading, reduceGraph }) => {
+const SidePanel = () => {
+  const { loading, graph, reduceGraph } = useGraph();
   return (
     <div className="sidePanelContainer">
       {loading ? (
