@@ -20,10 +20,6 @@ const Dashboard = () => {
     setCurrentCommunities(event.target.value);
   };
 
-  // const reduceAndReset = (node) => {
-  //   reduceGraph(node, selectedCommunity);
-  // };
-
   return (
     <div className="dashboardMain">
       <br />
