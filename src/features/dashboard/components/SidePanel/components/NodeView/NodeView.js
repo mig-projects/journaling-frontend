@@ -34,7 +34,8 @@ const NodeView = () => {
         </Typography>
         <Typography>
           {tagType === "category" &&
-            "One to two sentences manually written for this category."}
+            (currentNode.description ||
+              "One to two sentences manually written for this category.")}
           {tagType === "highlight" &&
             `${currentNode.count} participants mentioned this finding.`}
         </Typography>
